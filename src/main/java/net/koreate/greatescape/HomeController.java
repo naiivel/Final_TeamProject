@@ -14,11 +14,13 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		
 		return "index";
 	}
 	
 	@GetMapping("member/login")
 	public void sadffd() {}
+	
+	@GetMapping("/home")
+	public void home() {}
 	
 }
