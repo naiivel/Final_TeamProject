@@ -14,7 +14,6 @@ local.properties
 .loadpath
 .recommenders
 .classpath
-.springBeans
 
 # External tool builders
 .externalToolBuilders/
