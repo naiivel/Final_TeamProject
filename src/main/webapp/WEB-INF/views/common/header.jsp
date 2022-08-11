@@ -1,100 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!--폰트-->
-<link href="https://fonts.googleapis.com/css?family=Rufina:400,700"
-	rel="stylesheet" />
-
-<link
-	href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900"
-	rel="stylesheet" />
-
-<!-- TITLE OF SITE -->
-<title>Travel</title>
-
-<link rel="shortcut icon" type="image/icon"
-	href="${pageContext.request.contextPath}/resources/logo/favicon.png" />
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" />
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/animate.css" />
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/hover-min.css">
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/datepicker.css">
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/owl.carousel.min.css">
-	
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/owl.theme.default.min.css" />
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" />
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootsnav.css" />
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/style.css" />
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/responsive.css" />
-
+	<meta charset="UTF-8">
+	<title>최고의 여행 - 대탈출</title>
+	<link rel="stylesheet" href="${contextPath}/resources/bootstrap-5.2.0-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${contextPath}/resources/css/style.css">
+	<script src="${contextPath}/resources/js/jquery.js"></script>
 </head>
 
 <body>
-
-	<!-- Header 메뉴 시작 -->
-	<header class="top-area">
-		<div class="header-area">
+	<header class="mb-5">
+		<nav id="mainNavbar" class="navbar fixed-top navbar-expand-lg bg-light">
 			<div class="container">
-				<div class="row">
-					<div class="col-sm-2">
-						<div class="logo text-center">
-							<a href="#home"> 대<span>탈출</span>
-							</a>
-						</div>
-					</div>
-					<div class="col-sm-10">
-						<div class="main-menu">
-							<div class="navbar-header">
-								<button type="button" class="navbar-toggle"
-									data-toggle="collapse" data-target=".navbar-collapse">
-									<i class="fa fa-bars"></i>
-								</button>
-							</div>
-							<div class="collapse navbar-collapse">
-								<ul class="nav navbar-nav navbar-left row">
-									<li class="smooth-menu"><a href="#">아시아</a></li>
-									<li class="smooth-menu"><a href="#">유럽</a></li>
-									<li class="smooth-menu"><a href="#">아메리카</a></li>
-									<li class="smooth-menu"><a href="#">오세아니아</a></li>
-								</ul>
-								<ul class="nav navbar-nav navbar-right row">
-									<li class="smooth-menu"><a href="#">로그인</a></li>
-									<li class="smooth-menu"><a href="#">예약확인</a></li>
-									<li class="smooth-menu"><a href="#">고객센터</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
+				<a class="navbar-brand" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-airplane-fill" viewBox="0 0 16 16">
+  <path d="M6.428 1.151C6.708.591 7.213 0 8 0s1.292.592 1.572 1.151C9.861 1.73 10 2.431 10 3v3.691l5.17 2.585a1.5 1.5 0 0 1 .83 1.342V12a.5.5 0 0 1-.582.493l-5.507-.918-.375 2.253 1.318 1.318A.5.5 0 0 1 10.5 16h-5a.5.5 0 0 1-.354-.854l1.319-1.318-.376-2.253-5.507.918A.5.5 0 0 1 0 12v-1.382a1.5 1.5 0 0 1 .83-1.342L6 6.691V3c0-.568.14-1.271.428-1.849Z"/>
+</svg>
+						대탈출
+					</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="a">아시아</a></li>
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="b">유럽</a></li>
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="c">아메리카</a></li>
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">오세아니아</a></li>
+					</ul>
+					<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">로그인</a></li>
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">예약확인</a></li>
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">고객센터</a></li>
+					</ul>
 				</div>
-				<div class="home-border"></div>
 			</div>
-		</div>
+		</nav>
 	</header>
-	<!-- Header 메뉴 종료 -->
