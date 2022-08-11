@@ -1,92 +1,174 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-
-<head>
-<meta charset="UTF-8">
-<title>최고의 여행 - 대탈출</title>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/bootstrap-5.2.0-dist/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/style.css">
-<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
-</head>
-
-<body>
-	<header class="mb-5">
-		<nav id="mainNavbar"
-			class="navbar fixed-top navbar-expand-lg bg-light">
-			<div class="container">
-				<a class="navbar-brand" href="#"> <img
-					src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="30"
-					height="24" class="d-inline-block align-text-top"> 대탈출
-				</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="a">아시아</a></li>
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="b">유럽</a></li>
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="c">아메리카</a></li>
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="d">오세아니아</a></li>
-					</ul>
-					<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="d">로그인</a></li>
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="d">예약확인</a></li>
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="d">고객센터</a></li>
-					</ul>
+<%@ include file="common/header.jsp" %>
+<section class="container text-center">
+	<!-- 800*400 배너 공간 시작 -->
+	<div id="carouselExampleDark" class="carousel carousel-dark slide mb-5" data-bs-ride="carousel">
+		<div class="carousel-indicators">
+			<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+				aria-current="true" aria-label="Slide 1"></button>
+			<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+				aria-label="Slide 2"></button>
+			<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+				aria-label="Slide 3"></button>
+		</div>
+		<div class="carousel-inner">
+			<div class="carousel-item active" data-bs-interval="10000">
+				<img src="https://marketingcube.com.au/wp-content/uploads/2019/02/Placeholder-800x400-pixels-Timeline.png"
+					class="d-block w-100" alt="...">
+				<div class="carousel-caption d-none d-md-block">
+					<h5>First slide label</h5>
+					<p>Some representative placeholder content for the first slide.</p>
 				</div>
 			</div>
-		</nav>
-	</header>
-	<section class="container">Obcaecati enim voluptatum commodi
-		nulla autem? Quos, accusamus saepe! Quaerat sequi sunt tenetur maxime
-		dolores voluptatibus officiis delectus illo nesciunt culpa aliquam
-		reiciendis quam explicabo qui, in quia libero commodi! Odit quibusdam
-		fugit quidem aspernatur rerum molestias accusantium sint vero vitae
-		ex, beatae voluptate quisquam soluta necessitatibus doloribus, illum
-		fugiat? Unde quaerat nulla laborum deleniti ex alias fugit obcaecati
-		soluta. Quas placeat atque ipsum minima vel ex facilis eum culpa
-		aspernatur nobis, delectus vero hic ut, veritatis perferendis dolorum
-		accusamus voluptatum officia odit. Dicta, consequuntur error. Facere
-		ullam ratione tempore.</section>
-	<footer class="mt-5 bg-light">
-		<div class="container">
-			<div class="row align-center">
-				<div class="col-md-2 ">
-					<span class="fs-1">대탈출</span>
+			<div class="carousel-item" data-bs-interval="2000">
+				<img src="https://marketingcube.com.au/wp-content/uploads/2019/02/Placeholder-800x400-pixels-Timeline.png"
+					class="d-block w-100" alt="...">
+				<div class="carousel-caption d-none d-md-block">
+					<h5>Second slide label</h5>
+					<p>Some representative placeholder content for the second slide.</p>
 				</div>
-				<div class="col-md-7">
-					<div class="fs-6">㈜한국기술교육직업전문학교 │ 부산지점 : (47821)부산광역시 동래구 충렬대로 84 (온천동)</div>
-					<div class="fs-6">사업자등록번호 : 123-45-67890 │ 통신판매업신고번호 : 제2022 부산동래 12345호</div>
-					<div class="fs-6">관광사업등록증번호 : 제2022-999999호</div>
-				</div>
-				<div class="col-md-3 p-3">
-				<div class="list-group">
-					  <a href="#" class="fs-6 text-center list-group-item list-group-item-action">아시아</a>
-					  <a href="#" class="fs-6 text-center list-group-item list-group-item-action">유럽</a>
-					  <a href="#" class="fs-6 text-center list-group-item list-group-item-action">아메리카</a>
-					  <a href="#" class="fs-6 text-center list-group-item list-group-item-action">오세아니아</a>
-					</div>
+			</div>
+			<div class="carousel-item">
+				<img src="https://marketingcube.com.au/wp-content/uploads/2019/02/Placeholder-800x400-pixels-Timeline.png"
+					class="d-block w-100" alt="...">
+				<div class="carousel-caption d-none d-md-block">
+					<h5>Third slide label</h5>
+					<p>Some representative placeholder content for the third slide.</p>
 				</div>
 			</div>
 		</div>
-	</footer>
-	<script
-		src="${pageContext.request.contextPath}/resources/bootstrap-5.2.0-dist/js/bootstrap.min.js"></script>
-</body>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
+	<!-- 800*400 배너 공간 끝 -->
 
-</html>
+	<!-- 여행지 검색 공간 시작 -->
+	<div class="row mb-5">
+		<div class="col-1"></div>
+
+		<div class="col-10 border row p-3">
+			<h2 class="mb-3">여행지 검색</h2>
+			<form action="">
+				<div class="row">
+					<div class="col-lg-3">
+						<div class="input-group mb-5">
+							<span class="input-group-text" id="basic-addon1">나라</span>
+							<input type="text" class="form-control" placeholder="나라명" aria-label="나라"
+								aria-describedby="basic-addon1">
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div class="input-group mb-5">
+							<span class="input-group-text" id="basic-addon1">출발일</span>
+							<input type="date" class="form-control" placeholder="출발일" aria-label="출발일"
+								aria-describedby="basic-addon1">
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div class="input-group mb-5">
+							<span class="input-group-text" id="basic-addon1">기간</span>
+							<input type="number" class="form-control" placeholder="기간" aria-label="기간"
+								aria-describedby="basic-addon1">
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div class="input-group mb-5">
+							<span class="input-group-text" id="basic-addon1">인원</span>
+							<input type="number" class="form-control" placeholder="인원" aria-label="인원"
+								aria-describedby="basic-addon1">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="input-group mb-5">
+							<span class="input-group-text" id="basic-addon1">도시</span>
+							<input type="text" class="form-control" placeholder="도시명" aria-label="도시"
+								aria-describedby="basic-addon1">
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="input-group mb-5">
+							<span class="input-group-text">예산</span>
+							<input type="number" class="form-control" placeholder="최대금액" aria-label="예산"
+								aria-describedby="basic-addon1">
+							<span class="input-group-text">원</span>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<button class="form-control">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								class="bi bi-search" viewBox="0 0 16 16">
+								<path
+									d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
+								</path>
+							</svg>
+							검색
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="col-1"></div>
+	</div>
+	<!-- 여행지 검색 공간 끝 -->
+
+	<!-- 추천 여행지 공간 시작 -->
+	<section class="row mb-5">
+		<h2 class="mb-3">최고의 여행지!</h2>
+		<div class="col-md-6 col-xl-3">
+			<div class="card mx-auto" style="width: 18rem;">
+				<img src="${contextPath}/resources/image/geek.gif" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">Card title</h5>
+					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+						card's content.</p>
+					<a href="#" class="btn btn-outline-secondary">Go somewhere</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-xl-3">
+			<div class="card mx-auto" style="width: 18rem;">
+				<img src="${contextPath}/resources/image/geek-glasses.gif" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">Card title</h5>
+					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+						card's content.</p>
+					<a href="#" class="btn btn-outline-secondary">Go somewhere</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-xl-3">
+			<div class="card mx-auto" style="width: 18rem;">
+				<img src="${contextPath}/resources/image/geek-hair.gif" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">Card title</h5>
+					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+						card's content.</p>
+					<a href="#" class="btn btn-outline-secondary">Go somewhere</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-xl-3">
+			<div class="card mx-auto" style="width: 18rem;">
+				<img src="${contextPath}/resources/image/geek-glasses-hair.gif" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">Card title</h5>
+					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+						card's content.</p>
+					<a href="#" class="btn btn-outline-secondary">Go somewhere</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- 추천 여행지 공간 끝 -->
+</section>
+<%@ include file="common/footer.jsp" %>
