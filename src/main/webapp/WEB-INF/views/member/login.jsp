@@ -42,7 +42,7 @@
 </section>
 <script>
 	document.querySelector('#joinBtn').addEventListener('click', () => {
-		location.href = '${contextPath}/member/join';
+		location.href = 'join';
 	});
 </script>
 <%@ include file="../common/footer.jsp" %>
