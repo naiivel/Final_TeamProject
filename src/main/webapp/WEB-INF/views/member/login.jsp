@@ -1,59 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
+	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
-
-<!-- 여기다 작성하셈 -->
-	<section style="background: skyblue; min-height: 150px; overflow: hidden; padding-top: 50px; border-top: 1px solid black;" >
-		<!-- <div style="max-width: 1100px; margin: 100px auto; padding: 0 8px;">
-			<article style="display: block;">
-				<h3>로그인</h3>
-				<h4>탈출하라!</h4>
-			</article>
-			<form>
-				<article style="width: 1100px;padding: 60px 130px; margin-bottom: 30px; border-top: 2px solid black; border-bottom: 1px solid blue;">
-					<table style="border: 1px;">
-
-
-					</table>
-
-				</article>
-			</form>
-
-
-		</div> -->
-		</section>
-		<div class="container">
-			<table class="table align-middle">
-				<thead>
-					<tr>
-						<th colspan="2">대탈출</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="align-middle">
-						<td><input type="text" name="" id=""></td>
-						<td rowspan="2">
-							<button class="btn">로그인</button>
-						</td>
-					</tr>
-					<tr>
-						<td ><input type="password" name="" id=""></td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<input type="checkbox" name="" id="sadf">
-							<label for="sadf">아이디 저장</label>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<button class="btn">회원가입</button><button class="btn">아이디 찾기</button><button class="btn">비밀번호 찾기</button><button class="btn">비회원 예약확인</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+<section class="container">
+	<div class="row">
+		<div class="col-2"></div>
+		<div class="col-8">
+			<div class="row">
+				<h2 class="mb-5">대탈출</h2>
+				<form action="" method="">
+					<div class="row">
+						<div class="col-md-9">
+							<input type="text" class="form-control mb-3" id="id" placeholder="id">
+							<input type="password" class="form-control" id="pw" placeholder="password">
+						</div>
+						<div class="col-md-3">
+							<button class="btn btn btn-secondary w-100 h-100">로그인</button>
+						</div>
+						<div class="form-check m-3">
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+							<label class="form-check-label" for="flexCheckDefault">
+								아이디 저장
+							</label>
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
+		<div class="col-2"></div>
+	</div>
+	<div class="row ">
+		<div class="col-3"></div>
+		<div class="col-6 text-center">
+			<button id="joinBtn" type="button" class="btn btn-secondary">회원가입</button>
+			<button type="button" class="btn btn-secondary">아이디 찾기</button>
+			<button type="button" class="btn btn-secondary">비밀번호 찾기</button>
+			<button type="button" class="btn btn-secondary">비회원 예약확인</button>
 
-
+		</div>
+		<div class="col-3"></div>
+	</div>
+</section>
+<script>
+	document.querySelector('#joinBtn').addEventListener('click', () => {
+		location.href = '${contextPath}/member/join';
+	});
+</script>
 <%@ include file="../common/footer.jsp" %>
