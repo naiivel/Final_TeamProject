@@ -9,5 +9,5 @@ import net.koreate.greatescape.board.service.BoardService;
 @RequiredArgsConstructor
 public class BoardController {
 
-	private final BoardService bs;
+	private final BoardService bs; // zz
 }
