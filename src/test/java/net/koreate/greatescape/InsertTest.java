@@ -2,6 +2,7 @@ package net.koreate.greatescape;
 
 
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,7 +21,7 @@ public class InsertTest {
 	
 	MemberVO vo;
 	
-	@InsertTest
+	@Test
 	public void test() throws Exception{
 		vo = new MemberVO("master","master","총관리자","남성","19930330","01064800945","ceo@greatescape.net","Y");
 		dao.test(vo);

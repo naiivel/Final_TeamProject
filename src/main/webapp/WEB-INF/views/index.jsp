@@ -53,7 +53,7 @@
 	<div class="row mb-5">
 		<div class="col-1"></div>
 
-		<div class="col-10 border row p-3">
+		<div class="col-10 row p-3">
 			<h2 class="mb-3">여행지 검색</h2>
 			<form action="">
 				<div class="row">
@@ -123,9 +123,9 @@
 
 	<!-- 추천 여행지 공간 시작 -->
 	<section class="row mb-5">
-		<h2 class="mb-3">최고의 여행지!</h2>
+		<h2 class="mb-3">최고의 여행지</h2>
 		<div class="col-md-6 col-xl-3">
-			<div class="card mx-auto" style="width: 18rem;">
+			<div class="card border-0 mx-auto" style="width: 18rem;">
 				<img src="${contextPath}/resources/image/geek.gif" class="card-img-top" alt="...">
 				<div class="card-body">
 					<h5 class="card-title">Card title</h5>
@@ -136,7 +136,7 @@
 			</div>
 		</div>
 		<div class="col-md-6 col-xl-3">
-			<div class="card mx-auto" style="width: 18rem;">
+			<div class="card border-0 mx-auto" style="width: 18rem;">
 				<img src="${contextPath}/resources/image/geek-glasses.gif" class="card-img-top" alt="...">
 				<div class="card-body">
 					<h5 class="card-title">Card title</h5>
@@ -147,7 +147,7 @@
 			</div>
 		</div>
 		<div class="col-md-6 col-xl-3">
-			<div class="card mx-auto" style="width: 18rem;">
+			<div class="card border-0 mx-auto" style="width: 18rem;">
 				<img src="${contextPath}/resources/image/geek-hair.gif" class="card-img-top" alt="...">
 				<div class="card-body">
 					<h5 class="card-title">Card title</h5>
@@ -158,7 +158,7 @@
 			</div>
 		</div>
 		<div class="col-md-6 col-xl-3">
-			<div class="card mx-auto" style="width: 18rem;">
+			<div class="card border-0 mx-auto" style="width: 18rem;">
 				<img src="${contextPath}/resources/image/geek-glasses-hair.gif" class="card-img-top" alt="...">
 				<div class="card-body">
 					<h5 class="card-title">Card title</h5>
