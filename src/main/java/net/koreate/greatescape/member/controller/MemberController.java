@@ -9,14 +9,18 @@ import net.koreate.greatescape.member.service.MemberService;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/member/")
+@RequestMapping("member")
 public class MemberController {
 
 	private final MemberService ms;
 	
 	@GetMapping("login")
-	public void login() {}
+	public String login() {
+		return "member/login";
+	}
 	
-	@GetMapping("join")
-	public void join() {}
+	@GetMapping("/join")
+	public String join() {
+		return "member/join";
+	}
 }
