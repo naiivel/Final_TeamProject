@@ -7,13 +7,14 @@
 		<div class="col-8">
 			<div class="row">
 				<h2 class="mb-5">대탈출</h2>
-				<form action="" method="">
+				<form action="loginPost" method="post">
 					<div class="row">
 						<div class="col-md-9">
-							<input type="text" class="form-control mb-3" id="id" placeholder="id">
-							<input type="password" class="form-control" id="pw" placeholder="password">
+							<input type="text" class="form-control mb-3" name="member_id" placeholder="id">
+							<input type="password" class="form-control" name="member_pw" placeholder="password">
 						</div>
 						<div class="col-md-3">
+							
 							<button class="btn btn btn-secondary w-100 h-100">로그인</button>
 						</div>
 						<div class="form-check m-3">
