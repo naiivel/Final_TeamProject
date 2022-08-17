@@ -14,17 +14,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ServiceAdvice {
 
-	@Around("execution(* net.koreate.*.service.*.*(..))")
+	@Around("execution(* net.koreate.greatescape.*.service.*.*(..))")
 	public Object checkService(ProceedingJoinPoint pjp) throws Throwable {
 		// 전처리
-		log.info("--- around ServiceAdvice START ");
-		log.info("--- target : " + pjp.getTarget());
-		log.info("--- method : " + pjp.getSignature().getName());
-		log.info("--- params : " + Arrays.toString(pjp.getArgs()));
-		Object o = pjp.proceed(); // 실체 메소드 실행
+		log.info("================= START =================");
+		log.info("--- 실행 클래스 : " + pjp.getTarget());
+		log.info("--- 실행 메소드 : " + pjp.getSignature().getName());
+		log.info("--- 입력 값 : " + Arrays.toString(pjp.getArgs()));
+		Object o = pjp.proceed(); // 실제 메소드 실행부분
 		// 후처리
-		log.info("--- return value :" + o);
-		log.info("--- around ServiceAdvice END ");
+		log.info("--- 반환 값  :" + o);
+		log.info("================== END ==================");
 		return o;
 	}
 

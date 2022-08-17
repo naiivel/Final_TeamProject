@@ -37,8 +37,23 @@
 						<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">오세아니아</a></li>
 					</ul>
 					<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/member/login">로그인</a></li>
-						<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">예약확인</a></li>
+						<c:choose>
+							<c:when test="${!empty sessionScope.userInfo}">
+								<li class="nav-item"><a class="nav-link active" aria-current="page" href="member/logOut">로그아웃</a></li>
+								<c:choose>
+									<c:when test="${userInfo.member_master eq 'Y'}">
+										<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">관리자페이지</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">마이페이지</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:otherwise>
+								<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/member/login">로그인</a></li>
+								<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">예약확인</a></li>
+							</c:otherwise>
+						</c:choose>
 						<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">고객센터</a></li>
 					</ul>
 				</div>
