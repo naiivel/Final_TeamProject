@@ -8,8 +8,8 @@
 			<form action="joinPost" method="post">
 				<label for="id" class="form-label">아이디</label>
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" name="member_id" id="id" placeholder="">
-					<button class="btn btn-outline-secondary" type="button" id="button-addon2">중복확인</button>
+					<input type="text" class="form-control" name="member_id" id="member_id" placeholder="">
+					<button class="btn btn-outline-secondary" type="button" id="reduplication_check">중복확인</button>
 				</div>
 				<div class="mb-3">
 					<label for="password" class="form-label">비밀번호</label>
@@ -99,5 +99,23 @@
 			}
 		}).open();
 	}
+
+	$("#reduplication_check").click(function(){
+		$.ajax({
+			url : "redu_check",
+			type : "POST",
+			dataType : "json",
+			data : {"member_id" : $("#member_id").val()},
+			success : function(data){
+				if(data == 1){
+					alert("중복된 아이디입니다. 다시 입력해주세요.");
+					$("#member_id").val("");
+				}else{
+					alert("사용가능한 아이디입니다.");
+				}
+			}
+		});
+	});
+	
 </script>
 <%@ include file="../common/footer.jsp" %>

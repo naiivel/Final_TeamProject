@@ -1,5 +1,8 @@
 package net.koreate.greatescape.member.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -7,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.service.MemberService;
@@ -33,9 +37,28 @@ public class MemberController {
 	
 	// 로그인 시도
 	@PostMapping("/loginPost")
-	public String loginPost(MemberVO vo,HttpSession session) throws Exception{
-		session.setAttribute("userInfo",ms.loginCheck(vo));
-		return "redirect:/";
+	public String loginPost(MemberVO vo,HttpSession session,HttpServletRequest request,
+			HttpServletResponse response,Model model) throws Exception{
+		MemberVO login = ms.loginCheck(vo);
+		if(request.getParameter("remember_id") != null) {
+			String remember = request.getParameter("remember_id");
+			if(remember.equals("checked")) {
+				Cookie cookie = new Cookie("id",vo.getMember_id());
+				response.addCookie(cookie);
+			}
+		}else {
+			Cookie cookie = new Cookie("id", vo.getMember_id());
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+		}
+		
+		if(login != null) {
+			session.setAttribute("userInfo",login);
+			return "redirect:/";
+		}
+		String message = "아이디와 비밀번호가 일치하지 않습니다.";
+		model.addAttribute("message",message);
+		return "member/login";
 	}
 	
 	// 로그아웃 시도
@@ -52,6 +75,13 @@ public class MemberController {
 	public String joinPost(MemberVO vo)throws Exception{
 			ms.join(vo);
 		return "member/login";
+	}
+	
+	@PostMapping("/redu_check")
+	@ResponseBody
+	public int reduplicationCheck(MemberVO vo,Model model)throws Exception{
+		int result = ms.reduplcationCheck(vo);
+		return result;
 	}
 }
 
