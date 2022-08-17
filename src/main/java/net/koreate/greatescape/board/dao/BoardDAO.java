@@ -28,6 +28,8 @@ public interface BoardDAO {
 
 	//글 쓰기
 	
+	//상세보기
+	
 	//글 수정
 	
 	//글 삭제
@@ -37,6 +39,8 @@ public interface BoardDAO {
 	//글 목록
 	
 	//글 쓰기
+	
+	//상세보기
 	
 	//글 수정
 	
