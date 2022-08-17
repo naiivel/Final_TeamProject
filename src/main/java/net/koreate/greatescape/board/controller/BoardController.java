@@ -16,3 +16,5 @@ public class BoardController {
 	public String temp() {
 		return "temp/template";
 	}
+	
+}
