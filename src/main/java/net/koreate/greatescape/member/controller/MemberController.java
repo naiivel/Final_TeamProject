@@ -72,17 +72,34 @@ public class MemberController {
 	
 	// 회원가입 시도
 	@PostMapping("/joinPost")
-	public String joinPost(MemberVO vo)throws Exception{
-			ms.join(vo);
+	public String joinPost(MemberVO vo,HttpServletRequest request,Model model)throws Exception{
+		if(request.getParameter("reduCkConfirm").equals("N")) {
+			String message = "아이디 중복체크를 하지 않으셨습니다. 중복체크를 진행해주세요.";
+			model.addAttribute("writeInfo",vo);
+			model.addAttribute("message",message);
+			return "member/join";
+		}
+		
+		if(!request.getParameter("passwordCheck").equals(vo.getMember_pw())) {
+			String message = "비밀번호가 일치하지않습니다. 확인해주세요.";
+			model.addAttribute("writeInfo",vo);
+			model.addAttribute("message",message);
+			return "member/join";
+		}
+		
+			//ms.join(vo);
+		System.out.println("회원가입");
 		return "member/login";
 	}
 	
+	// 회원가입 아이디 중복체크
 	@PostMapping("/redu_check")
 	@ResponseBody
 	public int reduplicationCheck(MemberVO vo,Model model)throws Exception{
 		int result = ms.reduplcationCheck(vo);
 		return result;
 	}
+	
 }
 
 
