@@ -6,12 +6,24 @@
 		<div class="col-md-2">
 			<div class="card mb-3">
 				<div class="card-header">
-					고객센터
+					<h3 class="card-title text-center m-0">아시아</h3>
 				</div>
-				<div class="list-group list-group-flush">
-					<a href="${contextPath}/board/service" class="list-group-item active">질문과 답변</a>
-					<a href="${contextPath}/board/service2" class="list-group-item">자주 묻는 질문</a>
-					<a href="${contextPath}/board/service3" class="list-group-item">공지사항</a>
+				<div class="accordion" id="accordionPanelsStayOpenExample">
+					<div class="accordion-item">
+						<h4 class="accordion-header" id="panelsStayOpen-headingOne">
+							<button class="accordion-button" type="button" data-bs-toggle="collapse"
+								data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+								aria-controls="panelsStayOpen-collapseOne">
+								중국
+							</button>
+						</h4>
+						<div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+							aria-labelledby="panelsStayOpen-headingOne">
+							<div class="accordion-body">
+								베이징
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
 <section class="container">
-	<div class="row">
+	<div class="row mb-5">
 		<div class="col-2"></div>
 		<div class="col-8">
 			<div class="row">

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
 <section class="container">
-	<div class="row">
+	<div class="row mb-5">
 		<div class="col-2"></div>
 		<div class="col-8">
 			<form action="joinPost" method="post">
@@ -76,7 +76,7 @@
 		</div>
 		<div class="col-2"></div>
 	</div>
-	<div class="text-center">
+	<div class="text-center mb-5">
 		<button class="btn btn-secondary">가입하기</button>
 		<button class="btn btn-secondary">가입취소</button>
 	</div>
