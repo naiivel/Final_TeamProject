@@ -6,28 +6,27 @@
 		<div class="col-md-2">
 			<div class="card mb-3">
 				<div class="card-header">
-					고객센터
+					관리자 페이지
 				</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/board/service" class="list-group-item active">질문과 답변</a>
-					<a href="${contextPath}/board/service2" class="list-group-item">자주 묻는 질문</a>
-					<a href="${contextPath}/board/service3" class="list-group-item">공지사항</a>
+					<a href="${contextPath}/board/service" class="list-group-item active">회원/관리자 목록</a>
+					<a href="${contextPath}/board/service2" class="list-group-item">매출 관리</a>
+					<a href="${contextPath}/board/service3" class="list-group-item">상품 관리</a>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-10 mb-5">
-			<h2 class="mb-4">질문과 답변</h2>
+		<div class="col-md-10">
+			<h2 class="mb-4">회원/관리자 목록</h2>
 			<div class="mb-4">
 				<div class="dropdown">
 					<a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown" aria-expanded="false">
-						보기
+						회원 유형
 					</a>
-
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item" href="#">전체</a></li>
-						<li><a class="dropdown-item" href="#">확인 중</a></li>
-						<li><a class="dropdown-item" href="#">답변 완료</a></li>
+						<li><a class="dropdown-item" href="#">회원</a></li>
+						<li><a class="dropdown-item" href="#">관리자</a></li>
 					</ul>
 				</div>
 			</div>
@@ -35,36 +34,18 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th>번호</th>
-							<th>제목</th>
-							<th>글쓴이</th>
-							<th>등록일</th>
+							<th>필요한</th>
+							<th>단락을</th>
+							<th>추가하여</th>
+							<th>사용하세요</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>임시</td>
-							<td><a href="${contextPath}/board/service/show">임시</a></td>
-							<td>임시</td>
-							<td>임시</td>
-						</tr>
-						<tr>
-							<td>임시</td>
-							<td>임시</td>
-							<td>임시</td>
-							<td>임시</td>
-						</tr>
-						<tr>
-							<td>임시</td>
-							<td>임시</td>
-							<td>임시</td>
-							<td>임시</td>
-						</tr>
-						<tr>
-							<td>임시</td>
-							<td>임시</td>
-							<td>임시</td>
-							<td>임시</td>
+							<td>temp</td>
+							<td>temp</td>
+							<td>temp</td>
+							<td>temp</td>
 						</tr>
 					</tbody>
 				</table>
@@ -83,8 +64,7 @@
 				</ul>
 			</nav>
 			<div class="mb-4 text-end">
-				<button class="btn btn-outline-secondary" id="addBtn">글쓰기</button>
-				<button class="btn btn-outline-secondary">나의 질문</button>
+				<button class="btn btn-outline-secondary" id="addBtn">관리자 계정 추가</button>
 			</div>
 		</div>
 	</div>

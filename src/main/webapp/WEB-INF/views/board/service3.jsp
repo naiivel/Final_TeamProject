@@ -15,7 +15,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-10">
+		<div class="col-md-10 mb-5">
 			<h2 class="mb-4">공지사항</h2>
 			<div class="mb-4">
 				<div class="btn-group">
@@ -37,7 +37,7 @@
 					<tbody>
 						<tr>
 							<td>임시</td>
-							<td>임시</td>
+							<td><a href="${contextPath}/board/service3/show">임시</a></td>
 							<td>임시</td>
 							<td>임시</td>
 						</tr>
@@ -76,9 +76,14 @@
 				</ul>
 			</nav>
 			<div class="text-end mb-3">
-				<button class="btn btn-outline-secondary">글쓰기</button>
+				<button class="btn btn-outline-secondary" id="addBtn">글쓰기</button>
 			</div>
 		</div>
 	</div>
 </section>
+<script>
+	$("#addBtn").click(function () {
+		location.href = "${contextPath}/board/service3/new";
+	});
+</script>
 <%@ include file="../common/footer.jsp" %>
