@@ -1,5 +1,6 @@
 package net.koreate.greatescape.member.service;
 
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -21,4 +22,11 @@ public class MemberServiceImpl implements MemberService {
 	public void join(MemberVO vo) {
 		mdao.join(vo);
 	}
+
+	@Override
+	public int reduplcationCheck(MemberVO vo) {
+		int result = mdao.idCheck(vo);
+		return result;
+	}
+
 }

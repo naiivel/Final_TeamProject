@@ -9,5 +9,11 @@ public interface MemberService {
 
 	// 회원가입
 	void join(MemberVO vo);
+	
+	// ID중복체크
+	int reduplcationCheck(MemberVO vo);
+	
+	
+
 
 }
