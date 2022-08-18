@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<footer class="mt-5 bg-light">
+<footer class="mt-5 bg-light footer mt-auto">
 	<div class="container">
 		<div class="row align-items-center">
 			<div class="col-md-2 ">
-				<h1 class="fs-1">대탈출</h1>
+				<h1 class="fs-2">대탈출</h1>
 			</div>
 			<div class="col-md-6">
 				<div>㈜한국기술교육직업전문학교 | 고객상담 051-111-1111</div>

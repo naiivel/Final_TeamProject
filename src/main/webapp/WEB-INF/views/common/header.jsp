@@ -13,14 +13,10 @@
 	<script src="${contextPath}/resources/js/jquery.js"></script>
 </head>
 
-<body>
+<body class="d-flex flex-column vh-100">
 	<header class="mb-5">
 		<nav id="mainNavbar" class="navbar fixed-top navbar-expand-lg bg-light">
 			<div class="container">
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#tempSideBar"
-					aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
 				<a class="navbar-brand" href="${contextPath}/"><svg xmlns="http://www.w3.org/2000/svg" width="16"
 						height="16" fill="currentColor" class="bi bi-airplane-fill" viewBox="0 0 16 16">
 						<path
@@ -64,7 +60,8 @@
 								</li>
 							</c:otherwise>
 						</c:choose>
-						<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">고객센터</a></li>
+						<li class="nav-item"><a class="nav-link active" aria-current="page"
+								href="${contextPath}/board/service">고객센터</a></li>
 					</ul>
 				</div>
 			</div>
