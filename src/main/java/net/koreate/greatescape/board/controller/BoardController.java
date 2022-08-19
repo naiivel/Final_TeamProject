@@ -16,7 +16,7 @@ import net.koreate.greatescape.utils.SearchCriteria;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("board/")
+@RequestMapping("/board/")
 public class BoardController {
 
 	private final BoardService bs;

@@ -3,7 +3,7 @@
 <%@ include file="common/header.jsp" %>
 <section class="container text-center">
 	<!-- 800*400 배너 공간 시작 -->
-	<div id="carouselExampleDark" class="carousel carousel-dark slide mb-5" data-bs-ride="carousel">
+	<!-- <div id="carouselExampleDark" class="carousel carousel-dark slide mb-5" data-bs-ride="carousel">
 		<div class="carousel-indicators">
 			<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
 				aria-current="true" aria-label="Slide 1"></button>
@@ -46,7 +46,7 @@
 			<span class="carousel-control-next-icon" aria-hidden="true"></span>
 			<span class="visually-hidden">Next</span>
 		</button>
-	</div>
+	</div> -->
 	<!-- 800*400 배너 공간 끝 -->
 
 	<!-- 여행지 검색 공간 시작 -->
