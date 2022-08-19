@@ -20,7 +20,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public PageMaker getPageMaker(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -28,27 +28,29 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public List<FAQBoardVO> faqList(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<FAQBoardVO> list= null;
+		list= bdao.getFAQList(cri);
+		
+		return list;
 	}
 
 
 	@Override
 	public String writeFAQ(FAQBoardVO fvo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		bdao.writeFAQ(fvo);
+		
+		return "redirect:board/faq/list";
 	}
 
 	@Override
 	public String modifyFAQ(FAQBoardVO fvo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		bdao.modifyFAQ(fvo);
+		return "redirect:board/faq/modify";
 	}
 
 	@Override
 	public void deleteFAQ(int faq_num) throws Exception {
-		// TODO Auto-generated method stub
-		
+		bdao.deleteFAQ(faq_num);
 	}
 	
 	/****************************** QNA ************************************/
