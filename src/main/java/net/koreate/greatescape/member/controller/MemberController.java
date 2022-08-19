@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.service.MemberService;
 import net.koreate.greatescape.member.vo.MemberVO;
+import net.koreate.greatescape.product.vo.ProductVO;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +27,7 @@ public class MemberController {
 	// 로그인 페이지 이동
 	@GetMapping("/login")
 	public String login() {
+		
 		return "member/login";
 	}
 	
@@ -52,7 +54,7 @@ public class MemberController {
 			response.addCookie(cookie);
 		}
 		
-		if(login != null) {
+		if(login != null && login.getMember_leave().equals("Y")) {
 			session.setAttribute("userInfo",login);
 			return "redirect:/";
 		}
@@ -73,19 +75,6 @@ public class MemberController {
 	// 회원가입 시도
 	@PostMapping("/joinPost")
 	public String joinPost(MemberVO vo,HttpServletRequest request,Model model)throws Exception{
-		if(request.getParameter("reduCkConfirm").equals("N")) {
-			String message = "아이디 중복체크를 하지 않으셨습니다. 중복체크를 진행해주세요.";
-			model.addAttribute("writeInfo",vo);
-			model.addAttribute("message",message);
-			return "member/join";
-		}
-		
-		if(!request.getParameter("passwordCheck").equals(vo.getMember_pw())) {
-			String message = "비밀번호가 일치하지않습니다. 확인해주세요.";
-			model.addAttribute("writeInfo",vo);
-			model.addAttribute("message",message);
-			return "member/join";
-		}
 		
 			//ms.join(vo);
 		System.out.println("회원가입");
@@ -100,7 +89,93 @@ public class MemberController {
 		return result;
 	}
 	
-}
+	// (회원)마이페이지 출력-예약내역
+	@GetMapping("/myPage")
+	public String myPage(MemberVO vo,Model model) throws Exception{
+		ProductVO product = ms.reservationlist(vo.getMember_num());
+		model.addAttribute("product",product);
+		
+		return "member/myPage";
+	}
+	
+	// (회원)예약내역 상세보기
+	@GetMapping("/reservDetail")
+	public String reservDetail(MemberVO vo,Model model)throws Exception{
+		ProductVO product = ms.reservationlist(vo.getMember_num());
+		vo.setMember_product_num(product.getProduct_num());
+		int people = ms.findpeople(vo);
+		
+		model.addAttribute("loginMember",vo);
+		model.addAttribute("product",product);
+		model.addAttribute("people",people);
+		
+		return "member/reservDetail";
+	}
+	
+	// (회원) 정보수정 페이지이동
+	@GetMapping("/changeInfo")
+	public String changeInfo() {
+		return "member/changeInfo";
+	}
+	
+	// (회원) 정보수정 비밀번호 확인
+	@PostMapping("/insertPass")
+	public String insertPass(MemberVO vo,Model model)throws Exception{
+		MemberVO loginMember = ms.pwCheck(vo);
+		
+		if(loginMember != null) {
+			model.addAttribute("loginMember",loginMember);
+			return "member/info";
+		}
+		
+		String message = "비밀번호를 틀리셨습니다. 다시입력해주세요.";
+		model.addAttribute("message",message);
+		
+		return "member/changeInfo";
+	}
+	
+	// (회원) 정보수정 페이지
+	@GetMapping("/info")
+	public String info() {
+		return "member/info";
+	}
+	
+	
+	// (회원) 정보수정 적용
+	@PostMapping("/modify")
+	public String modify(MemberVO vo,HttpSession session) throws Exception{
+		MemberVO changeMember = ms.modify(vo);
+		if(changeMember.getMember_product_num() != 0) {
+			ms.changeRev(changeMember);
+		}
+		
+		session.removeAttribute("userInfo");
+		session.setAttribute("userInfo",changeMember);
+		
+		return "member/info";
+	}
+	
+	// (회원) 탈퇴 페이지 이동
+	@GetMapping("/withdraw")
+	public String withdraw() {
+		return "member/withdraw";
+	}
+	
+	// (회원) 탈퇴시 필요한 비밀번호 확인
+	@PostMapping("/delete")
+	public String delete(MemberVO vo,HttpSession session) {
+		MemberVO loginMember = ms.pwCheck(vo);
+		ms.changeLeave(loginMember);
+		session.removeAttribute("userInfo");
+		
+		return "redirect:/";
+	}
+	
+	
+	
+	
+	
+}	
 
 
 
