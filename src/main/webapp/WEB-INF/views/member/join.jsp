@@ -2,15 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
 <section class="container">
-	<div class="row">
+	<div class="row mb-5">
 		<div class="col-2"></div>
 		<div class="col-8">
 			<form id="joinForm" action="joinPost" method="post">
 				<label for="id" class="form-label">아이디</label>
 				<div class="input-group mb-3">
 					<input type="text" class="form-control" name="member_id" id="member_id" placeholder="">
+
 					<button class="btn btn-outline-secondary" type="button" id="reduplication_check">중복확인</button>
-					<input type="hidden" name="reduCkConfirm" id="reduCkConfirm" value="N"/>
+					<input type="hidden" name="reduCkConfirm" id="reduCkConfirm" value="N" />
 				</div>
 				<div class="mb-3">
 					<label for="password" class="form-label">비밀번호</label>
@@ -79,6 +80,10 @@
 				</div>
 		<div class="col-2"></div>
 	</div>
+	<div class="text-center mb-5">
+		<button class="btn btn-secondary">가입하기</button>
+		<button class="btn btn-secondary">가입취소</button>
+	</div>
 </section>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -98,47 +103,47 @@
 			}
 		}).open();
 	}
-	
+
 	var msg = '${message}';
-	if(msg != ''){
+	if (msg != '') {
 		alert(msg);
 	}
 
-	$("#reduplication_check").click(function(){
+	$("#reduplication_check").click(function () {
 		$.ajax({
-			url : "redu_check",
-			type : "POST",
-			dataType : "json",
-			data : {"member_id" : $("#member_id").val()},
-			success : function(data){
-				if(data == 1){
+			url: "redu_check",
+			type: "POST",
+			dataType: "json",
+			data: { "member_id": $("#member_id").val() },
+			success: function (data) {
+				if (data == 1) {
 					alert("중복된 아이디입니다. 다시 입력해주세요.");
 					$("#member_id").val("");
-				}else{
+				} else {
 					alert("사용가능한 아이디입니다.");
-					$("#reduCkConfirm").attr("value","Y");
+					$("#reduCkConfirm").attr("value", "Y");
 				}
 			}
 		});
 	});
-	
-	$(function(){
-	    $('#member_pw').keyup(function(){
-	      $('#confirm').html('');
-	    });
 
-	    $('#passwordCheck').keyup(function(){
-	        if($('#member_pw').val() != $('#passwordCheck').val()){
-	          $('#confirm').html('비밀번호 일치하지 않음');
-	          $('#confirm').attr('color', 'red');
-	        } else{
-	          $('#confirm').html('비밀번호 일치함');
-	          $('#confirm').attr('color', 'blue');
-	        }
-	    });
-	    
+	$(function () {
+		$('#member_pw').keyup(function () {
+			$('#confirm').html('');
+		});
+
+		$('#passwordCheck').keyup(function () {
+			if ($('#member_pw').val() != $('#passwordCheck').val()) {
+				$('#confirm').html('비밀번호 일치하지 않음');
+				$('#confirm').attr('color', 'red');
+			} else {
+				$('#confirm').html('비밀번호 일치함');
+				$('#confirm').attr('color', 'blue');
+			}
+		});
+
 	});
-	
+
 	$("#cancelBtn").click(function(){
 		location.href="login";
 	});
@@ -167,7 +172,6 @@
 	        $('#joinForm').submit();
 	    });
 	});
-	
-	
+
 </script>
 <%@ include file="../common/footer.jsp" %>

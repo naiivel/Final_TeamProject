@@ -14,22 +14,4 @@ public class BoardController {
 
 	private final BoardService bs;
 	
-	@GetMapping("/service")
-	public void service() {}
-	
-	@GetMapping("/service/show")
-	public String service1show() {
-		return "/board/service_show";
-	}
-	
-	@GetMapping("/service2")
-	public void service2() {}
-	
-	@GetMapping("/service2/new")
-	public String service2new() {
-		return "/board/service2_new";
-	}
-	
-	@GetMapping("/service3")
-	public void service3() {}
 }

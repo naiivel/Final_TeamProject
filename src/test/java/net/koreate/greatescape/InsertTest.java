@@ -22,9 +22,8 @@ public class InsertTest {
 	MemberVO vo;
 	
 	@Test
-	public void test() throws Exception{
-		vo = new MemberVO("master","master","총관리자","남성","19930330","01064800945","ceo@greatescape.net","Y");
-		dao.test(vo);
+	public void tests() throws Exception{
+
 	}
 
 }

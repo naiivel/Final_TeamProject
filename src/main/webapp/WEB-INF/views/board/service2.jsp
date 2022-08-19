@@ -15,7 +15,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-10">
+		<div class="col-md-10 mb-5">
 			<h2 class="mb-4">자주 묻는 질문</h2>
 			<div class="row mb-4">
 				<div class="col-8 offset-2">
@@ -109,8 +109,8 @@
 	</div>
 </section>
 <script>
-	$("#addBtn").click(function() {
-		location.href="${contextPath}/board/service2/new";
+	$("#addBtn").click(function () {
+		location.href = "${contextPath}/board/service2/new";
 	});
 </script>
 <%@ include file="../common/footer.jsp" %>
