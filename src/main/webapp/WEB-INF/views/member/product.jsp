@@ -10,7 +10,7 @@
 				</div>
 				<div class="list-group list-group-flush">
 					<a href="${contextPath}/member/info" class="list-group-item active">예약내역 확인</a>
-					<a href="${contextPath}/member/edit" class="list-group-item">정보수정/탈퇴</a>
+					<a href="${contextPath}/member/edit_check" class="list-group-item">정보수정/탈퇴</a>
 				</div>
 			</div>
 		</div>
@@ -18,40 +18,37 @@
 			<h2 class="mb-5">예약 내역 상세 확인</h2>
 			<div class="card mb-4">
 				<div class="card-header">
-					<h3 class="card-title">원숭이와 함께 하는 온천 여행 !</h3>
-					<p class="text-end card-text">2022/08/18 ~ 2022/08/24</p>
+					<h3 class="card-title">${product.product_name}</h3>
+					<p class="text-end card-text">${product.product_departure} ~ ${product.product_arrive}</p>
 				</div>
 				<div class="card-body">
 					<ul class="list-group list-group-flush">
-						<li class="list-group-item text-muted">123123</li>
-						<li class="list-group-item">234251</li>
-						<li class="list-group-item">ㄴㅁㅎㅇㄶ</li>
+						<li class="list-group-item text-muted"> 예약자 명 : ${userInfo.member_name}</li>
+						<li class="list-group-item"> 연락처 : ${userInfo.member_phone}</li>
+						<li class="list-group-item"> 이메일 : ${userInfo.member_email}</li>
 					</ul>
 				</div>
 				<div class="card-body">
-					<p class="card-text">입금완료</p>
-					<p class="card-text">10,000,000원</p>
-					<p class="card-text">3박 4일</p>
-					<p class="card-text">입금완료</p>
+					<p class="card-text">항공편 : ${product.product_airplane}</p>
+					<p class="card-text">성인 : ${reservation.rev_adult*product.product_adult}원</p>
+					<p class="card-text">소인 : ${reservation.rev_minor*product.product_minor}원</p>
+					<p class="card-text">${product.product_plan - 1}박 ${product.product_plan}일</p>
 					<a href="#" class="card-link">링크</a>
 					<p class="card-text">
 						<small class="text-muted">작은글씨</small>
 					</p>
-					<p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, iure, quod
-						tempora quo porro libero fuga quam dolorem itaque voluptatum, expedita necessitatibus beatae
-						alias ratione. Sed officiis ut itaque repellat.
-						Beatae repudiandae facere fugiat, quidem rem ut illo! Quis nihil molestiae veritatis fuga et
-						labore eius, nulla quas numquam! Nihil animi at temporibus amet totam iusto soluta quae. Fuga,
-						distinctio?
-						Perferendis facilis consequatur magni accusantium dolore laborum animi? Eveniet velit modi
-						reiciendis voluptatibus quas voluptas illo quae perferendis recusandae tempore consectetur
-						corrupti soluta obcaecati rerum, culpa veritatis aliquam neque asperiores!</p>
+					<p class="card-text">${tripInfo}</p>
 				</div>
 				<div class="card-footer">
-					<button class="btn btn-outline-secondary">예약 취소</button>
+					<button id="deleteBtn" class="btn btn-outline-secondary">예약 취소</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+<script>
+	$("#deleteBtn").click(function(){
+		location.href='deleteProduct';
+	});
+</script>
 <%@ include file="../common/footer.jsp" %>

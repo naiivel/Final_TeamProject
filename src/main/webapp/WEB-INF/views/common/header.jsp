@@ -49,7 +49,7 @@
 									</c:when>
 									<c:otherwise>
 										<li class="nav-item"><a class="nav-link active" aria-current="page"
-												href="d">마이페이지</a></li>
+												href="member/myPage">마이페이지</a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:when>

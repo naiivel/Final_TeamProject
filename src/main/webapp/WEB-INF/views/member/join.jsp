@@ -80,10 +80,6 @@
 				</div>
 		<div class="col-2"></div>
 	</div>
-	<div class="text-center mb-5">
-		<button class="btn btn-secondary">가입하기</button>
-		<button class="btn btn-secondary">가입취소</button>
-	</div>
 </section>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -134,10 +130,10 @@
 
 		$('#passwordCheck').keyup(function () {
 			if ($('#member_pw').val() != $('#passwordCheck').val()) {
-				$('#confirm').html('비밀번호 일치하지 않음');
+				$('#confirm').html('비밀번호 일치하지 않습니다.');
 				$('#confirm').attr('color', 'red');
 			} else {
-				$('#confirm').html('비밀번호 일치함');
+				$('#confirm').html('비밀번호 일치합니다');
 				$('#confirm').attr('color', 'blue');
 			}
 		});

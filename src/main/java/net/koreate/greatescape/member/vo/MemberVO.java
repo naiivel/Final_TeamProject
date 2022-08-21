@@ -21,7 +21,7 @@ public class MemberVO {
 	private String member_master;
 	private Date member_regdate;
 	private Date member_updatedate;
-	private int member_product_num;
+	private int product_num;
 	
 	public MemberVO(String member_id, String member_pw, String member_name, String member_gender, String member_birth,
 			String member_phone, String member_email, String member_master) {
