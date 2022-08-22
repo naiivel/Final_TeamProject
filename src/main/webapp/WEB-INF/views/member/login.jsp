@@ -37,8 +37,8 @@
 		<div class="col-3"></div>
 		<div class="col-6 text-center">
 			<button id="joinBtn" type="button" class="btn btn-secondary">회원가입</button>
-			<button type="button" class="btn btn-secondary">아이디 찾기</button>
-			<button type="button" class="btn btn-secondary">비밀번호 찾기</button>
+			<button id="idFinder" type="button" class="btn btn-secondary">아이디 찾기</button>
+			<button id="pwFinder" type="button" class="btn btn-secondary">비밀번호 찾기</button>
 			<button id="rev_check" type="button" class="btn btn-secondary">비회원 예약확인</button>
 
 		</div>
@@ -57,6 +57,14 @@
 	
 	$("#rev_check").click(function(){
 		location.href = 'rev_check';
+	});
+	
+	$("#idFinder").click(function(){
+		location.href = 'id_find';
+	});
+	
+	$("#pwFinder").click(function(){
+		location.href = 'pw_find';
 	});
 	
 	$("#loginBtn").click(function(){

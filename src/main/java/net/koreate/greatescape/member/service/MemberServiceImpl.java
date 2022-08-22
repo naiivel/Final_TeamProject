@@ -86,6 +86,11 @@ public class MemberServiceImpl implements MemberService {
 		mdao.seatPlus(product_num);
 	}
 
+	@Override
+	public MemberVO findId(MemberVO vo) {
+		return mdao.idFinder(vo);
+	}
+
 	
 	
 	
