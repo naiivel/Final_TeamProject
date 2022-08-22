@@ -9,8 +9,8 @@
 					마이 페이지
 				</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/member/info" class="list-group-item active">예약내역 확인</a>
-					<a href="${contextPath}/member/edit_check" class="list-group-item">정보수정/탈퇴</a>
+					<a href="myPage" class="list-group-item active">예약내역 확인</a>
+					<a href="edit_check" class="list-group-item">정보수정/탈퇴</a>
 				</div>
 			</div>
 		</div>

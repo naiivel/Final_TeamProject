@@ -39,7 +39,7 @@
 			<button id="joinBtn" type="button" class="btn btn-secondary">회원가입</button>
 			<button type="button" class="btn btn-secondary">아이디 찾기</button>
 			<button type="button" class="btn btn-secondary">비밀번호 찾기</button>
-			<button type="button" class="btn btn-secondary">비회원 예약확인</button>
+			<button id="rev_check" type="button" class="btn btn-secondary">비회원 예약확인</button>
 
 		</div>
 		<div class="col-3"></div>
@@ -54,6 +54,10 @@
 	if(msg != ''){
 		alert(msg);
 	}
+	
+	$("#rev_check").click(function(){
+		location.href = 'rev_check';
+	});
 	
 	$("#loginBtn").click(function(){
 		var remember_id = $("#remember_id").is(':checked')

@@ -49,14 +49,14 @@
 									</c:when>
 									<c:otherwise>
 										<li class="nav-item"><a class="nav-link active" aria-current="page"
-												href="member/myPage">마이페이지</a></li>
+												href="${contextPath}/member/myPage">마이페이지</a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:when>
 							<c:otherwise>
 								<li class="nav-item"><a class="nav-link active" aria-current="page"
 										href="${contextPath}/member/login">로그인</a></li>
-								<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">예약확인</a>
+								<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/nomember/index">예약확인</a>
 								</li>
 							</c:otherwise>
 						</c:choose>
