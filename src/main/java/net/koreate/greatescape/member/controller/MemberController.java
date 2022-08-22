@@ -77,9 +77,12 @@ public class MemberController {
 	
 	// 회원가입 시도
 	@PostMapping("/joinPost")
-	public String joinPost(MemberVO vo,HttpServletRequest request,Model model)throws Exception{
+	public String joinPost(MemberVO vo, Model model) throws Exception {
+
+		ms.join(vo);
+		String message = "대 탈출에 오신 것을 환영합니다.";
+		model.addAttribute("message",message);
 		
-			ms.join(vo);
 		return "member/login";
 	}
 	
@@ -203,6 +206,7 @@ public class MemberController {
 	
 	// (회원) 탈퇴시 필요한 비밀번호 확인 후 탈퇴 진행
 	@PostMapping("/delete")
+	@Transactional
 	public String delete(MemberVO vo,HttpSession session,Model model,HttpServletRequest request) {
 		String member_pw = request.getParameter("member_pw");
 		vo = (MemberVO) session.getAttribute("userInfo");
@@ -228,7 +232,11 @@ public class MemberController {
 	}
 	
 	
-	
+	// 비회원 예약확인 페이지 이동
+	@GetMapping("/rev_check")
+	public String rev_check() {
+		return "nomember/index";
+	}
 	
 	
 }	

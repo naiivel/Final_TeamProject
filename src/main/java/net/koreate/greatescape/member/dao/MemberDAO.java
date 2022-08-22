@@ -20,7 +20,7 @@ public interface MemberDAO {
 	@Insert("INSERT INTO tbl_member(member_id,member_pw,member_name,member_gender,member_birth,member_phone,member_address,"
 			+ "member_address_detail,member_email) VALUES(#{member_id},#{member_pw},#{member_name},#{member_gender},#{member_birth},"
 			+ "#{member_phone},#{member_address},#{member_address_detail},#{member_email})")
-	void join(MemberVO vo);
+	MemberVO join(MemberVO vo);
 	
 	// ID중복체크
 	@Select("SELECT count(*) FROM tbl_member WHERE member_id = #{member_id}")
