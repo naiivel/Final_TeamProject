@@ -29,13 +29,13 @@
 					aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-
+				
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link active" aria-current="page" href="a">아시아</a></li>
-						<li class="nav-item"><a class="nav-link active" aria-current="page" href="b">유럽</a></li>
-						<li class="nav-item"><a class="nav-link active" aria-current="page" href="c">아메리카</a></li>
-						<li class="nav-item"><a class="nav-link active" aria-current="page" href="d">오세아니아</a></li>
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/product/asia">아시아</a></li>
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/product/europe">유럽</a></li>
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/product/america">아메리카</a></li>
+						<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/product/oceania">오세아니아</a></li>
 					</ul>
 					<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 						<c:choose>
