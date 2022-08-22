@@ -42,6 +42,9 @@ public interface MemberService {
 	// 예약상품 취소
 	void deleteP(int product_num);
 
+	// 아이디 찾기
+	MemberVO findId(MemberVO vo);
+
 	
 	
 

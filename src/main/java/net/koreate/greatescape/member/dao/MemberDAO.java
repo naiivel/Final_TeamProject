@@ -71,5 +71,9 @@ public interface MemberDAO {
 	// 상품번호에 해당하는 상품 잔여좌석 +1
 	@Update("UPDATE tbl_product SET product_seat = product_seat + 1 WHERE product_num = #{product_num}")
 	void seatPlus(int product_num);
+
+	// 이메일로 아이디 찾기
+	@Select("SELECT * FROM tbl_member WHERE member_email = #{member_email}")
+	MemberVO idFinder(MemberVO vo);
 	
 }

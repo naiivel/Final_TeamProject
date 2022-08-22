@@ -1,17 +1,21 @@
 package net.koreate.greatescape.member.controller;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +30,9 @@ import net.koreate.greatescape.reservation.vo.ReservationVO;
 public class MemberController {
 
 	private final MemberService ms;
+	
+	@Autowired
+	JavaMailSender mailSender;
 	
 	// 로그인 페이지 이동
 	@GetMapping("/login")
@@ -74,6 +81,59 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
+	
+	// 아이디 찾기 페이지이동
+	@GetMapping("id_find")
+	public String id_find(Model model) {
+		String id = "아이디찾기";
+		model.addAttribute("id",id);
+		return "member/find";
+	}
+	
+	// 비밀번호 찾기 페이지이동
+	@GetMapping("pw_find")
+	public String pw_find() {
+		return "member/find";
+	}
+	
+	// 아이디 찾기 시도
+	@PostMapping("findInfo")
+	@ResponseBody
+	public int findId(MemberVO vo,Model model) {
+		MemberVO findMember = ms.findId(vo);
+		int result = 0;
+		
+		if(findMember != null) {
+			result = 1;
+			model.addAttribute("findMember",findMember);
+		}
+		
+		
+		return result;
+	}
+	
+
+	//인증메일 전송
+	@GetMapping("/checkEmail")
+	@ResponseBody
+	public String sendMail(@RequestParam("member_email") String email)throws Exception {
+		System.out.println(email);
+		String code = "";
+		for(int i=0; i<5;i++) {
+			code +=(int)(Math.random()*10);
+		}
+		
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message,"UTF-8");
+		helper.setFrom("yukitozx7@gmail.com");
+		helper.setTo(email);
+		helper.setSubject("인증 메일입니다.");
+		helper.setText("인증 코드 : <h3>["+code+"]</h3>",true);
+		mailSender.send(message);
+		System.out.println("발신 완료");
+		return code;
+	}
+
 	
 	// 회원가입 시도
 	@PostMapping("/joinPost")
@@ -237,6 +297,7 @@ public class MemberController {
 	public String rev_check() {
 		return "nomember/index";
 	}
+	
 	
 	
 }	
