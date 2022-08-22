@@ -91,6 +91,6 @@ public class HomeController {
 	@GetMapping("/nomember/show")
 	public void nomemberShow() {}
 	
-	@GetMapping("/product/asia")
-	public void asia() {}
+//	@GetMapping("/product/asia")
+//	public void asia() {}
 }

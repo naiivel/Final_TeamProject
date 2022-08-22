@@ -17,10 +17,9 @@ public interface MemberDAO {
 			+ "member_address_detail,member_email) VALUES(#{member_id},#{member_pw},#{member_name},#{member_gender},#{member_birth},"
 			+ "#{member_phone},#{member_address},#{member_address_detail},#{member_email})")
 	void join(MemberVO vo);
-
+	
 	// ID중복체크
 	@Select("SELECT count(*) FROM tbl_member WHERE member_id = #{member_id}")
 	int idCheck(MemberVO vo);
-	
 	
 }

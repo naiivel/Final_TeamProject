@@ -25,40 +25,6 @@
 						</div>
 					</div>
 				</div>
-				<div class="accordion" id="accordionPanelsStayOpenExample">
-					<div class="accordion-item">
-						<h4 class="accordion-header" id="panelsStayOpen-headingTwo">
-							<button class="accordion-button" type="button" data-bs-toggle="collapse"
-								data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true"
-								aria-controls="panelsStayOpen-collapseTwo">
-								일본
-							</button>
-						</h4>
-						<div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show"
-							aria-labelledby="panelsStayOpen-headingTwo">
-							<div class="accordion-body">
-								도쿄
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="accordion" id="accordionPanelsStayOpenExample">
-					<div class="accordion-item">
-						<h4 class="accordion-header" id="panelsStayOpen-headingThree">
-							<button class="accordion-button" type="button" data-bs-toggle="collapse"
-								data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true"
-								aria-controls="panelsStayOpen-collapseThree">
-								몽골
-							</button>
-						</h4>
-						<div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show"
-							aria-labelledby="panelsStayOpen-headingThree">
-							<div class="accordion-body">
-								울란바토르
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 		<div class="col-md-10 mb-5">
@@ -134,6 +100,8 @@
 			</div>
 		</div>
 	</div>
+	
+	
 </section>
 <script src="${contextPath}/resources/js/popper.min.js"></script>
 <script>
@@ -143,32 +111,6 @@
 
 </script>
 <%@ include file="../common/footer.jsp" %>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
