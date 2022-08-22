@@ -8,4 +8,5 @@ public class FAQBoardVO {
 	private int faq_num;
 	private String faq_title;
 	private String faq_content;
+	private String faq_category;
 }
