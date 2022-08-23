@@ -45,7 +45,7 @@
 								<c:choose>
 									<c:when test="${userInfo.member_master eq 'Y'}">
 										<li class="nav-item"><a class="nav-link active" aria-current="page"
-												href="d">관리자페이지</a></li>
+												href="${contextPath}/member/adminPage">관리자페이지</a></li>
 									</c:when>
 									<c:otherwise>
 										<li class="nav-item"><a class="nav-link active" aria-current="page"

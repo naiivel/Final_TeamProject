@@ -9,9 +9,9 @@
 					관리자 페이지
 				</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/board/service" class="list-group-item active">회원/관리자 목록</a>
-					<a href="${contextPath}/board/service2" class="list-group-item">매출 관리</a>
-					<a href="${contextPath}/board/service3" class="list-group-item">상품 관리</a>
+					<a href="${contextPath}/admin/index" class="list-group-item active">회원/관리자 목록</a>
+					<a href="${contextPath}/admin/money" class="list-group-item">매출 관리</a>
+					<a href="${contextPath}/admin/product" class="list-group-item">상품 관리</a>
 				</div>
 			</div>
 		</div>
@@ -34,10 +34,10 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th>필요한</th>
-							<th>단락을</th>
-							<th>추가하여</th>
-							<th>사용하세요</th>
+							<th>아이디</th>
+							<th>이름</th>
+							<th>유형</th>
+							<th>상세내역</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -52,7 +52,23 @@
 			</div>
 			<nav aria-label="Page navigation mb-3">
 				<ul class="pagination justify-content-center">
-					<li class="page-item disabled">
+				
+					<c:if test="${pm.prev}">
+								<li><a href="${pm.startPage - 1}">&laquo;</a></li>
+								<li><a href="1">1</a></li>
+								<li><span>...</span></li>
+							</c:if>
+							<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+								<li>
+									<a href="${i}">${i}</a>
+								</li>
+							</c:forEach>
+							<c:if test="${pm.next}">
+								<li><span>...</span></li>
+								<li><a href="${pm.maxPage}">${pm.maxPage}</a></li>
+								<li><a href="${pm.endPage + 1}">&raquo;</a></li>
+							</c:if>
+					<!-- <li class="page-item disabled">
 						<a class="page-link">Previous</a>
 					</li>
 					<li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -60,7 +76,7 @@
 					<li class="page-item"><a class="page-link" href="#">3</a></li>
 					<li class="page-item">
 						<a class="page-link" href="#">Next</a>
-					</li>
+					</li> -->
 				</ul>
 			</nav>
 			<div class="mb-4 text-end">
