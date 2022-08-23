@@ -55,7 +55,8 @@
         <div class="col-md-10 mb-2">
             <h3 class="mb-4">상세보기</h3>
             <div class="row mb-5">
-                <div class="col-md-8">
+                <div class="col-md-8" id="detailBox">
+                
                     <h4>상품명 솰라솰라</h4>
                     <div class="table-responsive">
                         <table class="table table-borderless" style="font-size: 1rem;">
@@ -97,8 +98,8 @@
                         </table>
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-success">예약하기</button>
-                        <button class="btn btn-warning">문의하기</button>
+                        <button class="btn btn-success" id="reservBtn">예약하기</button>
+                        <button class="btn btn-warning" id="qnaBtn">문의하기</button>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -158,4 +159,13 @@
         </div>
     </div>
 </section>
+<script>
+	$("#reservBtn").click(function(){
+		location.href = "${contextPath}/product/reserve";
+	});
+	
+	$("#qnaBtn").click(function(){
+		location.href = "${contextPath}/board/service";
+	});
+</script>
 <%@ include file="../common/footer.jsp" %>

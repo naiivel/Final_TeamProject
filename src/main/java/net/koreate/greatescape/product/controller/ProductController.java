@@ -1,14 +1,16 @@
 package net.koreate.greatescape.product.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
@@ -24,52 +26,53 @@ public class ProductController {
 	
 	//아시아 여행페이지 이동
 	@GetMapping("/asia")
-	public String asia() {
-		System.out.println("ssss");
+	public String asia(Model model) throws Exception {
+		List<ProductVO> list = ps.getAsiaList();
+		model.addAttribute("list", list);
 		return "product/asia";
 	}
 	
 	//오세아니아 여행페이지 이동
 	@GetMapping("/oceania")
-	public String oceania() {
-		
+	public String oceania(Model model) throws Exception {
+		List<ProductVO> list = ps.getOceaniaList();
+		model.addAttribute("list", list);
 		return "product/oceania";
 	}
 		
 	//유럽 여행페이지 이동
 	@GetMapping("/europe")
-	public String europe() {
-		
+	public String europe(Model model) throws Exception {
+		List<ProductVO> list = ps.getEuropeList();
+		model.addAttribute("list", list);
 		return "product/europe";
 	}
 		
 	//아메리카 여행페이지 이동
 	@GetMapping("/america")
-	public String america() {
-		
+	public String america(Model model) throws Exception {
+		List<ProductVO> list = ps.getAmericaList();
+		model.addAttribute("list", list);
 		return "product/america";
 	}
-		
-	//상품 등록 페이지 이동(관리자 전용)
-	@GetMapping("/register")
-	public String register() {
-		return "product/register";
+	
+	//나라탭 선택 시 상품리스트 호출
+	@GetMapping("/selectCountry")
+	@ResponseBody
+	public List<ProductVO> selectCountry(ProductVO vo) throws Exception {
+		System.err.println(vo);
+		List<ProductVO> list = ps.getProductList(vo);
+		return list;
 	}
 	
-	//상품 등록 후 리스트페이지 이동(관리자 전용)
-	@PostMapping("/register")
-	public String registerProduct(ProductVO vo,RedirectAttributes rttr) throws Exception {
-		String msg = ps.registerProduct(vo);
-		rttr.addFlashAttribute("result", msg);
-		return "redirect:/product/default";
+	/*
+	//상세보기 페이지 이동
+	@GetMapping("/show")
+	public String show(Model model) throws Exception {
+		List<ProductVO> list = ps.getShowList();
+		model.addAttribute("list", list);
+		return "product/show";
 	}
-	
-	//상품 상세보기페이지 이동
-	@GetMapping("/detail")
-	public String detail(HttpServletRequest request,HttpServletResponse response,int product_num) throws Exception {
-		ProductVO vo = ps.detail(product_num);
-		request.setAttribute("product", vo);
-		return "product/detail";
-	}
+	*/
 	
 }

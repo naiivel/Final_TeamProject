@@ -1,5 +1,7 @@
 package net.koreate.greatescape.product.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -11,21 +13,38 @@ import net.koreate.greatescape.product.vo.ProductVO;
 public class ProductServiceImpl implements ProductService {
 	
 	private final ProductDAO pdao;
-
+	
 	@Override
-	public String registerProduct(ProductVO vo) throws Exception {
-		int result = pdao.create(vo);
-		String msg = "등록 완료";
-		if(result == 0) {
-			msg = "등록 실패";
-		}
-		return msg;
+	public List<ProductVO> getProductList(ProductVO vo) throws Exception {
+		System.err.println(vo);
+		return pdao.getProductList(vo);
+	}
+	
+	@Override
+	public List<ProductVO> getAsiaList() throws Exception {
+		return pdao.getAsiaList();
 	}
 
 	@Override
-	public ProductVO detail(int product_num) throws Exception {
-		return pdao.detail(product_num);
+	public List<ProductVO> getEuropeList() throws Exception {
+		return pdao.getEuropeList();
 	}
+
+	@Override
+	public List<ProductVO> getAmericaList() throws Exception {
+		return pdao.getAmericaList();
+	}
+
+	@Override
+	public List<ProductVO> getOceaniaList() throws Exception {
+		return pdao.getOceaniaList();
+	}
+
+	@Override
+	public List<ProductVO> getShowList() throws Exception {
+		return pdao.getShowList();
+	}
+	
 	
 	
 	
