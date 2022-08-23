@@ -1,6 +1,8 @@
 package net.koreate.greatescape.member.dao;
 
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -9,6 +11,8 @@ import org.apache.ibatis.annotations.Update;
 import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
+import net.koreate.greatescape.utils.Criteria;
+import net.koreate.greatescape.utils.SearchCriteria;
 
 public interface MemberDAO {
 	
@@ -20,7 +24,7 @@ public interface MemberDAO {
 	@Insert("INSERT INTO tbl_member(member_id,member_pw,member_name,member_gender,member_birth,member_phone,member_address,"
 			+ "member_address_detail,member_email) VALUES(#{member_id},#{member_pw},#{member_name},#{member_gender},#{member_birth},"
 			+ "#{member_phone},#{member_address},#{member_address_detail},#{member_email})")
-	MemberVO join(MemberVO vo);
+	void join(MemberVO vo);
 	
 	// ID중복체크
 	@Select("SELECT count(*) FROM tbl_member WHERE member_id = #{member_id}")
@@ -75,5 +79,17 @@ public interface MemberDAO {
 	// 이메일로 아이디 찾기
 	@Select("SELECT * FROM tbl_member WHERE member_email = #{member_email}")
 	MemberVO idFinder(MemberVO vo);
+
+	// 이름/이메일/전화번호로 예약찾기
+	@Select("SELECT * FROM tbl_reservation WHERE rev_name = #{rev_name} AND rev_phone = #{rev_phone} AND rev_email = #{rev_email}")
+	ReservationVO nmreservation(ReservationVO vo);
+
+	// 정렬된 전체회원 목록 찾기
+	@Select("SELECT * FROM tbl_member ORDER BY member_num DESC limit #{startRow} , #{perPageNum}" )
+	List<MemberVO> memberList(SearchCriteria cri);
+
+	// 페이징 처리용 전체 회원수 찾기
+	@Select("SELECT count(*) FROM tbl_member")
+	int listCount();
 	
 }

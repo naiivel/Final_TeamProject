@@ -1,5 +1,7 @@
 package net.koreate.greatescape.member.controller;
 
+import java.util.List;
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +25,11 @@ import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.service.MemberService;
 import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.product.vo.ProductVO;
+import net.koreate.greatescape.reservation.vo.DetailBoardVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
+import net.koreate.greatescape.utils.PageMaker;
+import net.koreate.greatescape.utils.SearchCriteria;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -96,20 +103,13 @@ public class MemberController {
 		return "member/find";
 	}
 	
-	// 아이디 찾기 시도
+	// 계정정보 찾기 시도
 	@PostMapping("findInfo")
 	@ResponseBody
-	public int findId(MemberVO vo,Model model) {
+	public MemberVO findId(MemberVO vo) {
 		MemberVO findMember = ms.findId(vo);
-		int result = 0;
 		
-		if(findMember != null) {
-			result = 1;
-			model.addAttribute("findMember",findMember);
-		}
-		
-		
-		return result;
+		return findMember;
 	}
 	
 
@@ -156,6 +156,7 @@ public class MemberController {
 	
 	// (회원)마이페이지 출력-예약내역
 	@GetMapping("/myPage")
+	@Transactional
 	public String myPage(MemberVO vo,HttpServletRequest request,HttpSession session) throws Exception{
 		vo = (MemberVO) session.getAttribute("userInfo");
 		MemberVO loginMember = ms.memberInfo(vo.getMember_num());
@@ -176,6 +177,7 @@ public class MemberController {
 	
 	// (회원)예약내역 상세보기
 	@GetMapping("/reservDetail")
+	@Transactional
 	public String reservDetail(HttpSession session,Model model)throws Exception{
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
 		ReservationVO reserv = ms.findpeople(loginMember);
@@ -187,8 +189,9 @@ public class MemberController {
 		return "member/product";
 	}
 	
-	// (회원)예약내역 삭제
+	// (회원)예약내역 취소
 	@GetMapping("/deleteProduct")
+	@Transactional
 	public String deleteProduct(HttpSession session,Model model) throws Exception{
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
 		ms.deleteP(loginMember.getProduct_num());
@@ -298,9 +301,73 @@ public class MemberController {
 		return "nomember/index";
 	}
 	
+	// 비회원 예약확인시도
+	@PostMapping("/norev")
+	@Transactional
+	public String norev(ReservationVO vo,Model model,HttpSession session) throws Exception{
+		ReservationVO noMember = ms.findrev(vo);
+		
+		if(noMember != null) {
+			session.setAttribute("noMember", noMember);
+			
+			ProductVO noproduct = ms.findProduct(noMember.getProduct_num());
+			
+			model.addAttribute("noproduct",noproduct);
+			
+			String tripInfo = ms.findtripInfo(noproduct.getProduct_num());
+			model.addAttribute("tripInfo",tripInfo);
+			
+			return "nomember/show";
+		}
+		
+		String message = "해당하는 예약이 없습니다.";
+		
+		model.addAttribute("message",message);
+		
+		return "nomember/index";
+	}
 	
+	// 비회원 예약취소
+	@GetMapping("/deleteNoProduct")
+	public String deleteNoProduct(Model model,HttpSession session) throws Exception{
+		ReservationVO noMember = (ReservationVO) session.getAttribute("noMember");
+		ms.deleteNP(noMember);
+		
+		String message = "예약이 취소되었습니다.";
+		model.addAttribute("message",message);
+		
+		return "member/login";
+	}
+	
+	
+	// 관리자 페이지 이동
+	@GetMapping("/adminPage")
+	@Transactional
+	public String adminPage(@ModelAttribute("cri") SearchCriteria cri,
+			Model model) throws Exception{
+		List<MemberVO> list = ms.memberList(cri);
+		
+		PageMaker pm  = ms.pageMaker(cri);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("pm",pm);
+		return "admin/index";
+	}
 	
 }	
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

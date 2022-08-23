@@ -15,7 +15,7 @@
 </head>
 
 <body class="d-flex flex-column vh-100">
-	<nav id="mainNavbar" class="navbar fixed-top navbar-expand-lg">
+  <nav id="mainNavbar" class="navbar fixed-top navbar-expand-lg">
 		<div class="container">
 			<a class="navbar-brand" href="${contextPath}/"><svg xmlns="http://www.w3.org/2000/svg" width="16"
 					height="16" fill="currentColor" class="bi bi-airplane-fill" viewBox="0 0 16 16">
@@ -45,7 +45,7 @@
 							<c:choose>
 								<c:when test="${userInfo.member_master eq 'Y'}">
 									<li class="nav-item"><a class="nav-link active" aria-current="page"
-											href="d">관리자페이지</a></li>
+                                        href="${contextPath}/member/adminPage">관리자페이지</a></li>
 								</c:when>
 								<c:otherwise>
 									<li class="nav-item"><a class="nav-link active" aria-current="page"
