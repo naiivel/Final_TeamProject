@@ -11,6 +11,7 @@ import net.koreate.greatescape.board.vo.NoticeBoardVO;
 import net.koreate.greatescape.board.vo.QNABoardVO;
 import net.koreate.greatescape.utils.PageMaker;
 import net.koreate.greatescape.utils.SearchCriteria;
+import net.koreate.greatescape.utils.SearchPageMaker;
 
 @Service
 @RequiredArgsConstructor
@@ -20,8 +21,14 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public PageMaker getPageMaker(SearchCriteria cri) throws Exception {
-		
-		return null;
+		int totalCount= bdao.getCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		cri.setPerPageNum(5);
+		pm.setCri(cri);
+		pm.setDisplayPageNum(5);
+		pm.setTotalCount(totalCount);
+		cri.setPerPageNum(5);
+		return pm;
 	}
 
 	/****************************** FAQ ************************************/
@@ -36,10 +43,10 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public String writeFAQ(FAQBoardVO fvo) throws Exception {
-		bdao.writeFAQ(fvo);
+	public FAQBoardVO writeFAQ(FAQBoardVO fvo) throws Exception {
+		FAQBoardVO newFAQ= bdao.writeFAQ(fvo);
 		
-		return "redirect:board/faq/list";
+		return newFAQ;
 	}
 
 	@Override

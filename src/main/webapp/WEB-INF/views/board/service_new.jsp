@@ -10,7 +10,7 @@
 				</div>
 				<div class="list-group list-group-flush">
 					<a href="${contextPath}/board/service" class="list-group-item active">질문과 답변</a>
-					<a href="${contextPath}/board/service2" class="list-group-item">자주 묻는 질문</a>
+					<a href="${contextPath}/board/faq/list" class="list-group-item">자주 묻는 질문</a>
 					<a href="${contextPath}/board/service3" class="list-group-item">공지사항</a>
 				</div>
 			</div>

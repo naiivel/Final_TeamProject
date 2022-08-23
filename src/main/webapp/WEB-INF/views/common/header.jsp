@@ -60,12 +60,10 @@
 								</li>
 							</c:otherwise>
 						</c:choose>
-<<<<<<< HEAD
-						<li class="nav-item"><a class="nav-link active" aria-current="page" href="">고객센터</a></li>
-=======
+
 						<li class="nav-item"><a class="nav-link active" aria-current="page"
 								href="${contextPath}/board/service">고객센터</a></li>
->>>>>>> refs/heads/main
+
 					</ul>
 				</div>
 			</div>

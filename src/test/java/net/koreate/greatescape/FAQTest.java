@@ -26,9 +26,9 @@ public class FAQTest {
 		fvo.setFaq_title("되냐");
 		fvo.setFaq_content("되라되라되라되라");
 		
-		String message= bs.writeFAQ(fvo);
+	//	String message= bs.writeFAQ(fvo);
 		
-		System.out.println(message);
+	//	System.out.println(message);
 	}
 	
 	@Test

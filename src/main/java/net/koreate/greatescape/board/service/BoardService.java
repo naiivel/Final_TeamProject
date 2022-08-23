@@ -20,7 +20,7 @@ public interface BoardService {
 	List<FAQBoardVO> faqList(SearchCriteria cri) throws Exception;
 		
 	//새글작성
-	String writeFAQ(FAQBoardVO fvo) throws Exception;
+	FAQBoardVO writeFAQ(FAQBoardVO fvo) throws Exception;
 	
 	//글 수정
 	String modifyFAQ(FAQBoardVO fvo) throws Exception;

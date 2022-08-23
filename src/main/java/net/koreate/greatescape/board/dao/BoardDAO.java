@@ -24,7 +24,7 @@ public interface BoardDAO {
 	
 	//글 쓰기
 	@Insert("INSERT INTO tbl_faq(faq_category, faq_title, faq_content) VALUES(#{faq_category}, #{faq_title}, #{faq_content})")
-	void writeFAQ(FAQBoardVO fvo) throws Exception;
+	FAQBoardVO writeFAQ(FAQBoardVO fvo) throws Exception;
 
 	
 	//글 수정
