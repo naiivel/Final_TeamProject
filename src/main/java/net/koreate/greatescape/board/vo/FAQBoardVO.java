@@ -10,6 +10,4 @@ public class FAQBoardVO {
 	private String faq_content;
 	private String faq_category;
 
-	 
-
 }

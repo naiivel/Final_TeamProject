@@ -125,3 +125,5 @@ pom.properties
 MANIFEST.MF
 **/target/
 */target/*
+**/META-INF/
+*/META-INF/*

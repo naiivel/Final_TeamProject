@@ -51,8 +51,6 @@ public class HomeController {
 		return "/board/service3_show";
 	}
 	
-	@GetMapping("/member/info")
-	public void info() {}
 	
 	@GetMapping("/member/info/product")
 	public String product() {
@@ -91,6 +89,15 @@ public class HomeController {
 	@GetMapping("/nomember/show")
 	public void nomemberShow() {}
 	
-	@GetMapping("/product/asia")
-	public void asia() {}
+//	@GetMapping("/product/asia")
+//	public void asia() {}
+
+	@GetMapping("/product/new")
+	public void productNew() {}
+	
+	@GetMapping("/product/show")
+	public void productShow() {}
+	
+	@GetMapping("/product/reserve")
+	public void productReserve() {}
 }
