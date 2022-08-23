@@ -1,8 +1,13 @@
 package net.koreate.greatescape.member.service;
 
+import java.util.List;
+
 import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
+import net.koreate.greatescape.utils.Criteria;
+import net.koreate.greatescape.utils.PageMaker;
+import net.koreate.greatescape.utils.SearchCriteria;
 
 public interface MemberService {
 	
@@ -44,6 +49,18 @@ public interface MemberService {
 
 	// 아이디 찾기
 	MemberVO findId(MemberVO vo);
+
+	// 비회원 예약찾기
+	ReservationVO findrev(ReservationVO vo);
+
+	// 비회원 예약취소
+	void deleteNP(ReservationVO noMember);
+
+	// 회원번호순 정보 불러오기
+	List<MemberVO> memberList(SearchCriteria cri);
+
+	// 페이징처리
+	PageMaker pageMaker(SearchCriteria cri);
 
 	
 	
