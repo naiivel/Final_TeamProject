@@ -1,24 +1,35 @@
 package net.koreate.greatescape.member.controller;
 
+import java.util.List;
+
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.service.MemberService;
 import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.product.vo.ProductVO;
+import net.koreate.greatescape.reservation.vo.DetailBoardVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
+import net.koreate.greatescape.utils.PageMaker;
+import net.koreate.greatescape.utils.SearchCriteria;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +37,9 @@ import net.koreate.greatescape.reservation.vo.ReservationVO;
 public class MemberController {
 
 	private final MemberService ms;
+	
+	@Autowired
+	JavaMailSender mailSender;
 	
 	// 로그인 페이지 이동
 	@GetMapping("/login")
@@ -75,6 +89,52 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	// 아이디 찾기 페이지이동
+	@GetMapping("id_find")
+	public String id_find(Model model) {
+		String id = "아이디찾기";
+		model.addAttribute("id",id);
+		return "member/find";
+	}
+	
+	// 비밀번호 찾기 페이지이동
+	@GetMapping("pw_find")
+	public String pw_find() {
+		return "member/find";
+	}
+	
+	// 계정정보 찾기 시도
+	@PostMapping("findInfo")
+	@ResponseBody
+	public MemberVO findId(MemberVO vo) {
+		MemberVO findMember = ms.findId(vo);
+		
+		return findMember;
+	}
+	
+
+	//인증메일 전송
+	@GetMapping("/checkEmail")
+	@ResponseBody
+	public String sendMail(@RequestParam("member_email") String email)throws Exception {
+		System.out.println(email);
+		String code = "";
+		for(int i=0; i<5;i++) {
+			code +=(int)(Math.random()*10);
+		}
+		
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message,"UTF-8");
+		helper.setFrom("yukitozx7@gmail.com");
+		helper.setTo(email);
+		helper.setSubject("인증 메일입니다.");
+		helper.setText("인증 코드 : <h3>["+code+"]</h3>",true);
+		mailSender.send(message);
+		System.out.println("발신 완료");
+		return code;
+	}
+
+	
 	// 회원가입 시도
 	@PostMapping("/joinPost")
 	public String joinPost(MemberVO vo, Model model) throws Exception {
@@ -96,6 +156,7 @@ public class MemberController {
 	
 	// (회원)마이페이지 출력-예약내역
 	@GetMapping("/myPage")
+	@Transactional
 	public String myPage(MemberVO vo,HttpServletRequest request,HttpSession session) throws Exception{
 		vo = (MemberVO) session.getAttribute("userInfo");
 		MemberVO loginMember = ms.memberInfo(vo.getMember_num());
@@ -116,6 +177,7 @@ public class MemberController {
 	
 	// (회원)예약내역 상세보기
 	@GetMapping("/reservDetail")
+	@Transactional
 	public String reservDetail(HttpSession session,Model model)throws Exception{
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
 		ReservationVO reserv = ms.findpeople(loginMember);
@@ -127,8 +189,9 @@ public class MemberController {
 		return "member/product";
 	}
 	
-	// (회원)예약내역 삭제
+	// (회원)예약내역 취소
 	@GetMapping("/deleteProduct")
+	@Transactional
 	public String deleteProduct(HttpSession session,Model model) throws Exception{
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
 		ms.deleteP(loginMember.getProduct_num());
@@ -238,8 +301,73 @@ public class MemberController {
 		return "nomember/index";
 	}
 	
+	// 비회원 예약확인시도
+	@PostMapping("/norev")
+	@Transactional
+	public String norev(ReservationVO vo,Model model,HttpSession session) throws Exception{
+		ReservationVO noMember = ms.findrev(vo);
+		
+		if(noMember != null) {
+			session.setAttribute("noMember", noMember);
+			
+			ProductVO noproduct = ms.findProduct(noMember.getProduct_num());
+			
+			model.addAttribute("noproduct",noproduct);
+			
+			String tripInfo = ms.findtripInfo(noproduct.getProduct_num());
+			model.addAttribute("tripInfo",tripInfo);
+			
+			return "nomember/show";
+		}
+		
+		String message = "해당하는 예약이 없습니다.";
+		
+		model.addAttribute("message",message);
+		
+		return "nomember/index";
+	}
+	
+	// 비회원 예약취소
+	@GetMapping("/deleteNoProduct")
+	public String deleteNoProduct(Model model,HttpSession session) throws Exception{
+		ReservationVO noMember = (ReservationVO) session.getAttribute("noMember");
+		ms.deleteNP(noMember);
+		
+		String message = "예약이 취소되었습니다.";
+		model.addAttribute("message",message);
+		
+		return "member/login";
+	}
+	
+	
+	// 관리자 페이지 이동
+	@GetMapping("/adminPage")
+	@Transactional
+	public String adminPage(@ModelAttribute("cri") SearchCriteria cri,
+			Model model) throws Exception{
+		List<MemberVO> list = ms.memberList(cri);
+		
+		PageMaker pm  = ms.pageMaker(cri);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("pm",pm);
+		return "admin/index";
+	}
 	
 }	
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
