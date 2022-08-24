@@ -16,9 +16,9 @@ ${pm }
 					고객센터
 				</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/board/service" class="list-group-item" id="qnaBoard">질문과 답변</a>
-					<a href="${contextPath}/board/faq/list" class="list-group-item active" id="faqBoard">자주 묻는 질문</a>
-					<a href="${contextPath}/board/service3" class="list-group-item" id="noticeBoard">공지사항</a>
+					<a href="${contextPath}/board/qna" class="list-group-item" id="qnaBoard">질문과 답변</a>
+					<a href="${contextPath}/board/faq/${pm.makeQuery(1)}" class="list-group-item active" id="faqBoard">자주 묻는 질문</a>
+					<a href="${contextPath}/board/notice" class="list-group-item" id="noticeBoard">공지사항</a>
 				</div>
 			</div>
 		</div>
@@ -34,7 +34,7 @@ ${pm }
 										d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
 								</svg>
 							</span>
-							<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+							<input type="text" name="keyword" id="keyword" class="form-control" aria-label="Amount (to the nearest dollar)">
 							<button class="btn btn-dark" type="button" id="button-addon2">검색</button> 
 						</div>
 					</form>
@@ -50,7 +50,7 @@ ${pm }
 				</div>
 			</div>
 			<c:set var="number" value="0"/>
-			<c:forEach var="faq" items="${list}" >
+			<c:forEach var="faq" items="${list}"  >
 			<c:set var="number" value="${number+=1}"/>
 			<div class="accordion mb-3" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item">
@@ -69,39 +69,66 @@ ${pm }
 						</div>
 					</div>
 					
-			<%-- 
-					<h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-						<button class="accordion-button" type="button" data-bs-toggle="collapse"
-							data-bs-target="#panelsStayOpen-collapseTwo" 
-							aria-controls="panelsStayOpen-collapseTwo">
-							${faq.faq_title }
-						</button>
-					</h2>
-					<div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
-						aria-labelledby="panelsStayOpen-headingTwo">
-						<div class="accordion-body">
-							${faq.faq_content }
-						</div>
-					</div>
-					 --%>
 				</div>
 				
 			</div>
 		
 			</c:forEach>
+			<%-- <nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<c:if test="${pm.first}">
+							<li class="page-item">
+								<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(1)}" aria-label="Previous">
+        							<span aria-hidden="true">&laquo;&laquo;</span>
+      							</a>
+    						</li>
+								<li><a href="${contextPath}/board/faq/${pm.makeQuery(1)}">&laquo;&laquo;</a></li>
+							</c:if>
+							<c:if test="${pm.prev}">
+								<li><a href="${contextPath}/board/faq/${pm.makeQuery(pm.startPage-1)}">&laquo;</a></li>
+							</c:if>
+							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
+								<li ${pm.cri.page ==i? 'class=active':''}><a href="${contextPath}/board/faq/${pm.makeQuery(i)}">[${i}]</a></li>
+							</c:forEach>
+							<c:if test="${pm.next}">
+								<li><a href="${contextPath}/board/faq/${pm.makeQuery(pm.endPage+1)}">&raquo;</a></li>
+							</c:if>
+							<c:if test="${pm.last}">
+								<li><a href="${contextPath}/board/faq/${pm.makeQuery(pm.maxPage)}">&raquo;&raquo;</a></li>
+							</c:if>
+					</ul>
+			</nav> --%>
 			<nav aria-label="Page navigation mb-3">
 				<ul class="pagination justify-content-center">
-					<li class="page-item disabled">
-						<a class="page-link">Previous</a>
-					</li>
-					<c:forEach var="i" items="">
-						<li class="page-item"><a class="page-link" href="${contextPath}/board/faq/list/page?=${i}">${i}</a></li>
+					<c:if test="${pm.first}">
+						<li class="page-item">
+							<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(1)}" aria-label="Previous">
+       							<span aria-hidden="true">&laquo;</span></a>
+   						</li>
+    				</c:if>		
+    				<c:if test="${pm.prev}">
+						<li class="page-item">
+							<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(pm.startPage-1)}">&lt;</a>
+						</li>
+					</c:if>
+					<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
+						<li class="page-item" ${pm.cri.page ==i? 'class=active':''}>
+							<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(i)}">${i}</a>
+						</li>
 					</c:forEach>
-					<li class="page-item">
-						<a class="page-link" href="#">Next</a>
-					</li>
+					<c:if test="${pm.next}">
+						<li class="page-item">
+							<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(pm.endPage+1)}">&rt;</a>
+						</li>
+					</c:if>
+					<c:if test="${pm.last}">
+						<li class="page-item">
+							<a class="page-link" href="${contextPath}/board/faq/${pm.maxPage}" aria-label="Previous">
+       							<span aria-hidden="true">&raquo;</span></a>
+   						</li>
+    				</c:if>	
 				</ul>
-			</nav>
+			</nav> 
 			<c:if test="${userInfo.member_master eq 'Y'}">
 			<div class="text-end mb-3">
 				<button class="btn btn-outline-secondary" id="addBtn">추가하기</button>
@@ -111,16 +138,23 @@ ${pm }
 	</div>
 </section>
 <script>
-	var page = 1;
+	
 
 	$("#addBtn").click(function () {
 		location.href = "${contextPath}/board/service2/new";
 	});
 	
 	$("#qnaBoard").click(function(){
-		location.href="qna/list";
+		location.href="board/qna";
 	});
 	
+	$("#faqBoard").click(function(){
+		location.href="board/faq";
+	});
+	
+	$("#noticeBoard").click(function(){
+		location.href="board/notice";
+	});
 	
 	$("#trip").on("click",function(){
 		$("#airline").css("border", "");
@@ -128,6 +162,7 @@ ${pm }
 		$("#passport").css("border", "");
 		$("#other").css("border", "");
 		$(this).css("border", "solid darkblue 1px");
+		location.href="board/faq/trip";
 	});
 	
 	
@@ -137,6 +172,7 @@ ${pm }
 		$("#passport").css("border", "");
 		$("#other").css("border", "");
 		$(this).css("border", "solid darkblue 1px");
+		location.href="board/faq/airline";
 	});
 	
 	$("#reservation").on("click",function(){
@@ -145,6 +181,7 @@ ${pm }
 		$("#passport").css("border", "");
 		$("#other").css("border", "");
 		$(this).css("border", "solid darkblue 1px");
+		location.href="board/faq/reservation";
 	});
 	
 	$("#passport").on("click",function(){
@@ -153,6 +190,7 @@ ${pm }
 		$("#trip").css("border", "");
 		$("#other").css("border", "");
 		$(this).css("border", "solid darkblue 1px");
+		location.href="board/faq/passport";
 	});
 	
 	$("#other").on("click",function(){
@@ -161,6 +199,7 @@ ${pm }
 		$("#passport").css("border", "");
 		$("#trip").css("border", "");
 		$(this).css("border", "solid darkblue 1px");
+		location.href="board/faq/other";
 	});
 	
 	$("#faqBoard").on("click", function(){
@@ -181,7 +220,7 @@ ${pm }
 		
 		var keyword=$("#keyword").val();
 		console.log("kw: "+keyword);
-		location.href="${contextPath}/board/faq/list?keyword="+keyword;
+		location.href="${contextPath}/board/faq";
 	});
 </script>
 <%@ include file="../common/footer.jsp" %>

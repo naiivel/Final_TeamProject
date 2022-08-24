@@ -62,7 +62,7 @@
 						</c:choose>
 
 						<li class="nav-item"><a class="nav-link active" aria-current="page"
-								href="${contextPath}/board/service">고객센터</a></li>
+								href="${contextPath}/board/qna">고객센터</a></li>
 
 					</ul>
 				</div>

@@ -9,19 +9,26 @@
 					고객센터
 				</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/board/service" class="list-group-item">질문과 답변</a>
-					<a href="${contextPath}/board/service2" class="list-group-item">자주 묻는 질문</a>
-					<a href="${contextPath}/board/service3" class="list-group-item  active">공지사항</a>
+					<a href="${contextPath}/board/qna" class="list-group-item active" id="qnaBoard">질문과 답변</a>
+					<a href="${contextPath}/board/faq" class="list-group-item" id="faqBoard">자주 묻는 질문</a>
+					<a href="${contextPath}/board/notice" class="list-group-item" id="noticeBoard">공지사항</a>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-10 mb-5">
-			<h2 class="mb-4">공지사항</h2>
+			<h2 class="mb-4">질문과 답변</h2>
 			<div class="mb-4">
-				<div class="btn-group">
-					<button class="btn btn-outline-secondary">전체</button>
-					<button class="btn btn-outline-secondary">공지사항</button>
-					<button class="btn btn-outline-secondary">외교부 소식</button>
+				<div class="dropdown">
+					<a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
+						보기
+					</a>
+
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="#">전체</a></li>
+						<li><a class="dropdown-item" href="#">확인 중</a></li>
+						<li><a class="dropdown-item" href="#">답변 완료</a></li>
+					</ul>
 				</div>
 			</div>
 			<div class="table-responsive">
@@ -37,7 +44,7 @@
 					<tbody>
 						<tr>
 							<td>임시</td>
-							<td><a href="${contextPath}/board/service3/show">임시</a></td>
+							<td><a href="${contextPath}/board/service/show">임시</a></td>
 							<td>임시</td>
 							<td>임시</td>
 						</tr>
@@ -75,15 +82,17 @@
 					</li>
 				</ul>
 			</nav>
-			<div class="text-end mb-3">
+			<div class="mb-4 text-end">
 				<button class="btn btn-outline-secondary" id="addBtn">글쓰기</button>
+				<button class="btn btn-outline-secondary">나의 질문</button>
 			</div>
 		</div>
 	</div>
 </section>
+<script src="${contextPath}/resources/js/popper.min.js"></script>
 <script>
-	$("#addBtn").click(function () {
-		location.href = "${contextPath}/board/service3/new";
+	document.querySelector("#addBtn").addEventListener("click", function () {
+		location.href = "${contextPath}/board/qnaWrite";
 	});
 </script>
 <%@ include file="../common/footer.jsp" %>

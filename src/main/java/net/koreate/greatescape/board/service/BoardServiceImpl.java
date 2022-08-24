@@ -23,11 +23,10 @@ public class BoardServiceImpl implements BoardService {
 	public PageMaker getPageMaker(SearchCriteria cri) throws Exception {
 		int totalCount= bdao.getCount(cri);
 		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
 		cri.setPerPageNum(5);
 		pm.setCri(cri);
-		pm.setDisplayPageNum(5);
 		pm.setTotalCount(totalCount);
-		cri.setPerPageNum(5);
 		return pm;
 	}
 
