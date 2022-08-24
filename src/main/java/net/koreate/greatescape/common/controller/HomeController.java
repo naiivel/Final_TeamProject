@@ -1,15 +1,30 @@
 package net.koreate.greatescape.common.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.RequiredArgsConstructor;
+import net.koreate.greatescape.common.dao.TempDAO;
+import net.koreate.greatescape.product.vo.ProductVO;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
+	
+	private final TempDAO dao;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -100,4 +115,31 @@ public class HomeController {
 	
 	@GetMapping("/product/reserve")
 	public void productReserve() {}
+	
+	@GetMapping("/product/{continent}")
+	public String productIndex(@PathVariable String continent, Model model) throws Exception {
+		List<ProductVO> list = dao.getContinentList(continent);
+		
+		Set<String> countrySet = new HashSet<>();
+		list.stream().forEach(p -> countrySet.add(p.getProduct_country()));
+		
+		Map<String, Set<String>> cityMap = new HashMap<>();
+		countrySet.stream().forEach(country -> {
+			Set<String> citySet = new HashSet<>();
+			list.stream().filter(p -> p.getProduct_country().equals(country)).forEach(p -> citySet.add(p.getProduct_city()));
+			cityMap.put(country, citySet);
+		});
+		model.addAttribute("list", list);
+		model.addAttribute("countrySet", countrySet);
+		model.addAttribute("cityMap", cityMap);
+		return "/product/index";
+	}
+	
+	@GetMapping("/product/getList")
+	@ResponseBody
+	public List<ProductVO> getList(String city) throws Exception {
+		List<ProductVO> list = dao.getCityList(city);
+		return list;
+	}
+	
 }
