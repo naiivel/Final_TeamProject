@@ -12,10 +12,16 @@
 				<div>관광사업등록증번호 : 제2022-999999호 </div>
 			</div>
 			<div class="col-md-4 p-3">
-				<button type="button" class="btn btn-outline-secondary">아시아</button>
+			<ul class="d-flex list-group list-group-horizontal">
+				<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/asia">아시아</a></li>
+				<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/europe">유럽</a></li>
+				<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/america">아메리카</a></li>
+				<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/oceania">오세아니아</a></li>
+			</ul>
+				<!-- <button type="button" class="btn btn-outline-secondary">아시아</button>
 				<button type="button" class="btn btn-outline-secondary">유럽</button>
 				<button type="button" class="btn btn-outline-secondary">아메리카</button>
-				<button type="button" class="btn btn-outline-secondary">오세아니아</button>
+				<button type="button" class="btn btn-outline-secondary">오세아니아</button> -->
 			</div>
 		</div>
 	</div>

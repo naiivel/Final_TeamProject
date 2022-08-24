@@ -25,7 +25,6 @@ public class ProductController {
 	//아시아 여행페이지 이동
 	@GetMapping("/asia")
 	public String asia() {
-		System.out.println("ssss");
 		return "product/asia";
 	}
 	

@@ -41,7 +41,7 @@
 					<c:choose>
 						<c:when test="${!empty sessionScope.userInfo}">
 							<li class="nav-item"><a class="nav-link active" aria-current="page"
-									href="member/logOut">로그아웃</a></li>
+									href="${contextPath}/member/logOut">로그아웃</a></li>
 							<c:choose>
 								<c:when test="${userInfo.member_master eq 'Y'}">
 									<li class="nav-item"><a class="nav-link active" aria-current="page"
