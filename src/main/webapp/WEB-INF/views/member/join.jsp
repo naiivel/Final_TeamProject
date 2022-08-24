@@ -119,10 +119,10 @@
 
 		$('#passwordCheck').keyup(function () {
 			if ($('#member_pw').val() != $('#passwordCheck').val()) {
-				$('#confirm').html('비밀번호 일치하지 않습니다.');
+				$('#confirm').html('비밀번호가 일치하지 않습니다.');
 				$('#confirm').attr('color', 'red');
 			} else {
-				$('#confirm').html('비밀번호 일치합니다');
+				$('#confirm').html('비밀번호가 일치합니다');
 				$('#confirm').attr('color', 'blue');
 			}
 		});

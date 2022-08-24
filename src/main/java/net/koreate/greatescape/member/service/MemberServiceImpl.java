@@ -112,18 +112,37 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<MemberVO> memberList(SearchCriteria cri) {
+	public List<MemberVO> memberList(Criteria cri) {
 		return mdao.memberList(cri);
 	}
 
 	@Override
-	public PageMaker pageMaker(SearchCriteria cri) {
+	public PageMaker pageMaker(Criteria cri) {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(mdao.listCount());
 		return pageMaker;
 	}
 
+	@Override
+	public List<MemberVO> typeMemberList(Criteria cri, String member_master) {
+		System.out.println(member_master);
+		return mdao.booleanMaster(cri,member_master);
+	}
+
+	@Override
+	public PageMaker typePageMaker(Criteria cri,String member_master) {
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(mdao.typelistCount(member_master));
+		return pageMaker;
+	}
+
+	@Override
+	public void createAdmin(MemberVO vo) {
+		mdao.createAdmin(vo);
+		
+	}
 	
 	
 	
