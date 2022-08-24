@@ -2,6 +2,7 @@ package net.koreate.greatescape.product.service;
 
 import java.util.List;
 
+import net.koreate.greatescape.product.vo.ProductDetailVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 
 public interface ProductService {
@@ -22,6 +23,12 @@ public interface ProductService {
 	List<ProductVO> getProductList(ProductVO vo) throws Exception;
 	
 	//상세보기 상품 리스트 가져오기
-	List<ProductVO> getShowList() throws Exception;
+	ProductVO read(int product_num) throws Exception;
+	
+	//상품 등록
+	String regist(ProductVO vo, ProductDetailVO dvo) throws Exception;
+	
+	//예약 하기
+	String reserve(ProductVO vo) throws Exception;
 	
 }

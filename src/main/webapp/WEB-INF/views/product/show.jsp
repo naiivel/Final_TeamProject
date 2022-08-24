@@ -57,12 +57,12 @@
             <div class="row mb-5">
                 <div class="col-md-8" id="detailBox">
                 
-                    <h4>상품명 솰라솰라</h4>
+                    <h4>상품 정보~ ${board.product_name}</h4>
                     <div class="table-responsive">
                         <table class="table table-borderless" style="font-size: 1rem;">
                             <tr>
                                 <th>교통편</th>
-                                <td colspan="2">대한항공</td>
+                                <td colspan="2">대한항공 ${board.product_city}</td>
                                 <th>여행일정</th>
                                 <td colspan="2">아시아 일본 [3박 4일]</td>
                             </tr>
@@ -98,7 +98,7 @@
                         </table>
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-success" id="reservBtn">예약하기</button>
+                        <button class="btn btn-success reserve" data-num="${board.product_num}">예약하기</button>
                         <button class="btn btn-warning" id="qnaBtn">문의하기</button>
                     </div>
                 </div>
@@ -160,8 +160,8 @@
     </div>
 </section>
 <script>
-	$("#reservBtn").click(function(){
-		location.href = "${contextPath}/product/reserve";
+	$(".reserve").click(function(){
+		location.href = "${contextPath}/product/reserve?product_num=" + $(this).attr("data-num");
 	});
 	
 	$("#qnaBtn").click(function(){

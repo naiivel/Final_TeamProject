@@ -92,12 +92,12 @@ public class HomeController {
 //	@GetMapping("/product/asia")
 //	public void asia() {}
 
-	@GetMapping("/product/new")
-	public void productNew() {}
+//	@GetMapping("/product/new")
+//	public void productNew() {}
 	
-	@GetMapping("/product/show")
-	public void productShow() {}
+//	@GetMapping("/product/show")
+//	public void productShow() {}
 	
-	@GetMapping("/product/reserve")
-	public void productReserve() {}
+//	@GetMapping("/product/reserve")
+//	public void productReserve() {}
 }

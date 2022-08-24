@@ -60,7 +60,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">나라</span>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="floatingInputGroup1">
+                                <input type="text" class="form-control" id="floatingInputGroup1" name="product_country">
                                 <label for="floatingInputGroup1">나라이름</label>
                             </div>
                         </div>
@@ -68,54 +68,54 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">지역</span>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="floatingInputGroup2">
+                                <input type="text" class="form-control" id="floatingInputGroup2" name="product_city">
                                 <label for="floatingInputGroup2">지역이름</label>
                             </div>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">요금</span>
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="floatingInputGroup7">
+                                <input type="number" class="form-control" id="floatingInputGroup7" name="product_adult">
                                 <label for="floatingInputGroup7">성인</label>
                             </div>
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="floatingInputGroup4">
+                                <input type="number" class="form-control" id="floatingInputGroup4" name="product_minor">
                                 <label for="floatingInputGroup4">소인</label>
                             </div>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">항공편</span>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="floatingInputGroup3">
+                                <input type="text" class="form-control" id="floatingInputGroup3" name="product_airplane">
                                 <label for="floatingInputGroup3">--항공</label>
                             </div>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">출발일</span>
-                            <input type="date" class="form-control" id="floatingInputGroup5">
+                            <input type="date" class="form-control" id="floatingInputGroup5" name="product_departure">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">도착일</span>
-                            <input type="date" class="form-control" id="floatingInputGroup6">
+                            <input type="date" class="form-control" id="floatingInputGroup6" name="product_arrive">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">잔여좌석</span>
-                            <input type="number" class="form-control" id="floatingInputGroup6">
+                            <input type="number" class="form-control" id="floatingInputGroup6" name="product_seat">
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">상품 설명</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+                            <textarea name="detail_info" class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">상세 일정</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+                            <textarea name="detail_schedule" class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
                         </div>
                     </div>
                     <div class="col-md-6 justify-content-center row">
                         <img src="${contextPath}/resources/image/sample.jpg" class="img-fluid mb-3">
                         <div class="mb-3 text-center">
                             <label for="formFileSm" class="form-label">이미지를 첨부하세요.</label>
-                            <input class="form-control form-control-sm mb-3" id="formFileSm" type="file">
+                            <input class="form-control form-control-sm mb-3" id="formFileSm" type="file" name="detail_title_image">
                             <button class="btn btn-success">등록</button>
                         </div>
                     </div>

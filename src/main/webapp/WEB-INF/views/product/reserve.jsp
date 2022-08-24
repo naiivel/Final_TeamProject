@@ -13,7 +13,7 @@
             <table class="table table-borderless" style="font-size: 1rem;">
               <tr>
                 <th>상품명</th>
-                <td colspan="5">자바와 함께하는 개발여행</td>
+                <td colspan="5">상품명 : ${board.product_name}</td>
               </tr>
               <tr>
                 <th>교통편</th>
@@ -363,4 +363,6 @@
     </div>
   </div>
 </section>
+<script>
+</script>
 <%@ include file="../common/footer.jsp" %>

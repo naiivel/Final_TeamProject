@@ -2,9 +2,6 @@ package net.koreate.greatescape.product.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.product.service.ProductService;
+import net.koreate.greatescape.product.vo.ProductDetailVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 
 @Controller
@@ -65,14 +63,42 @@ public class ProductController {
 		return list;
 	}
 	
-	/*
 	//상세보기 페이지 이동
 	@GetMapping("/show")
-	public String show(Model model) throws Exception {
-		List<ProductVO> list = ps.getShowList();
-		model.addAttribute("list", list);
+	public String show(Model model,int product_num) throws Exception {
+		ProductVO vo = ps.read(product_num);
+		model.addAttribute("board", vo);
 		return "product/show";
 	}
-	*/
+	
+	//상품 등록 페이지 이동(관리자 전용)
+	@GetMapping("/new")
+	public String register() throws Exception{
+		return "product/new";
+	}
+	
+	//상품 등록 페이지 : 상품 등록(관리자 전용)
+	@PostMapping("/new")
+	public String register(ProductVO vo, ProductDetailVO dvo, RedirectAttributes rttr) throws Exception {
+		String result = ps.regist(vo, dvo);
+		rttr.addFlashAttribute("result", result);
+		return "redirect:/product/new";
+	}
+	
+	//예약하기 페이지 이동
+	@GetMapping("reserve")
+	public String reserve(Model model, int product_num) throws Exception{
+		ProductVO vo = ps.read(product_num);
+		model.addAttribute("board", vo);
+		return "product/reserve";
+	}
+	
+	//예약완료 후 페이지 이동
+	@PostMapping("reserve")
+	public String reservation(ProductVO vo, RedirectAttributes rttr) throws Exception{
+		String result = ps.reserve(vo);
+		rttr.addFlashAttribute("result", result);
+		return "redirect:/member/product";
+	}
 	
 }

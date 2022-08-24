@@ -3,9 +3,11 @@ package net.koreate.greatescape.product.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.product.dao.ProductDAO;
+import net.koreate.greatescape.product.vo.ProductDetailVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 
 @Service
@@ -41,11 +43,22 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductVO> getShowList() throws Exception {
-		return pdao.getShowList();
+	public ProductVO read(int product_num) throws Exception {
+		return pdao.read(product_num);
 	}
-	
-	
-	
+
+	@Override
+	@Transactional
+	public String regist(ProductVO vo, ProductDetailVO dvo) throws Exception {
+		int result = pdao.create(vo);
+		result = pdao.create(dvo);
+		String message = (result != 0) ? "SUCCESS" : "FAILED";
+		return message;
+	}
+
+	@Override
+	public String reserve(ProductVO vo) throws Exception {
+		return null;
+	}
 	
 }

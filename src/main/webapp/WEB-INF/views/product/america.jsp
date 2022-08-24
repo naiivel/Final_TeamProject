@@ -91,14 +91,21 @@
 										<p class="card-text">${product.product_airplane}</p>
 									</div>
 									<div class="col-md-2 mb-3">
-										<p class="card-text">성인기준 ${product.product_adult}원</p>
 										<p>
 											<!-- href collapse1 -- 목록마다 인덱스 숫자로 업데이트하기 -->
-											<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse${product.product_num}"> 상세보기 </a>
+											<a class="btn btn-primary showBtn" data-num="${product.product_num}"> 상세보기 </a>
+											<c:choose>
+												<c:when test="${product.product_seat>5}">
+													<div class="card card-body">좌석 수 : ${product.product_seat}</div>
+												</c:when>
+												<c:when test="${product.product_seat<6}">
+													<div class="card card-body">좌석 수 : ${product.product_seat} 마감임박</div>
+												</c:when>
+												<c:otherwise>
+													<div class="card card-body">좌석 수 : 예약마감</div>
+												</c:otherwise>
+											</c:choose>
 										</p>
-									</div>
-									<div class="collapse" id="collapse${product.product_num}">
-										<div class="card card-body">좌석 수 : ${product.product_seat}</div>
 									</div>
 								</div>
 							</c:forEach>
@@ -132,6 +139,14 @@
 		location.href = "${contextPath}/product/new";
 	});
 	
+	$(".showBtn").click(function(){
+		location.href = "${contextPath}/product/show?product_num=" + $(this).attr("data-num");
+	});
+	
+	$("#listBox").on("click", ".showBtn", function() {
+		location.href = "${contextPath}/product/show?product_num=" + $(this).attr("data-num");
+	});
+	
 	$(".accordion-item").on("click","a",function(e){
 		e.preventDefault();
 		var tag = $(this);
@@ -155,13 +170,16 @@
 					html += '<p class="card-text">' + product.product_airplane + '</p>';
 					html += '</div>';
 					html += '<div class="col-md-2 mb-3">';
-					html += '<p class="card-text">성인 기준: ' + product.product_adult +'원</p>';
 					html += '<p>';
-					html += '<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse' + product.product_num + '"> 상세보기 </a>';
+					html += '<a class="btn btn-primary showBtn" data-num="' + product.product_num + '"> 상세보기 </a>';			
+					if (product.product_seat > 5) {
+					html += '<div class="card card-body">좌석 수 : ' + product.product_seat + '</div>';
+					} else if (product.product_seat < 6) {
+					html += '<div class="card card-body">좌석 수 : ' + product.product_seat + '<br/>마감임박</div>';
+					} else {
+					html += '<div class="card card-body">좌석 수 : <br/>예약마감</div>';
+					}
 					html += '</p>';
-					html += '</div>';
-					html += '<div class="collapse" id="collapse' + product.product_num  +'">';
-					html += '<div class="card card-body">좌석 수: ' + product.product_seat + '</div>';
 					html += '</div>';
 					html += '</div>';
 					$("#listBox").append(html);
