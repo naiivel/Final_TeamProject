@@ -38,9 +38,9 @@ public class PageMaker {
   }
   
   public void calcPaging() {
-    this.endPage = (int)Math.ceil(this.cri.getPage() / this.displayPageNum) * this.displayPageNum;
+    this.endPage = (int)Math.ceil(this.cri.getPage() / (double)this.displayPageNum) * this.displayPageNum;
     this.startPage = this.endPage - this.displayPageNum + 1;
-    this.maxPage = (int)Math.ceil(this.totalCount / this.cri.getPerPageNum());
+    this.maxPage = (int)Math.ceil(this.totalCount / (double)this.cri.getPerPageNum());
     if (this.endPage > this.maxPage)
       this.endPage = this.maxPage; 
     this.first = (this.startPage > 1);
