@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import net.koreate.greatescape.common.dao.TempDAO;
+import net.koreate.greatescape.product.vo.ProductDetailVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,6 +44,14 @@ public class Seeds {
 			ProductVO vo = new ProductVO();
 			randomSet(vo);
 			dao.productSeed(vo);
+			ProductDetailVO productDetailVO = new ProductDetailVO();
+			productDetailVO.setDetail_info("Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa ad sapiente nisi dicta enim veritatis provident architecto dolorum quis, inventore temporibus velit, veniam obcaecati alias molestiae ducimus quidem unde. Ducimus.\r\n" + 
+					"Natus iste, quasi quibusdam perspiciatis sed, consequatur libero repellendus placeat sunt distinctio quia dolore, ad quaerat officia ipsum sit blanditiis hic. Itaque assumenda magni aliquid impedit eligendi inventore minima nulla.\r\n" + 
+					"Earum mollitia eveniet nulla quia, qui rerum enim cupiditate quaerat, iure excepturi dolor quas id magnam deserunt odio at ea. Iusto quo dolorem, provident possimus eaque maxime soluta suscipit id.");
+			productDetailVO.setDetail_schedule("Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa ad sapiente nisi dicta enim veritatis provident architecto dolorum quis, inventore temporibus velit, veniam obcaecati alias molestiae ducimus quidem unde. Ducimus.\r\n" + 
+					"Natus iste, quasi quibusdam perspiciatis sed, consequatur libero repellendus placeat sunt distinctio quia dolore, ad quaerat officia ipsum sit blanditiis hic. Itaque assumenda magni aliquid impedit eligendi inventore minima nulla.\r\n" + 
+					"Earum mollitia eveniet nulla quia, qui rerum enim cupiditate quaerat, iure excepturi dolor quas id magnam deserunt odio at ea. Iusto quo dolorem, provident possimus eaque maxime soluta suscipit id.");
+			dao.detailSeed(productDetailVO);
 		}
 	}
 

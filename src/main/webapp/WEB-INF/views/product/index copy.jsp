@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
-<link rel="stylesheet" href="${contextPath}/resources/css/product.index.css">
+<style>
+	.accordion-body:hover {
+		cursor: pointer;
+	}
+</style>
 <c:choose>
 	<c:when test="${empty list}">
 		<section class="container d-flex flex-column justify-content-center align-items-center h-100">
@@ -11,9 +15,38 @@
 		</section>
 	</c:when>
 	<c:otherwise>
-		<section class="container d-flex justify-content-center mt-5">
-			<div class="row w-100">
-				<main class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+		<section class="container">
+			<div class="row">
+				<div class="col-lg-2">
+					<div class="card mb-3">
+						<div class="card-header ">
+							<h3 class="card-title text-center m-0">${list[0].product_continent}</h3>
+						</div>
+						<c:set var="countryNum" value="1" />
+						<c:forEach var="country" items="${countrySet}">
+							<div class="accordion" id="accordion">
+								<div class="accordion-item">
+									<h4 class="accordion-header" id="heading${countryNum}">
+										<button class="accordion-button <c:if test=" ${countryNum ne 1}">collapsed</c:if>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${countryNum}" aria-expanded="true" aria-controls="collapse${countryNum}">
+											${country}
+										</button>
+									</h4>
+
+									<div id="collapse${countryNum}" class="accordion-collapse collapse <c:if test=" ${countryNum eq 1}">show</c:if>" aria-labelledby="heading${countryNum}">
+										<c:forEach var="city" items="${cityMap.get(country)}">
+											<div class="accordion-body" data-city="${city}">
+												${city}
+											</div>
+										</c:forEach>
+									</div>
+
+								</div>
+							</div>
+							<c:set var="countryNum" value="${countryNum + 1}" />
+						</c:forEach>
+					</div>
+				</div>
+				<main class="col-lg-10">
 					<h3 class="mb-3">${list[0].product_continent}</h3>
 					<c:forEach var="country" items="${countrySet}">
 						<div class="card mb-4">
@@ -52,33 +85,6 @@
 						</div>
 					</c:forEach>
 				</main>
-			</div>
-			<div class="card mb-3 position-fixed translate-middle d-none d-lg-block">
-				<div class="card-header ">
-					<h3 class="fs-5 card-title text-center m-0">${list[0].product_continent}</h3>
-				</div>
-				<c:set var="countryNum" value="1" />
-				<c:forEach var="country" items="${countrySet}">
-					<div class="accordion" id="accordion">
-						<div class="accordion-item">
-							<h4 class="accordion-header" id="heading${countryNum}">
-								<button class="accordion-button <c:if test=" ${countryNum ne 1}">collapsed</c:if>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${countryNum}" aria-expanded="true" aria-controls="collapse${countryNum}">
-									${country}
-								</button>
-							</h4>
-
-							<div id="collapse${countryNum}" class="accordion-collapse collapse <c:if test=" ${countryNum eq 1}">show</c:if>" aria-labelledby="heading${countryNum}">
-								<c:forEach var="city" items="${cityMap.get(country)}">
-									<div class="accordion-body" data-city="${city}">
-										${city}
-									</div>
-								</c:forEach>
-							</div>
-
-						</div>
-					</div>
-					<c:set var="countryNum" value="${countryNum + 1}" />
-				</c:forEach>
 			</div>
 		</section>
 	</c:otherwise>

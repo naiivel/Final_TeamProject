@@ -1,6 +1,5 @@
 package net.koreate.greatescape.common.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -140,6 +139,13 @@ public class HomeController {
 	public List<ProductVO> getList(String city) throws Exception {
 		List<ProductVO> list = dao.getCityList(city);
 		return list;
+	}
+	
+	@GetMapping("/product/show/{id}")
+	public String productShow(@PathVariable int id, Model model) throws Exception {
+		model.addAttribute("product", dao.getProductById(id));
+		model.addAttribute("detail", dao.getDetailById(id));
+		return "/product/detail";
 	}
 	
 }
