@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.common.dao.TempDAO;
+import net.koreate.greatescape.product.vo.FullProductVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 
 @Controller
@@ -25,9 +26,10 @@ public class HomeController {
 	
 	private final TempDAO dao;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		
+	@GetMapping("/")
+	public String home(Model model) {
+		List<FullProductVO> list = dao.getIndexList();
+		model.addAttribute("list", list);
 		return "index";
 	}
 	
@@ -118,21 +120,11 @@ public class HomeController {
 	@GetMapping("/product/{continent}")
 	public String productIndex(@PathVariable String continent, Model model) throws Exception {
 		List<ProductVO> list = dao.getContinentList(continent);
-		
-		Set<String> countrySet = new HashSet<>();
-		list.stream().forEach(p -> countrySet.add(p.getProduct_country()));
-		
-		Map<String, Set<String>> cityMap = new HashMap<>();
-		countrySet.stream().forEach(country -> {
-			Set<String> citySet = new HashSet<>();
-			list.stream().filter(p -> p.getProduct_country().equals(country)).forEach(p -> citySet.add(p.getProduct_city()));
-			cityMap.put(country, citySet);
-		});
-		model.addAttribute("list", list);
-		model.addAttribute("countrySet", countrySet);
-		model.addAttribute("cityMap", cityMap);
+		listSplit(model, list);
 		return "/product/index";
 	}
+
+	
 	
 	@GetMapping("/product/getList")
 	@ResponseBody
@@ -146,6 +138,36 @@ public class HomeController {
 		model.addAttribute("product", dao.getProductById(id));
 		model.addAttribute("detail", dao.getDetailById(id));
 		return "/product/detail";
+	}
+	
+	@GetMapping("/product/search")
+	public String productSearch(Model model, String country, String departure, String plan, String seat, String city, String money) throws Exception {
+		Map<String, String> map = new HashMap<>();
+		map.put("country", country);
+		map.put("departure", departure);
+		map.put("plan", plan);
+		map.put("seat", seat);
+		map.put("city", city);
+		map.put("money", money);
+		List<ProductVO> list = dao.getSearchList(map);
+		listSplit(model, list);
+		return "/product/index";
+	}
+	
+	private void listSplit(Model model, List<ProductVO> list) {
+		Set<String> countrySet = new HashSet<>();
+		list.stream().forEach(p -> countrySet.add(p.getProduct_country()));
+		
+		Map<String, Set<String>> cityMap = new HashMap<>();
+		countrySet.stream().forEach(country -> {
+			Set<String> citySet = new HashSet<>();
+			list.stream().filter(p -> p.getProduct_country().equals(country)).forEach(p -> citySet.add(p.getProduct_city()));
+			cityMap.put(country, citySet);
+		});
+		model.addAttribute("continent", "검색 결과");
+		model.addAttribute("list", list);
+		model.addAttribute("countrySet", countrySet);
+		model.addAttribute("cityMap", cityMap);
 	}
 	
 }

@@ -1,11 +1,14 @@
 package net.koreate.greatescape.common.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 
+import net.koreate.greatescape.product.vo.FullProductVO;
 import net.koreate.greatescape.product.vo.ProductDetailVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 
@@ -31,5 +34,11 @@ public interface TempDAO {
 
 	@Select("SELECT * FROM tbl_detail WHERE product_num = #{id}")
 	ProductDetailVO getDetailById(int id);
+
+	@SelectProvider(type = TempProvider.class, method = "getSearchList")
+	List<ProductVO> getSearchList(Map<String, String> map);
+
+	@Select("SELECT p.*, d.detail_info, d.detail_schedule, d.detail_title_image FROM tbl_product AS p, tbl_detail AS d WHERE product_seat > 5 ORDER BY product_seat LIMIT 4")
+	List<FullProductVO> getIndexList();
 
 }

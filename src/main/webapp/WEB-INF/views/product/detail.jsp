@@ -34,7 +34,7 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="card mb-3">
-				<img src="https://source.unsplash.com/random" class="card-img-top" alt="...">
+				<img src="${detail.detail_title_image}" class="card-img-top" alt="...">
 				<div class="card-header">
 					<h2 class="fs-5 card-title m-0 p-1">[${product.product_country}/${product.product_city}] ${product.product_name}</h2>
 				</div>
