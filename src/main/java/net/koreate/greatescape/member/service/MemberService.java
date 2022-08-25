@@ -57,10 +57,19 @@ public interface MemberService {
 	void deleteNP(ReservationVO noMember);
 
 	// 회원번호순 정보 불러오기
-	List<MemberVO> memberList(SearchCriteria cri);
+	List<MemberVO> memberList(Criteria cri);
 
 	// 페이징처리
-	PageMaker pageMaker(SearchCriteria cri);
+	PageMaker pageMaker(Criteria cri);
+
+	// 회원의 관리자 여부
+	List<MemberVO> typeMemberList(Criteria cri, String member_master);
+
+	// 회원 타입 페이징처리 
+	PageMaker typePageMaker(Criteria cri, String member_master);
+
+	// 관리자 계정 생성
+	void createAdmin(MemberVO vo);
 
 	
 	

@@ -25,10 +25,10 @@ import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.service.MemberService;
 import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.product.vo.ProductVO;
-import net.koreate.greatescape.reservation.vo.DetailBoardVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
+import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
-import net.koreate.greatescape.utils.SearchCriteria;
+
 
 
 @Controller
@@ -43,8 +43,11 @@ public class MemberController {
 	
 	// 로그인 페이지 이동
 	@GetMapping("/login")
-	public String login() {
-		
+	public String login(HttpServletRequest request,HttpSession session) {
+		if(request.getHeader("Referer") != null) {
+			System.out.println(request.getHeader("Referer"));
+			session.setAttribute("url",request.getHeader("Referer"));
+		}
 		return "member/login";
 	}
 	
@@ -63,6 +66,7 @@ public class MemberController {
 			String remember = request.getParameter("remember_id");
 			if(remember.equals("checked")) {
 				Cookie cookie = new Cookie("id",vo.getMember_id());
+				cookie.setMaxAge(24*60*60);
 				response.addCookie(cookie);
 			}
 		}else {
@@ -73,7 +77,14 @@ public class MemberController {
 		
 		if(login != null && login.getMember_leave().equals("Y")) {
 			session.setAttribute("userInfo",login);
-			return "redirect:/";
+			if(session.getAttribute("url") != null) {
+				String url = (String) session.getAttribute("url");
+				System.out.println(url);
+				
+				String prevPage = url.replace("http://localhost:8080/greatescape/", "");
+				System.out.println(prevPage);
+				return "redirect:/"+prevPage;
+			}
 		}
 		String message = "아이디와 비밀번호가 일치하지 않습니다.";
 		model.addAttribute("message",message);
@@ -85,6 +96,9 @@ public class MemberController {
 	public String logOut(HttpSession session){
 		if (session.getAttribute("userInfo") != null) {
 			session.removeAttribute("userInfo");
+			if(session.getAttribute("url") != null) {
+				session.removeAttribute("url");
+			}
 		}
 		return "redirect:/";
 	}
@@ -106,7 +120,7 @@ public class MemberController {
 	// 계정정보 찾기 시도
 	@PostMapping("findInfo")
 	@ResponseBody
-	public MemberVO findId(MemberVO vo) {
+	public MemberVO findInfo(MemberVO vo) {
 		MemberVO findMember = ms.findId(vo);
 		
 		return findMember;
@@ -343,8 +357,29 @@ public class MemberController {
 	// 관리자 페이지 이동
 	@GetMapping("/adminPage")
 	@Transactional
-	public String adminPage(@ModelAttribute("cri") SearchCriteria cri,
-			Model model) throws Exception{
+	public String adminPage(@ModelAttribute("cri") Criteria cri,
+			Model model,HttpServletRequest request) throws Exception{
+		String type = request.getParameter("type");
+		System.out.println(type);
+		if(type != null) {
+			if(type.equals("회원")) {
+				String member_master = "N";
+				List<MemberVO> list = ms.typeMemberList(cri,member_master);
+				PageMaker pm = ms.typePageMaker(cri,member_master);
+				
+				model.addAttribute("list",list);
+				model.addAttribute("pm",pm);
+				return "admin/index";
+			}else {
+				String member_master = "Y";
+				List<MemberVO> list = ms.typeMemberList(cri,member_master);
+				PageMaker pm = ms.typePageMaker(cri,member_master);
+				
+				model.addAttribute("list",list);
+				model.addAttribute("pm",pm);
+				return "admin/index";
+			}
+		}
 		List<MemberVO> list = ms.memberList(cri);
 		
 		PageMaker pm  = ms.pageMaker(cri);
@@ -354,6 +389,46 @@ public class MemberController {
 		return "admin/index";
 	}
 	
+	// 회원정보 상세보기 페이지 이동
+	@GetMapping("detailInfo")
+	public String detailInfo(MemberVO vo,Model model) throws Exception{
+		MemberVO clickMember = ms.memberInfo(vo.getMember_num());
+		
+		model.addAttribute("clickMember",clickMember);
+		
+		return "admin/indexShow";
+	}
+	
+	// (관리자)회원 예약내역 보기
+	@GetMapping("memberReserv")
+	@Transactional
+	public String memberReserv(MemberVO vo,Model model) throws Exception{
+		MemberVO member = ms.memberInfo(vo.getMember_num());
+		ProductVO product = ms.findProduct(member.getProduct_num());
+		ReservationVO reserv = ms.findpeople(member);
+		String tripInfo = ms.findtripInfo(member.getProduct_num());
+		
+		model.addAttribute("member",member);
+		model.addAttribute("product",product);
+		model.addAttribute("reservation",reserv);
+		model.addAttribute("tripInfo",tripInfo);
+		
+		
+		return "admin/indexProduct";
+	}
+	
+	// 관리자 계정추가 페이지 이동
+	@GetMapping("createAdmin")
+	public String createAdmin() {
+		return "admin/indexMakeAdmin";
+	}
+	
+	// 새 관리자 계정 등록
+	@PostMapping("newAdmin")
+	public String newAdmin(MemberVO vo) throws Exception{
+		ms.createAdmin(vo);
+		return "redirect:/member/adminPage";
+	}
 }	
 
 

@@ -7,6 +7,6 @@ public class ProductDetailVO {
 
 	private int product_num;
 	private String detail_info;
-	private String schedule;
-	private String title_image;
+	private String detail_schedule;
+	private String detail_title_image;
 }
