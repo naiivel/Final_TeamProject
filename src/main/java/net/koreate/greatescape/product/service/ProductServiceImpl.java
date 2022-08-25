@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public String regist(ProductVO vo, ProductDetailVO dvo) throws Exception {
 		int result = pdao.create(vo);
-		result = pdao.create(dvo);
+		result = pdao.createDetail(dvo);
 		String message = (result != 0) ? "SUCCESS" : "FAILED";
 		return message;
 	}
@@ -60,5 +60,6 @@ public class ProductServiceImpl implements ProductService {
 	public String reserve(ProductVO vo) throws Exception {
 		return null;
 	}
+
 	
 }

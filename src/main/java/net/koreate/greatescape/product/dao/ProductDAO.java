@@ -37,10 +37,8 @@ public interface ProductDAO {
 	//상품 등록
 	@Insert("INSERT INTO tbl_product(product_continent,product_country,product_city,product_name,product_airplane,product_departure,product_arrive,product_plan,product_adult,product_minor,product_seat) VALUES(#{product_continent},#{product_country},#{product_city},#{product_name},#{product_airplane},#{product_departure},#{product_arrive},#{product_plan},#{product_adult},#{product_minor},#{product_seat})")
 	int create(ProductVO vo) throws Exception;
-	@Insert("INSERT INTO tbl_datail(product_num,detail_info,detail_schedule,detail_title_image) VALUES(LAST_INSERT_ID(),#{detail_info},#{detail_schedule},#{detail_title_image})")
-	int create(ProductDetailVO vo) throws Exception;
 	
-	//예약하기
-	
+	@Insert("INSERT INTO tbl_datail (product_num, detail_info, detail_schedule, detail_title_image) VALUES (LAST_INSERT_ID(), #{detail_info}, #{detail_schedule}, #{detail_title_image})")
+	int createDetail(ProductDetailVO vo) throws Exception;
 
 }

@@ -125,7 +125,7 @@
 						<c:choose>
 							<c:when test="${userInfo.member_master eq 'Y'}">
 								<div class="text-end mb-3">
-									<button class="btn btn-success" id="addBtn">새 상품 등록</button>
+									<button class="btn btn-success" id="addBtn" data-continent="${list[0].product_continent}">새 상품 등록</button>
 								</div>
 							</c:when>
 						</c:choose>
@@ -137,7 +137,7 @@
 <script src="${contextPath}/resources/js/popper.min.js"></script>
 <script>
 	$("#addBtn").click(function() {
-		location.href = "${contextPath}/product/new";
+		location.href = "${contextPath}/product/new?product_continent=" + $(this).attr("data-continent");
 	});
 	
 	$(".showBtn").click(function(){

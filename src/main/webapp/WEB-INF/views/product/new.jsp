@@ -53,7 +53,8 @@
             </div>
         </div>
         <div class="col-md-10 mb-2">
-            <form action="">
+            <form action="new" method="post">
+            	<input type="hidden" name="continent" value="${param.product_continent}"/>
                 <h3 class="mb-4">여행상품 등록</h3>
                 <div class="row">
                     <div class="col-md-6">
@@ -116,7 +117,7 @@
                         <div class="mb-3 text-center">
                             <label for="formFileSm" class="form-label">이미지를 첨부하세요.</label>
                             <input class="form-control form-control-sm mb-3" id="formFileSm" type="file" name="detail_title_image">
-                            <button class="btn btn-success">등록</button>
+                            <button class="btn btn-success regist" data-num="${param.product_continent}">등록</button>
                         </div>
                     </div>
                 </div>
@@ -124,4 +125,9 @@
         </div>
     </div>
 </section>
+<script>
+	$(".regist").click(function(){
+		location.href = "${contextPath}/product/reserve?product_continent=" + $(this).attr("data-num");
+	});
+</script>
 <%@ include file="../common/footer.jsp" %>

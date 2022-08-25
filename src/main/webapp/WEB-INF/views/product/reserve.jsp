@@ -17,20 +17,20 @@
               </tr>
               <tr>
                 <th>교통편</th>
-                <td colspan="2">대한항공</td>
+                <td colspan="2">${board.product_airplane}</td>
                 <th>여행일정</th>
-                <td colspan="2">아시아 일본 [3박 4일]</td>
+                <td colspan="2">${board.product_plan}</td>
               </tr>
               <tr>
                 <th>출발일정</th>
-                <td colspan="5">출발 2022.09.01 (수) 14:45 | <span class="text-muted" style="font-size: 0.95rem;">현지기준 도착시간
+                <td colspan="5">${board.product_departure} | <span class="text-muted" style="font-size: 0.95rem;">현지기준 도착시간
                     2022.09.02 (수)
                     16:50</span></td>
               </tr>
               <tr>
                 <th>도착일정</th>
-                <td colspan="5"><span class="text-muted" style="font-size: 0.95rem;">출발 2022.09.01 (수)
-                    14:45</span> | 도착 2022.09.02 (수)
+                <td colspan="5"><span class="text-muted" style="font-size: 0.95rem;">${board.product_arrive}
+					</span> | 도착 2022.09.02 (수)
                   16:50</td>
               </tr>
             </table>
@@ -348,9 +348,9 @@
               </div>
             </div>
             <div class="row mb-3">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+             		 <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
               <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3">
+                <input type="email" class="form-control" id="inputEmail3" value="${userInfo.member_id}">
               </div>
             </div>
             <div class="text-center">

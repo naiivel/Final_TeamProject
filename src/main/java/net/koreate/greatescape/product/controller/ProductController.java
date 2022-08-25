@@ -1,6 +1,11 @@
 package net.koreate.greatescape.product.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
+import net.koreate.greatescape.member.service.MemberService;
+import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.product.service.ProductService;
 import net.koreate.greatescape.product.vo.ProductDetailVO;
 import net.koreate.greatescape.product.vo.ProductVO;
@@ -21,6 +28,7 @@ import net.koreate.greatescape.product.vo.ProductVO;
 public class ProductController {
 	
 	private final ProductService ps;
+	private final MemberService ms;
 	
 	//아시아 여행페이지 이동
 	@GetMapping("/asia")
@@ -45,7 +53,7 @@ public class ProductController {
 		model.addAttribute("list", list);
 		return "product/europe";
 	}
-		
+	
 	//아메리카 여행페이지 이동
 	@GetMapping("/america")
 	public String america(Model model) throws Exception {
@@ -77,19 +85,44 @@ public class ProductController {
 		return "product/new";
 	}
 	
-	//상품 등록 페이지 : 상품 등록(관리자 전용)
+	//상품 등록 페이지 : 상품 등록(관리자 전용) 
 	@PostMapping("/new")
-	public String register(ProductVO vo, ProductDetailVO dvo, RedirectAttributes rttr) throws Exception {
+	public String register(String product_continent, String product_country,String product_city,int product_adult,int product_minor,String product_airplane,String product_departure, String product_arrive, String product_seat, ProductDetailVO dvo ,RedirectAttributes rttr) throws Exception {
+		ProductVO vo = new ProductVO();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		vo.setProduct_continent(product_continent);
+		vo.setProduct_country(product_country);
+		vo.setProduct_city(product_city);
+		vo.setProduct_adult(product_adult);
+		vo.setProduct_minor(product_minor);
+		vo.setProduct_airplane(product_airplane);
+		vo.setProduct_departure(formatter.parse(product_departure));
+		vo.setProduct_arrive(formatter.parse(product_arrive));
+		vo.setProduct_seat(Integer.parseInt(product_seat));
+		
+		String continentName = "";
+		if(product_continent == "아시아") {
+			continentName = "asia";
+		}
+		if(product_continent == "아메리카") {
+			continentName = "america";
+		}
+		if(product_continent == "유럽") {
+			continentName = "europe";
+		}
+		if(product_continent == "오세아니아") {
+			continentName = "oceania";
+		}
+		
 		String result = ps.regist(vo, dvo);
 		rttr.addFlashAttribute("result", result);
-		return "redirect:/product/new";
+		return "redirect:/product/" + continentName;
 	}
 	
 	//예약하기 페이지 이동
 	@GetMapping("reserve")
-	public String reserve(Model model, int product_num) throws Exception{
-		ProductVO vo = ps.read(product_num);
-		model.addAttribute("board", vo);
+	public String reserve() throws Exception{
+		
 		return "product/reserve";
 	}
 	

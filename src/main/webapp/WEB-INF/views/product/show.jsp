@@ -57,25 +57,24 @@
             <div class="row mb-5">
                 <div class="col-md-8" id="detailBox">
                 
-                    <h4>상품 정보~ ${board.product_name}</h4>
+                    <h4>${board.product_name}</h4>
                     <div class="table-responsive">
                         <table class="table table-borderless" style="font-size: 1rem;">
                             <tr>
                                 <th>교통편</th>
-                                <td colspan="2">대한항공 ${board.product_city}</td>
+                                <td colspan="2">${board.product_airplane}</td>
                                 <th>여행일정</th>
-                                <td colspan="2">아시아 일본 [3박 4일]</td>
+                                <td colspan="2">${board.product_plan}</td>
                             </tr>
                             <tr>
                                 <th>출발일정</th>
-                                <td colspan="5">출발 2022.09.01 (수) 14:45 | <span class="text-muted"
+                                <td colspan="5">${board.product_departure} | <span class="text-muted"
                                         style="font-size: 0.95rem;">현지기준 도착시간 2022.09.02 (수)
                                         16:50</span></td>
                             </tr>
                             <tr>
                                 <th>도착일정</th>
-                                <td colspan="5"><span class="text-muted" style="font-size: 0.95rem;">출발 2022.09.01 (수)
-                                        14:45</span> | 도착 2022.09.02 (수)
+                                <td colspan="5"><span class="text-muted" style="font-size: 0.95rem;">${board.product_arrive}</span> | 도착 2022.09.02 (수)
                                     16:50</td>
                             </tr>
                             <tr>
@@ -93,7 +92,7 @@
                             </tr>
                             <tr>
                                 <th>예약현황</th>
-                                <td colspan=" 5">예약 100석 (잔여좌석 5석 | 최소출발인원 20명)</td>
+                                <td colspan=" 5">${board.product_seat}</td>
                             </tr>
                         </table>
                     </div>
