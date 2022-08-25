@@ -24,12 +24,22 @@ public class BoardServiceImpl implements BoardService {
 		int totalCount= bdao.getCount(cri);
 		PageMaker pm= new SearchPageMaker();
 		pm.setDisplayPageNum(5);
-		cri.setPerPageNum(5);
 		pm.setCri(cri);
 		pm.setTotalCount(totalCount);
 		return pm;
 	}
+	
+	@Override
+	public PageMaker getCategoryPageMaker(SearchCriteria cri, String category) throws Exception {
+		int totalCount= bdao.getCategoryCount(cri, category);
+		PageMaker categoryPM= new SearchPageMaker();
+		categoryPM.setDisplayPageNum(5);
+		categoryPM.setCri(cri);
+		categoryPM.setTotalCount(totalCount);
+		return categoryPM;
+	}
 
+	
 	/****************************** FAQ ************************************/
 	
 	@Override
@@ -42,10 +52,9 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public FAQBoardVO writeFAQ(FAQBoardVO fvo) throws Exception {
-		FAQBoardVO newFAQ= bdao.writeFAQ(fvo);
+	public void writeFAQ(FAQBoardVO fvo) throws Exception {
+		bdao.writeFAQ(fvo);
 		
-		return newFAQ;
 	}
 
 	@Override
@@ -57,6 +66,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void deleteFAQ(int faq_num) throws Exception {
 		bdao.deleteFAQ(faq_num);
+	}
+	
+	@Override
+	public List<FAQBoardVO> categoryList(SearchCriteria cri, String faq_category) throws Exception {
+		/*
+		 * List<FAQBoardVO> list= null;
+		 * 
+		 * list= bdao.getCategoryList(cri, category);
+		 */
+		return bdao.getCategoryList(cri, faq_category);
 	}
 	
 	/****************************** QNA ************************************/
@@ -122,4 +141,6 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 }

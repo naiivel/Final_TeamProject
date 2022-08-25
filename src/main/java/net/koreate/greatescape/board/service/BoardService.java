@@ -12,15 +12,18 @@ public interface BoardService {
 
 	//페이징처리
 	PageMaker getPageMaker(SearchCriteria cri) throws Exception;
-	
-	
+	//카테고리별 리스트
+	PageMaker getCategoryPageMaker(SearchCriteria cri, String category) throws Exception;
 	/****************************** FAQ ************************************/
 	
 	//질문리스트-페이징처리
 	List<FAQBoardVO> faqList(SearchCriteria cri) throws Exception;
 		
+	//카테고리별 리스트
+	List<FAQBoardVO> categoryList(SearchCriteria cri, String faq_category) throws Exception;
+	
 	//새글작성
-	FAQBoardVO writeFAQ(FAQBoardVO fvo) throws Exception;
+	void writeFAQ(FAQBoardVO fvo) throws Exception;
 	
 	//글 수정
 	String modifyFAQ(FAQBoardVO fvo) throws Exception;

@@ -1,14 +1,17 @@
 package net.koreate.greatescape.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.board.service.BoardService;
 import net.koreate.greatescape.board.vo.FAQBoardVO;
+import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
 import net.koreate.greatescape.utils.SearchCriteria;
 
@@ -32,13 +36,22 @@ public class BoardController {
 	public void notice() {}
 	
 	private final BoardService bs;
-
-	@PostMapping("faq/write")
-	public String writeFAQ(FAQBoardVO fvo, RedirectAttributes rttr) throws Exception {
-		bs.writeFAQ(fvo);
-		rttr.addAttribute("faq",fvo);
-		System.out.println("fvo: "+fvo);
-		return "redirect:board/faq";
+	
+	
+	
+	@GetMapping("faqWrite")
+	public String faqWrite() throws Exception{
+		return "board/faqWrite";
+	}
+	
+	@PostMapping("faqWrite")
+	public String writeFAQ( @RequestParam("faq_category")String faq_category, 
+			@RequestParam("faq_title")String faq_title, @RequestParam("faq_content")String faq_content) throws Exception {
+		
+		FAQBoardVO vo= new FAQBoardVO(faq_category,faq_title,faq_content);
+		bs.writeFAQ(vo);
+		
+		return "redirect:faq";
 	}
 
 	@GetMapping("faq")
@@ -54,23 +67,26 @@ public class BoardController {
 		return mav;
 	}
 	
-	@GetMapping("faq/*")
-	public ModelAndView categoryList(ModelAndView mav, FAQBoardVO vo, SearchCriteria cri) throws Exception {
-		if(vo.getFaq_category().equals("해외여행")) {
-			mav.setViewName("faq?category=trip");
-		} else if(vo.getFaq_category().equals("항공")) {
-			mav.setViewName("faq?category=airline0");
-		} else if(vo.getFaq_category().equals("예약/결제")) {
-			mav.setViewName("faq?category=reservation");
-		} else if(vo.getFaq_category().equals("여권/비자/환전")) {
-			mav.setViewName("faq?category=passport");
-		} else if(vo.getFaq_category().equals("홈페이지/기타")) {
-			mav.setViewName("faq?category=other");
+	@ResponseBody
+	@PostMapping("categoryList")
+	public ResponseEntity<Map<String, Object>> categoryList(SearchCriteria cri, FAQBoardVO vo){
+		ResponseEntity<Map<String, Object>> entity= null;
+		try {
+			Map<String,Object> map= new HashMap<>();
+			System.out.println(vo);
+			List<FAQBoardVO> categoryList = bs.categoryList(cri, vo.getFaq_category());
+			map.put("categoryList", categoryList);
+			PageMaker categoryPm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
+			map.put("categoryPm", categoryPm);
+			
+			entity= new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception e) {
+			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		System.out.println(entity);
 		
-		return mav;
+		return entity;
 	}
-	
 	
 	
 }

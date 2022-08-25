@@ -1,13 +1,40 @@
 @font-face {
-     font-family: 'S-CoreDream-3Light';
-     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
 body {
-	padding-top: 100px;
-	font-family: 'S-CoreDream-3Light', 'Nanum Gothic', sans-serif;
+    padding-top: 72px;
+    font-family: 'Pretendard-Regular', 'S-CoreDream-3Light', 'Nanum Gothic', sans-serif;
 }
+
 footer {
-	font-size: 12px;
+    background-color: #fafbfc;
+    font-size: 12px;
+}
+
+#mainNavbar {
+    background-color: #fafbfc;
+}
+
+footer .btn-outline-secondary {
+    --bs-btn-color: #rgba(0, 0, 0, 0.9);
+    --bs-btn-border-color: none;
+    --bs-btn-hover-color: #rgba(0, 0, 0, 0.9);
+    --bs-btn-hover-bg: #ccdbfd;
+    --bs-btn-hover-border-color: none;
+}
+
+.input-group-text {
+    background-color: #0d6dfdd0;
+    color: #fff;
 }
