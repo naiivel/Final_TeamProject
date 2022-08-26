@@ -1,5 +1,7 @@
 package net.koreate.greatescape.product.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,17 +60,21 @@ public class ProductServiceRESTImpl implements ProductServiceREST {
 	}
 	
 	@Override
-	public ProductVO read(int product_num) throws Exception {
+	public ProductVO read(int product_num) {
 		return dao.read(product_num);
 	}
 
 	@Override
 	@Transactional
-	public String regist(ProductVO vo, ProductDetailVO dvo) throws Exception {
-		int result = dao.create(vo);
-		result = dao.createDetail(dvo);
-		String message = (result != 0) ? "SUCCESS" : "FAILED";
-		return message;
+	public int createProduct(FullProductDTO dto, String departure, String arrive) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		dto.setProduct_departure(formatter.parse(departure));
+		dto.setProduct_arrive(formatter.parse(arrive));
+		int result = 0;
+		result += dao.createProduct(dto);
+		result += dao.createDetail(dto);
+		dao.getLastInsertId();
+		return result;
 	}
 
 	@Override

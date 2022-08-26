@@ -1,6 +1,8 @@
 package net.koreate.greatescape.product.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.product.service.ProductServiceREST;
+import net.koreate.greatescape.product.vo.FullProductDTO;
 import net.koreate.greatescape.product.vo.ProductDetailVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
@@ -42,16 +45,9 @@ public class ProductControllerREST {
 		return "/products/index";
 	}
 	
-	@GetMapping("/{id}")
-	public String detail(@PathVariable String id, Model model) {
-		model.addAttribute("product", ps.getFullProductById(id));
-		return "/products/detail";
-	}
-	
-	@GetMapping("/{id}/reservation")
-	public String renderReservationForm(@PathVariable String id, Model model) {
-		model.addAttribute("product", ps.getProductById(id));
-		return "/products/reserve";
+	@GetMapping("/new")
+	public String renderNewForm() {
+		return "products/new";
 	}
 	
 	@GetMapping("/search")
@@ -62,6 +58,20 @@ public class ProductControllerREST {
 		List<ProductVO> list = ps.getListBySearch(country, departure, plan, seat, city, money);
 		listSplitAndAdd(model, list);
 		return "/products/index";
+	}
+	
+	@GetMapping("/{id}")
+	public String detail(@PathVariable String id, Model model) {
+		FullProductDTO product = ps.getFullProductById(id);
+		if (product == null) return "/products/index";
+		model.addAttribute("product", product);
+		return "/products/detail";
+	}
+	
+	@GetMapping("/{id}/reservation")
+	public String renderReservationForm(@PathVariable String id, Model model) {
+		model.addAttribute("product", ps.getProductById(id));
+		return "/products/reserve";
 	}
 	
 	@GetMapping("/continent/{continent}")
@@ -79,39 +89,37 @@ public class ProductControllerREST {
 		return list;
 	}
 	
-	// 상품 등록 페이지 이동(관리자 전용)
-	@GetMapping("/new")
-	public String register() throws Exception {
-		return "products/new";
+	@PostMapping("")
+	public String createProduct(FullProductDTO dto, String departure, String arrive, RedirectAttributes rttr) throws UnsupportedEncodingException, ParseException {
+		String result = ps.createProduct(dto, departure, arrive);
+		rttr.addFlashAttribute("flashMessage", result);
+		return "redirect:/products/" + ;
 	}
-
-	// 상품 등록 페이지 : 상품 등록(관리자 전용)
-	@PostMapping("/new")
-	public String register(String product_continent, String product_name, String product_country, String product_city,
-			int product_adult, int product_minor, String product_airplane, String product_departure,
-			String product_arrive, String product_seat, ProductDetailVO dvo, RedirectAttributes rttr) throws Exception {
-		ProductVO vo = new ProductVO();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		vo.setProduct_continent(product_continent);
-		vo.setProduct_name(product_name);
-		vo.setProduct_country(product_country);
-		vo.setProduct_city(product_city);
-		vo.setProduct_adult(product_adult);
-		vo.setProduct_minor(product_minor);
-		vo.setProduct_airplane(product_airplane);
-		vo.setProduct_departure(formatter.parse(product_departure));
-		vo.setProduct_arrive(formatter.parse(product_arrive));
-		vo.setProduct_seat(Integer.parseInt(product_seat));
-
-		String result = ps.regist(vo, dvo);
-		rttr.addFlashAttribute("result", result);
-		String encodedParam = URLEncoder.encode(product_continent, "UTF-8");
-		return "redirect:/products/" + encodedParam;
-	}
+//	public String register(String product_continent, String product_name, String product_country, String product_city,
+//			int product_adult, int product_minor, String product_airplane, String product_departure,
+//			String product_arrive, String product_seat, ProductDetailVO dvo, RedirectAttributes rttr)  {
+//		ProductVO vo = new ProductVO();
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//		vo.setProduct_continent(product_continent);
+//		vo.setProduct_name(product_name);
+//		vo.setProduct_country(product_country);
+//		vo.setProduct_city(product_city);
+//		vo.setProduct_adult(product_adult);
+//		vo.setProduct_minor(product_minor);
+//		vo.setProduct_airplane(product_airplane);
+//		vo.setProduct_departure(formatter.parse(product_departure));
+//		vo.setProduct_arrive(formatter.parse(product_arrive));
+//		vo.setProduct_seat(Integer.parseInt(product_seat));
+//
+//		String result = ps.regist(vo, dvo);
+//		rttr.addFlashAttribute("result", result);
+//		String encodedParam = URLEncoder.encode(product_continent, "UTF-8");
+//		return "redirect:/products/" + encodedParam;
+//	}
 
 	// 예약하기 페이지 이동
 	@GetMapping("/reserve")
-	public String reserve(int product_num, Model model) throws Exception {
+	public String reserve(int product_num, Model model) {
 		ProductVO vo = ps.read(product_num);
 		model.addAttribute("board", vo);
 		return "products/reserve";
@@ -120,25 +128,26 @@ public class ProductControllerREST {
 	// 예약완료 후 페이지 이동
 	@PostMapping("/reserve")
 	public String reservation(HttpSession session, int product_num, ReservationVO rvo, RedirectAttributes rttr)
-			throws Exception {
+			 {
 		MemberVO vo = (MemberVO) session.getAttribute("userInfo");
 		int result = ps.reserve(product_num, rvo);
 		if (result > 0) {
-			rttr.addFlashAttribute("msg", "예약이 완료되었습니다.");
+			rttr.addFlashAttribute("flashMessage", "예약이 완료되었습니다.");
 			if (vo != null) {
 				return "redirect:/member/reservDetail";
 			} else {
 				return "redirect:/nomember/show";
 			}
 		} else {
-			rttr.addFlashAttribute("msg", "예약 중 오류가 발생하였습니다.");
+			rttr.addFlashAttribute("flashMessage", "예약 중 오류가 발생하였습니다.");
 			return "redirect:/products/reserve";
 		}
 	}
 	
 	@ExceptionHandler
-	public String exceptionHandler(Exception e) {
+	public String exceptionHandler(Exception e, RedirectAttributes rttr) {
 		e.printStackTrace();
+		rttr.addFlashAttribute("flashMessage", "예상치 못한 오류가 발생하였습니다! 관리자에게 문의하여 주세요!");
 		return "index";
 	}
 	

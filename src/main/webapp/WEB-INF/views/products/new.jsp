@@ -3,59 +3,16 @@
 <%@ include file="../common/header.jsp" %>
 <section class="container">
     <div class="row">
-        <div class="col-md-2">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <h3 class="card-title text-center m-0">아시아</h3>
-                </div>
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h4 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                나라이름1
-                            </button>
-                        </h4>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                지역1
-                            </div>
-                        </div>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                지역2
-                            </div>
-                        </div>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                지역3
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h4 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                나라이름2
-                            </button>
-                        </h4>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                지역1
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="col-md-10 mb-2">
-            <form action="new" method="post">
-            	<input type="text" name="product_continent" value="${param.continent}"/>
-            	<input type="text" name="product_name" />
+            <form action="${contextPath}/products" method="post">
+                <select name="product_continent">
+                    <option value="아시아">아시아</option>
+                    <option value="유럽">유럽</option>
+                    <option value="아메리카">아메리카</option>
+                    <option value="오세아니아">오세아니아</option>
+                </select>
+                <label for="product_name">상품명</label>
+                <input type="text" name="product_name" id="product_name" />
                 <h3 class="mb-4">여행상품 등록</h3>
                 <div class="row">
                     <div class="col-md-6">
@@ -94,11 +51,11 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">출발일</span>
-                            <input type="date" class="form-control" id="floatingInputGroup5" name="product_departure">
+                            <input type="date" class="form-control" id="floatingInputGroup5" name="departure">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">도착일</span>
-                            <input type="date" class="form-control" id="floatingInputGroup6" name="product_arrive">
+                            <input type="date" class="form-control" id="floatingInputGroup6" name="arrive">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">잔여좌석</span>
@@ -126,9 +83,4 @@
         </div>
     </div>
 </section>
-<script>
-/* 	$(".regist").click(function(){
-		location.href = "${contextPath}/product/reserve?product_continent=" + $(this).attr("data-num");
-	}); */
-</script>
 <%@ include file="../common/footer.jsp" %>

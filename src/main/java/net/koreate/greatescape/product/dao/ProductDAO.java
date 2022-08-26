@@ -33,14 +33,19 @@ public interface ProductDAO {
 	@SelectProvider(type = ProductProvider.class, method = "getListBySearch")
 	List<ProductVO> getListBySearch(Map<String, String> map);
 
+	@Insert("INSERT INTO tbl_product VALUES (NULL, #{product_continent}, #{product_country}, #{product_city}, #{product_name}, #{product_airplane}, #{product_departure}, #{product_arrive}, (Date(#{product_arrive}) - Date(#{product_departure})), #{product_adult}, #{product_minor}, #{product_seat})")
+	int createProduct(FullProductDTO vo);
+	
+	@Insert("INSERT INTO tbl_detail VALUES (NULL, LAST_INSERT_ID(), #{detail_info}, #{detail_schedule}, #{detail_title_image})")
+	int createDetail(FullProductDTO vo);
+	
+	
 	@Select("SELECT * FROM tbl_product WHERE product_num = #{product_num}")
 	ProductVO read(int product_num);
 	
-	@Insert("INSERT INTO tbl_product(product_continent,product_country,product_city,product_name,product_airplane,product_departure,product_arrive,product_plan,product_adult,product_minor,product_seat) VALUES(#{product_continent},#{product_country},#{product_city},#{product_name},#{product_airplane},#{product_departure},#{product_arrive}, (Date(#{product_arrive}) - Date(#{product_departure})), #{product_adult},#{product_minor},#{product_seat})")
-	int create(ProductVO vo) throws Exception;
 	
-	@Insert("INSERT INTO tbl_detail VALUES (NULL, LAST_INSERT_ID(), #{detail_info}, #{detail_schedule}, #{detail_title_image})")
-	int createDetail(ProductDetailVO vo) throws Exception;
+	
+	
 	
 	//예약 등록
 	@Insert("INSERT INTO tbl_reservation VALUES (NULL, #{rvo.rev_name}, #{rvo.rev_birth}, #{rvo.rev_phone}, #{rvo.rev_email}, #{num}, #{rvo.rev_adult}, #{rvo.rev_minor})")
@@ -49,4 +54,7 @@ public interface ProductDAO {
 	// 좌석 수 줄이기
 	@Update("UPDATE tbl_product SET product_seat = product_seat - ( #{rvo.rev_adult} + #{rvo.rev_minor} )")
 	int seatMinus(Map<String, Object> map);
+
+	@Select()
+	int getLastInsertId();
 }
