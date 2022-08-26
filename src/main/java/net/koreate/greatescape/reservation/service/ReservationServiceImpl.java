@@ -13,8 +13,14 @@ public class ReservationServiceImpl implements ReservationService {
 	private final ReservationDAO rdao;
 
 	@Override
-	public ProductVO read(int product_num) {
-		return null;
+	public void reserve(int product_num) {
+		// TODO Auto-generated method stub
+		
 	}
+
+//	@Override
+//	public ProductVO read(int product_num) {
+//		return null;
+//	}
 	
 }

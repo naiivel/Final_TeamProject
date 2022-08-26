@@ -7,10 +7,10 @@ import net.koreate.greatescape.reservation.vo.ReservationVO;
 public interface ReservationDAO {
 
 	//예약 등록
-	@Insert()
+//	@Insert()
 	int reserve(ReservationVO vo) throws Exception;
 	
-	@Insert()
+//	@Insert()
 	int reserveDetail() throws Exception;
 	
 }

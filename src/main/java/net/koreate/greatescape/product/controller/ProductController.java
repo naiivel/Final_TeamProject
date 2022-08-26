@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
-import net.koreate.greatescape.member.service.MemberService;
 import net.koreate.greatescape.product.service.ProductService;
 import net.koreate.greatescape.product.vo.ProductDetailVO;
 import net.koreate.greatescape.product.vo.ProductVO;
@@ -111,4 +110,11 @@ public class ProductController {
 		return "product/reserve";
 	}
 	
+	//예약완료 후 페이지 이동
+		@PostMapping("/reserve")
+		@ResponseBody
+		public String reservation(int product_num , ReservationVO rvo) throws Exception{
+			ps.reserve(product_num);
+			return "성공";
+		}
 }
