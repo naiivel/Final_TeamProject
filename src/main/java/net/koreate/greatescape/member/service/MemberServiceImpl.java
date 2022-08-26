@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.dao.MemberDAO;
 import net.koreate.greatescape.member.vo.MemberVO;
+import net.koreate.greatescape.member.vo.SalesVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
 import net.koreate.greatescape.utils.Criteria;
@@ -143,6 +144,17 @@ public class MemberServiceImpl implements MemberService {
 		mdao.createAdmin(vo);
 		
 	}
+
+	@Override
+	public int countContinent(String continent) {
+		return mdao.getCountContinent(continent);
+	}
+
+	@Override
+	public List<SalesVO> totalSales(String continent) {
+		return mdao.getTotalSales(continent);
+	}
+
 	
 	
 	

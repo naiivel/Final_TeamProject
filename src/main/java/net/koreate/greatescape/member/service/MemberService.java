@@ -3,6 +3,7 @@ package net.koreate.greatescape.member.service;
 import java.util.List;
 
 import net.koreate.greatescape.member.vo.MemberVO;
+import net.koreate.greatescape.member.vo.SalesVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
 import net.koreate.greatescape.utils.Criteria;
@@ -70,6 +71,13 @@ public interface MemberService {
 
 	// 관리자 계정 생성
 	void createAdmin(MemberVO vo);
+	
+	// 대륙별 상품 판매 개수 검색
+	int countContinent(String continent);
+
+	// 대륙별 상품 판매 총액을 위한 정보검색
+	List<SalesVO> totalSales(String asia);
+
 
 	
 	
