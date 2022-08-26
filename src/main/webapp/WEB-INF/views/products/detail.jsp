@@ -73,6 +73,9 @@
 				<div class="col d-flex justify-content-around">
 					<a href="${contextPath}/products/${product.product_num}/reservation" class="btn btn-primary" id="reserveBtn">예약하기</a>
 					<a href="${contextPath}/board/service" class="btn btn-primary" id="qnaBtn">문의하기</a>
+					<c:if test="${userInfo.member_id eq 'master'}">
+						<a href="${contextPath}/products/${product.product_num}/update" class="btn btn-primary" id="reserveBtn">상품 수정</a>
+					</c:if>
 				</div>
 			</div>
 		</div>

@@ -39,22 +39,15 @@ public interface ProductDAO {
 	@Insert("INSERT INTO tbl_detail VALUES (NULL, LAST_INSERT_ID(), #{detail_info}, #{detail_schedule}, #{detail_title_image})")
 	int createDetail(FullProductDTO vo);
 	
-	
-	@Select("SELECT * FROM tbl_product WHERE product_num = #{product_num}")
-	ProductVO read(int product_num);
-	
-	
-	
-	
-	
-	//예약 등록
 	@Insert("INSERT INTO tbl_reservation VALUES (NULL, #{rvo.rev_name}, #{rvo.rev_birth}, #{rvo.rev_phone}, #{rvo.rev_email}, #{num}, #{rvo.rev_adult}, #{rvo.rev_minor})")
 	int reserve(Map<String, Object> map);
 	
-	// 좌석 수 줄이기
 	@Update("UPDATE tbl_product SET product_seat = product_seat - ( #{rvo.rev_adult} + #{rvo.rev_minor} )")
 	int seatMinus(Map<String, Object> map);
 
-	@Select()
+	@Select("SELECT LAST_INSERT_ID()")
 	int getLastInsertId();
+
+	@Update("UPDATE tbl_product AS p, tbl_detail AS d SET p.product_continent = #{product_continent}, p.product_country = #{product_country}, p.product_city = #{product_city}, p.product_name = #{product_name}, p.product_airplane = #{product_airplane}, p.product_departure = #{product_departure}, p.product_arrive = #{product_arrive}, p.product_plan = (Date(#{product_arrive}) - Date(#{product_departure})), p.product_adult = #{product_adult}, p.product_minor = #{product_minor}, p.product_seat = #{product_seat}, d.detail_info = #{detail_info}, d.detail_schedule = #{detail_schedule}, d.detail_title_image = #{detail_title_image} WHERE p.product_num = #{product_num} AND d.product_num = #{product_num}")
+	int updateProduct(FullProductDTO dto);
 }

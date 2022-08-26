@@ -60,20 +60,13 @@ public class ProductServiceRESTImpl implements ProductServiceREST {
 	}
 	
 	@Override
-	public ProductVO read(int product_num) {
-		return dao.read(product_num);
-	}
-
-	@Override
 	@Transactional
 	public int createProduct(FullProductDTO dto, String departure, String arrive) throws ParseException {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		dto.setProduct_departure(formatter.parse(departure));
-		dto.setProduct_arrive(formatter.parse(arrive));
+		setDate(dto, departure, arrive);
 		int result = 0;
 		result += dao.createProduct(dto);
+		if (result == 1) dto.setProduct_num(dao.getLastInsertId());
 		result += dao.createDetail(dto);
-		dao.getLastInsertId();
 		return result;
 	}
 
@@ -84,11 +77,22 @@ public class ProductServiceRESTImpl implements ProductServiceREST {
 		map.put("num", product_num);
 		map.put("rvo", rvo);
 		int result = 0;
-		// 예약 테이블에 예약정보 추가 (이메일로 연결)
-		result = dao.reserve(map);
-		// 상품 테이블에서 좌석 수 줄이기
-		result = dao.seatMinus(map);
+		result += dao.reserve(map);
+		result += dao.seatMinus(map);
 		return result;
+	}
+
+	@Override
+	public int updateProduct(String id, FullProductDTO dto, String departure, String arrive) throws ParseException {
+		dto.setProduct_num(Integer.parseInt(id));
+		setDate(dto, departure, arrive);
+		return dao.updateProduct(dto);
+	}
+	
+	private void setDate(FullProductDTO dto, String departure, String arrive) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		dto.setProduct_departure(formatter.parse(departure));
+		dto.setProduct_arrive(formatter.parse(arrive));
 	}
 
 }

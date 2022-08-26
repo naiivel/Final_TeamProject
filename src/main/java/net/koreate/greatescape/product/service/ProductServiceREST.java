@@ -21,10 +21,10 @@ public interface ProductServiceREST {
 
 	List<ProductVO> getListBySearch(String country, String departure, String plan, String seat, String city, String money);
 	
-	ProductVO read(int product_num);
-	
 	int createProduct(FullProductDTO dto, String departure, String arrive) throws ParseException;
 
 	int reserve(int product_num, ReservationVO rvo);
+
+	int updateProduct(String id, FullProductDTO dto, String departure, String arrive) throws ParseException;
 
 }

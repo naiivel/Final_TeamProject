@@ -4,7 +4,7 @@
 <section class="container">
 	<div class="row">
 		<div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
-			<form id="reserveForm" action="${contextPath}/products/reserve" method="POST">
+			<form id="reserveForm" action="${contextPath}/products/${product.product_num}" method="POST">
 				<div class="card mb-3">
 					<div class="card-header">
 						<h3 class="card-title text-center m-0">상품 정보</h3>
@@ -14,24 +14,24 @@
 							<table class="table table-borderless" style="font-size: 1rem;">
 								<tr>
 									<th>상품명</th>
-									<td colspan="5">상품명 : ${board.product_name}</td>
+									<td colspan="5">상품명 : ${product.product_name}</td>
 								</tr>
 								<tr>
 									<th>교통편</th>
-									<td colspan="2">${board.product_airplane}</td>
+									<td colspan="2">${product.product_airplane}</td>
 									<th>여행일정</th>
-									<td colspan="2">${board.product_plan}</td>
+									<td colspan="2">${product.product_plan}</td>
 								</tr>
 								<tr>
 									<th>출발일정</th>
 
 									<td colspan="5"><fmt:formatDate
-											value="${board.product_departure}" pattern="yyyy-MM-dd" /></td>
+											value="${product.product_departure}" pattern="yyyy-MM-dd" /></td>
 								</tr>
 								<tr>
 									<th>도착일정</th>
 									<td colspan="5"><fmt:formatDate
-											value="${board.product_arrive}" pattern="yyyy-MM-dd" /></td>
+											value="${product.product_arrive}" pattern="yyyy-MM-dd" /></td>
 								</tr>
 							</table>
 						</div>
@@ -368,7 +368,6 @@
 							</p>
 							</p>
 						</div>
-
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" value=""
 								id="flexCheckDefault"> <label class="form-check-label"
@@ -416,10 +415,11 @@
 							type="String" class="form-control" id="inputEmail"
 							value="${userInfo.member_email}" name="rev_email"> 
 							<input
-							id="inputNum" type="hidden" name="product_num"
-							value="${param.product_num}" />
+							id="inputProductNum" type="hidden" name="product_num"
+							value="${product.product_num}" />
+							<input type="hidden" id="inputMemberId" name="member_id" value="${userInfo.member_id}">
 						<div class="text-center">
-									<button class="btn btn-primary reserveBtn1">예약확정</button>
+									<button id="reserveBtn" class="btn btn-primary">예약확정</button>
 							<button class="btn btn-warning">취소</button>
 						</div>
 					</div>
@@ -429,7 +429,7 @@
 	</div>
 </section>
 <script>
-$(".reserveBtn1").click(function(e) {
+$("#reserveBtn").click(function(e) {
 	e.preventDefault();
 	if (!$("#flexCheckDefault").is(":checked")) {
 		alert("이용약관에 동의해주세요.");
@@ -445,89 +445,5 @@ $(".reserveBtn1").click(function(e) {
 	if (!minor) $("#inputMinor").val("0");
 	$("#reserveForm").submit();	
 });
-
-	/* $(".reserveBtn1").click(function(e) {
-		e.preventDefault();
-		if (!$("#flexCheckDefault").is(":checked")) {
-			alert("이용약관에 동의해주세요.");
-			return;
-		}
-		if ($("#opt1").val() + $("#opt2").val() < 1) {
-			alert("인원수를 선택해주세요.");
-			return;
-		}
-		let adult = $("#inputAdult").val();
-		let minor = $("#inputMinor").val();
-		if (!adult)
-			adult = 0;
-		if (!minor)
-			minor = 0;
-
-		$.ajax({
-			type : "POST",
-			url : "${contextPath}/product/reserve",
-			data : {
-				product_num : $("#inputNum").val(),
-				rev_phone : $("#inputPhone").val(),
-				rev_name : $("#inputName").val(),
-				rev_birth : $("#inputBirth").val(),
-				rev_email : $("#inputEmail").val(),
-				rev_adult : adult,
-				rev_minor : minor
-			},
-			dataType : "json",
-			success : function(result) {
-				alert("result");
-			},
-			error : function(res) {
-				console.log(res);
-			}
-		});
-
-		location.href = "${contextPath}/member/product";
-		alert("예약이 완료되었습니다");
-	});
-
-	$(".reserveBtn2").click(function(e) {
-		e.preventDefault();
-		if (!$("#flexCheckDefault").is(":checked")) {
-			alert("이용약관에 동의해주세요.");
-			return;
-		}
-		if ($("#opt1").val() + $("#opt2").val() < 1) {
-			alert("인원수를 선택해주세요.");
-			return;
-		}
-
-		let adult = $("#inputAdult").val();
-		let minor = $("#inputMinor").val();
-		if (!adult)
-			adult = 0;
-		if (!minor)
-			minor = 0;
-		$.ajax({
-			type : "POST",
-			url : "${contextPath}/product/reserve",
-			data : {
-				product_num : $("#inputNum").val(),
-				rev_phone : $("#inputPhone").val(),
-				rev_name : $("#inputName").val(),
-				rev_birth : $("#inputBirth").val(),
-				rev_email : $("#inputEmail").val(),
-				rev_adult : adult,
-				rev_minor : minor
-			},
-			dataType : "json",
-			success : function(result) {
-				alert("ㄴㅁㅇㄻㄴㅇㄹ");
-				alert("result");
-			},
-			error : function(res) {
-				console.log("에러??");
-				console.log(res);
-			}
-		});
-
-	}); */
 </script>
 <%@ include file="../common/footer.jsp"%>

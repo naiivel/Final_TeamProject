@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -37,12 +38,25 @@ public class ProductControllerREST {
 	
 	private final ProductServiceREST ps;
 	
-	@GetMapping("")
-	public String index(Model model) {
+	@GetMapping({"/", ""})
+	public String renderIndex(Model model) {
 		List<ProductVO> list = ps.getAllList();
 		model.addAttribute("continent", "모든 상품 정보");
 		listSplitAndAdd(model, list);
 		return "/products/index";
+	}
+	
+	@PostMapping({"/", ""})
+	public String createProduct(FullProductDTO dto, String departure, String arrive, RedirectAttributes rttr) throws UnsupportedEncodingException, ParseException {
+		int result = ps.createProduct(dto, departure, arrive);
+		if (result == 2) {
+			rttr.addFlashAttribute("flashMessage", "성공적으로 상품 등록이 완료되었습니다.");
+		} else {
+			rttr.addFlashAttribute("flashMessage", "상품 등록 중 오류가 발생하였습니다.");
+		}
+		int id = dto.getProduct_num();
+		if (id != 0) return "redirect:/products/" + id;
+		return "redirect:/products/new";
 	}
 	
 	@GetMapping("/new")
@@ -61,17 +75,45 @@ public class ProductControllerREST {
 	}
 	
 	@GetMapping("/{id}")
-	public String detail(@PathVariable String id, Model model) {
+	public String renderDetail(@PathVariable String id, Model model) {
 		FullProductDTO product = ps.getFullProductById(id);
 		if (product == null) return "/products/index";
 		model.addAttribute("product", product);
 		return "/products/detail";
 	}
 	
-	@GetMapping("/{id}/reservation")
-	public String renderReservationForm(@PathVariable String id, Model model) {
-		model.addAttribute("product", ps.getProductById(id));
-		return "/products/reserve";
+	@PostMapping("/{id}")
+	public String reservation(HttpSession session, int product_num, String member_id, ReservationVO rvo, RedirectAttributes rttr) {
+		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
+		if (loginMember != null && !loginMember.getMember_id().equals(member_id)) {
+			rttr.addFlashAttribute("flashMessage", "비정상적인 접근입니다.");
+			return "redirect:/";
+		}
+		int result = ps.reserve(product_num, rvo);
+		if (result > 0) {
+			rttr.addFlashAttribute("flashMessage", "예약이 완료되었습니다.");
+			if (loginMember != null) {
+				return "redirect:/member/reservDetail";
+			} else {
+				return "redirect:/nomember/show";
+			}
+		} else {
+			rttr.addFlashAttribute("flashMessage", "예약 중 오류가 발생하였습니다.");
+			return "redirect:/products/reserve";
+		}
+	}
+	
+	@PutMapping("/{id}")
+	public String updateProduct(@PathVariable String id, FullProductDTO dto, String departure, String arrive, RedirectAttributes rttr) throws ParseException {
+		int result = ps.updateProduct(id, dto, departure, arrive);
+		String redirectURL = "redirect:/products/" + id;
+		if (result == 0) {
+			redirectURL += "/update";
+			rttr.addFlashAttribute("flashMessage", "수정 중 오류가 발생하였습니다.");
+		} else {
+			rttr.addFlashAttribute("flashMessage", "정상적으로 수정이 완료되었습니다.");
+		}
+		return redirectURL;
 	}
 	
 	@GetMapping("/continent/{continent}")
@@ -89,61 +131,18 @@ public class ProductControllerREST {
 		return list;
 	}
 	
-	@PostMapping("")
-	public String createProduct(FullProductDTO dto, String departure, String arrive, RedirectAttributes rttr) throws UnsupportedEncodingException, ParseException {
-		String result = ps.createProduct(dto, departure, arrive);
-		rttr.addFlashAttribute("flashMessage", result);
-		return "redirect:/products/" + ;
-	}
-//	public String register(String product_continent, String product_name, String product_country, String product_city,
-//			int product_adult, int product_minor, String product_airplane, String product_departure,
-//			String product_arrive, String product_seat, ProductDetailVO dvo, RedirectAttributes rttr)  {
-//		ProductVO vo = new ProductVO();
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//		vo.setProduct_continent(product_continent);
-//		vo.setProduct_name(product_name);
-//		vo.setProduct_country(product_country);
-//		vo.setProduct_city(product_city);
-//		vo.setProduct_adult(product_adult);
-//		vo.setProduct_minor(product_minor);
-//		vo.setProduct_airplane(product_airplane);
-//		vo.setProduct_departure(formatter.parse(product_departure));
-//		vo.setProduct_arrive(formatter.parse(product_arrive));
-//		vo.setProduct_seat(Integer.parseInt(product_seat));
-//
-//		String result = ps.regist(vo, dvo);
-//		rttr.addFlashAttribute("result", result);
-//		String encodedParam = URLEncoder.encode(product_continent, "UTF-8");
-//		return "redirect:/products/" + encodedParam;
-//	}
-
-	// 예약하기 페이지 이동
-	@GetMapping("/reserve")
-	public String reserve(int product_num, Model model) {
-		ProductVO vo = ps.read(product_num);
-		model.addAttribute("board", vo);
-		return "products/reserve";
-	}
-
-	// 예약완료 후 페이지 이동
-	@PostMapping("/reserve")
-	public String reservation(HttpSession session, int product_num, ReservationVO rvo, RedirectAttributes rttr)
-			 {
-		MemberVO vo = (MemberVO) session.getAttribute("userInfo");
-		int result = ps.reserve(product_num, rvo);
-		if (result > 0) {
-			rttr.addFlashAttribute("flashMessage", "예약이 완료되었습니다.");
-			if (vo != null) {
-				return "redirect:/member/reservDetail";
-			} else {
-				return "redirect:/nomember/show";
-			}
-		} else {
-			rttr.addFlashAttribute("flashMessage", "예약 중 오류가 발생하였습니다.");
-			return "redirect:/products/reserve";
-		}
+	@GetMapping("/{id}/reservation")
+	public String renderReservationForm(@PathVariable String id, Model model) {
+		model.addAttribute("product", ps.getProductById(id));
+		return "/products/reserve";
 	}
 	
+	@GetMapping("/{id}/update")
+	public String renderUpdateForm(@PathVariable String id, Model model) {
+		model.addAttribute("product", ps.getFullProductById(id));
+		return "/products/update";
+	}
+
 	@ExceptionHandler
 	public String exceptionHandler(Exception e, RedirectAttributes rttr) {
 		e.printStackTrace();

@@ -58,3 +58,15 @@
 			</div>
 		</div>
 	</nav>
+	<c:if test="${!empty flashMessage}">
+	<div class="container">
+	<div class="row">
+	<div class="col-6 offset-3">
+	<div class="alert alert-primary alert-dismissible fade show" role="alert">
+	  ${flashMessage}
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	</div>
+	</div>
+	</div>
+	</c:if>

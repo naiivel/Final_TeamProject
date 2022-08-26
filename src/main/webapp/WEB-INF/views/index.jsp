@@ -3,7 +3,6 @@
 <%@ include file="common/header.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/index.css">
 <section class="container text-center">
-	<!-- 800*400 배너 공간 시작 -->
 	<div id="carouselExampleDark" class="carousel carousel-dark slide mb-5" data-bs-ride="carousel">
 		<div class="carousel-indicators">
 			<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -42,9 +41,7 @@
 			<span class="visually-hidden">Next</span>
 		</button>
 	</div>
-	<!-- 800*400 배너 공간 끝 -->
 
-	<!-- 여행지 검색 공간 시작 -->
 	<div class="row mb-3">
 		<div class="col-1"></div>
 		<div class="col-10 row p-3">
@@ -101,12 +98,9 @@
 				</div>
 			</form>
 		</div>
-
 		<div class="col-1"></div>
 	</div>
-	<!-- 여행지 검색 공간 끝 -->
 
-	<!-- 추천 여행지 공간 시작 -->
 	<section class="row mb-3">
 		<h2 class="mb-4">최고의 여행지</h2>
 		<c:choose>
@@ -118,7 +112,7 @@
 							<div class="card-body">
 								<h5 class="card-title">${product.product_name}</h5>
 								<p class="card-text">${product.detail_info.length() > 200 ? product.detail_info.substring(0, 200) : product.detail_info}...</p>
-								<a href="${contextPath}/product/show/${product.product_num}"
+								<a href="${contextPath}/products/${product.product_num}"
 									class="btn btn-outline-secondary">바로가기</a>
 							</div>
 						</div>
@@ -140,6 +134,5 @@
 				</c:otherwise>
 		</c:choose>
 	</section>
-	<!-- 추천 여행지 공간 끝 -->
 </section>
 <%@ include file="common/footer.jsp" %>

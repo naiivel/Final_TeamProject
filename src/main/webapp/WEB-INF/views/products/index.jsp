@@ -2,13 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/product.index.css">
-<button id="newBtn">새상품등록</button>
 <c:choose>
 	<c:when test="${empty list}">
 		<section class="container d-flex flex-column justify-content-center align-items-center h-100">
 			<div class="alert alert-danger" role="alert">
 				<h4 class="alert-heading m-0">일치하는 상품 정보가 존재하지 않습니다.</h4>
 			</div>
+			<c:if test="${userInfo.member_id eq 'master'}">
+				<a id="newBtn" href="${contextPath}/products/new" class="btn btn-primary">상품 등록</a>
+			</c:if>
 		</section>
 	</c:when>
 	<c:otherwise>
@@ -16,7 +18,12 @@
 			<div class="row w-100">
 				<main class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
 					<%-- <h3 class="mb-3">${list[0].product_continent}</h3> --%>
-					<h3 class="mb-3">${continent}</h3>
+					<div>
+					<h3 class="mb-3 d-inline-block">${continent}</h3>
+					<c:if test="${userInfo.member_id eq 'master'}">
+						<a id="newBtn" href="${contextPath}/products/new" class="btn btn-sm btn-primary ms-3">상품 등록</a>
+					</c:if>
+					</div>
 					<c:forEach var="country" items="${countrySet}">
 						<div class="card mb-4">
 							<div class="card-header">
@@ -65,12 +72,12 @@
 					<div class="accordion" id="accordion">
 						<div class="accordion-item">
 							<h4 class="accordion-header" id="heading${countryNum}">
-								<button class="accordion-button <c:if test="${countryNum ne 1}">collapsed</c:if>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${countryNum}" aria-expanded="true" aria-controls="collapse${countryNum}">
+								<button class="accordion-button <c:if test=" ${countryNum ne 1}">collapsed</c:if>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${countryNum}" aria-expanded="true" aria-controls="collapse${countryNum}">
 									${country}
 								</button>
 							</h4>
 
-							<div id="collapse${countryNum}" class="accordion-collapse collapse <c:if test="${countryNum eq 1}">show</c:if>" aria-labelledby="heading${countryNum}">
+							<div id="collapse${countryNum}" class="accordion-collapse collapse <c:if test=" ${countryNum eq 1}">show</c:if>" aria-labelledby="heading${countryNum}">
 								<c:forEach var="city" items="${cityMap.get(country)}">
 									<div class="accordion-body" data-city="${city}">
 										${city}
@@ -92,13 +99,13 @@
 
 	document.querySelectorAll(".accordion-body").forEach(tag => tag.addEventListener("click", function () {
 		axios.get("${contextPath}/products/city/" + this.getAttribute("data-city"))
-		.then(function (response) {
-			let html = makeHtml(response.data);
-			main.innerHTML = html;
-		})
-		.catch(function (error) {
-			console.log(error);
-		})
+			.then(function (response) {
+				let html = makeHtml(response.data);
+				main.innerHTML = html;
+			})
+			.catch(function (error) {
+				console.log(error);
+			})
 	}));
 
 	const makeHtml = array => {
@@ -147,11 +154,5 @@
 		if (target.tagName !== "BUTTON") return;
 		location.href = "${contextPath}/products/" + target.getAttribute("data-num");
 	});
-	
-	$("#newBtn").click(function() {
-		location.href="${contextPath}/products/new?continent=${continent}";
-	});
-
-
 </script>
 <%@ include file="../common/footer.jsp" %>
