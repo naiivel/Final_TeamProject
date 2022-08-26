@@ -35,7 +35,7 @@
 					<p class="card-text">성인 : ${reservation.rev_adult*product.product_adult}원</p>
 					<p class="card-text">소인 : ${reservation.rev_minor*product.product_minor}원</p>
 					<p class="card-text">${product.product_plan - 1}박 ${product.product_plan}일</p>
-					<a href="#" class="card-link">${product.product_country} 대사관</a>
+					<a href="${embassy}" class="card-link">${product.product_country} 대사관</a>
 					<p class="card-text">
 						<small class="text-muted">작은글씨</small>
 					</p>

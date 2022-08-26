@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import net.koreate.greatescape.member.vo.MemberVO;
+import net.koreate.greatescape.member.vo.SalesVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
 import net.koreate.greatescape.utils.Criteria;
@@ -104,5 +105,20 @@ public interface MemberDAO {
 	@Insert("INSERT INTO tbl_member(member_id,member_pw,member_name,member_gender,member_birth,member_phone,member_email,member_master) "
 			+ "VALUES(#{member_id},#{member_pw},#{member_name},#{member_gender},#{member_birth},#{member_phone},#{member_email},'Y')")
 	void createAdmin(MemberVO vo);
+
+	// 대륙조건으로 상품 팔린 개수 검색
+	@Select("SELECT count(*) FROM tbl_product NATURAL JOIN tbl_reservation WHERE product_continent = #{continent}")
+	int getCountContinent(String continent);
+
+	// 대륙 조건으로 팔린 상품 금액계산용 정보 검색
+	@Select("SELECT product_adult,product_minor,rev_adult,rev_minor FROM tbl_product NATURAL JOIN tbl_reservation WHERE product_continent = #{continent}")
+	List<SalesVO> getTotalSales(String continent);
+
 	
 }
+
+
+
+
+
+

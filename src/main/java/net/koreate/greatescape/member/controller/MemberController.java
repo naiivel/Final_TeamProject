@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.service.MemberService;
+import net.koreate.greatescape.member.vo.EmbassyVO;
 import net.koreate.greatescape.member.vo.MemberVO;
+import net.koreate.greatescape.member.vo.SalesVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
 import net.koreate.greatescape.utils.Criteria;
@@ -192,10 +194,17 @@ public class MemberController {
 	// (회원)예약내역 상세보기
 	@GetMapping("/reservDetail")
 	@Transactional
-	public String reservDetail(HttpSession session,Model model)throws Exception{
+	public String reservDetail(HttpSession session,Model model,EmbassyVO url)throws Exception{
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
 		ReservationVO reserv = ms.findpeople(loginMember);
 		String tripInfo = ms.findtripInfo(loginMember.getProduct_num());
+		
+		ProductVO product = ms.findProduct(loginMember.getProduct_num());
+		
+		String embassy = url.findEmbassy(product.getProduct_country());
+		System.out.println(embassy);
+		
+		model.addAttribute("embassy",embassy);
 		
 		model.addAttribute("reservation",reserv);
 		model.addAttribute("tripInfo",tripInfo);
@@ -402,11 +411,16 @@ public class MemberController {
 	// (관리자)회원 예약내역 보기
 	@GetMapping("memberReserv")
 	@Transactional
-	public String memberReserv(MemberVO vo,Model model) throws Exception{
+	public String memberReserv(MemberVO vo,Model model,EmbassyVO url) throws Exception{
 		MemberVO member = ms.memberInfo(vo.getMember_num());
 		ProductVO product = ms.findProduct(member.getProduct_num());
 		ReservationVO reserv = ms.findpeople(member);
 		String tripInfo = ms.findtripInfo(member.getProduct_num());
+		
+		String embassy = url.findEmbassy(product.getProduct_country());
+		System.out.println(embassy);
+		
+		model.addAttribute("embassy",embassy);
 		
 		model.addAttribute("member",member);
 		model.addAttribute("product",product);
@@ -428,6 +442,65 @@ public class MemberController {
 	public String newAdmin(MemberVO vo) throws Exception{
 		ms.createAdmin(vo);
 		return "redirect:/member/adminPage";
+	}
+	
+	// 매출페이지 이동
+	@GetMapping("sales")
+	public String sales(Model model) throws Exception{
+		// 대륙별 상품 판매 개수
+		String asia = "아시아";
+		String america = "아메리카";
+		String oseania = "오세아니아";
+		String europe = "유럽";
+
+		
+		int countAsia = ms.countContinent(asia);
+		int countAmerica = ms.countContinent(america);
+		int countOseania = ms.countContinent(oseania);
+		int countEurope = ms.countContinent(europe);
+		
+		model.addAttribute("countAsia",countAsia);
+		model.addAttribute("countAmerica",countAmerica);
+		model.addAttribute("countOseania",countOseania);
+		model.addAttribute("countEurope",countEurope);
+		
+		// 대륙별 상품 판매 총액
+		List<SalesVO> asiaSales = ms.totalSales(asia);
+		List<SalesVO> americaSales = ms.totalSales(america);
+		List<SalesVO> oseaniaSales = ms.totalSales(oseania);
+		List<SalesVO> europeSales = ms.totalSales(europe);
+		
+		int totalAsia = 0;
+		int totalAmerica = 0;
+		int totalOseania = 0;
+		int totalEurope = 0;
+		
+		for(SalesVO a : asiaSales) {
+			totalAsia = a.getProduct_adult()*a.getRev_adult()+a.getProduct_minor()*a.getRev_minor();
+		}
+		
+		for(SalesVO am : americaSales) {
+			totalAmerica = am.getProduct_adult()*am.getRev_adult()+am.getProduct_minor()*am.getRev_minor();
+		}
+		
+		for(SalesVO o : oseaniaSales) {
+			totalOseania = o.getProduct_adult()*o.getRev_adult()+o.getProduct_minor()*o.getRev_minor();
+		}
+		
+		for(SalesVO e : europeSales) {
+			totalEurope = e.getProduct_adult()*e.getRev_adult()+e.getProduct_minor()*e.getRev_minor();
+		}
+		
+		int totalSales = totalAsia+totalAmerica+totalEurope+totalOseania;
+		
+		model.addAttribute("asiaSales", totalAsia);
+		model.addAttribute("americaSales", totalAmerica);
+		model.addAttribute("oseaniaSales", totalOseania);
+		model.addAttribute("europeSales", totalEurope);
+		model.addAttribute("totalSales",totalSales);
+		 
+
+		return "admin/money";
 	}
 }	
 
