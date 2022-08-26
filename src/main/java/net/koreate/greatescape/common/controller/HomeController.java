@@ -104,5 +104,6 @@ public class HomeController {
 //	
 //	@GetMapping("/nomember/show")
 //	public void nomemberShow() {}
+
 	
 }

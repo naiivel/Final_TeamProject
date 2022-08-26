@@ -84,8 +84,8 @@
 			</div>
 			<div class="row">
 				<div class="col d-flex justify-content-around">
-					<button class="btn btn-primary">예약하기</button>
-					<button class="btn btn-primary">문의하기</button>
+					<button id="reserveBtn" class="btn btn-primary">예약하기</button>
+					<button id="qnaBtn" class="btn btn-primary">문의하기</button>
 				</div>
 			</div>
 		</div>
@@ -104,26 +104,12 @@
 	</div>
 </section>
 <script>
+	$("#reserveBtn").click(function(){
+		location.href = "${contextPath}/product/reserve?product_num=${product.product_num}";
+	});
+	
+	$("#qnaBtn").click(function(){
+		location.href = "${contextPath}/board/service";
+	});
 </script>
-
-<!-- 
-	product_num;
-	product_continent;
-	product_country;
-	product_city;
-	product_name;
-	product_airplane;
-	product_departure;
-	product_arrive;
-	product_plan;
-	product_adult;
-	product_minor;
-	product_seat;
-
-	product_num;
-	detail_info;
-	schedule;
-	title_image;
-
- -->
 <%@ include file="../common/footer.jsp" %>
