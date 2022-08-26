@@ -2,10 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../common/header.jsp"%>
+<style>
+txt-hlight{
+	background: yellow;
+}
+</style>
 
 
 <section class="container">
-
 	<div class="row">
 		<div class="col-md-2">
 			<div class="card mb-3">
@@ -51,15 +55,16 @@
 						id="other">홈페이지/기타</button>
 				</div>
 			</div>
+			<div id="listDiv">
 			<c:set var="number" value="0" />
 			<c:choose>
 				<c:when test="${list ne null }">
 					<c:forEach var="faq" items="${list}">
 						<c:set var="number" value="${number+=1}" />
-						<div class="accordion  mb-3" id="accordionPanelsStayOpenExample">
+						<div class="accordion mb-3" id="accordionPanelsStayOpenExample">
 							<div class="accordion-item">
 								<h2 class="accordion-header" id="panelsStayOpen-heading-${number}">
-									<button class=" accordion-button collapsed" type="button" data-bs-toggle="collapse"
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 										data-bs-target="#panelsStayOpen-collapse-${number}" aria-controls="panelsStayOpen-collapse-${number}">
 										${faq.faq_category}&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q. ${faq.faq_title }
 									</button>
@@ -76,6 +81,8 @@
 						<h1>게시글이 없습니다.</h1>
 				</c:otherwise>
 			</c:choose>
+			</div>
+			<div id="paging">
 			<nav id="allPaging" aria-label="Page navigation mb-3">
 				<ul class="pagination justify-content-center">
 					<c:if test="${pm.first}">
@@ -102,12 +109,13 @@
 					</c:if>
 					<c:if test="${pm.last}">
 						<li class="page-item"><a class="page-link"
-							href="${contextPath}/board/faq/${pm.maxPage}"
+							href="${contextPath}/board/faq/${pm.makeQuery(pm.maxPage)}"
 							aria-label="Previous"> <span aria-hidden="true">&raquo;</span></a>
 						</li>
 					</c:if>
 				</ul>
 			</nav>
+			</div>
 			<c:if test="${userInfo.member_master eq 'Y'}">
 				<div class="text-end mb-3">
 					<button class="btn btn-outline-secondary" id="addBtn">추가하기</button>
@@ -142,7 +150,7 @@
 	$("#trip").on("click", function() {
 		$(".accordion").hide();
 		$("#allPaging").hide();
-		var html="";
+		
 		var faq_category = $(this).val();
 		console.log("faq_category: ", faq_category);
 		$.ajax({
@@ -156,6 +164,26 @@
 				console.log(data);
 				console.log(data.categoryList);
 				console.log(data.categoryPm);
+				var str="";
+				str += "<c:if test='"+${data.categoryList ne null }+"'>";
+				str += "<c:forEach var='cgfaq' items='"+${data.categoryList}+"'>";
+				str += "<c:set var='number' value="+${number+=1}+" />";
+				str +=	"<div class='accordion mb-3' id='accordionPanelsStayOpenExample'>";
+				str +=	"<div class='accordion-item'>";
+				str +=	"<h2 class='accordion-header' id='panelsStayOpen-heading-"+${number}+"'>";
+				str +=	"<button class='accordion-button collapsed' type='button' data-bs-toggle='collapse'";
+				str +=	"data-bs-target='#panelsStayOpen-collapse-"+${number}+"' aria-controls='panelsStayOpen-collapse-"+${number}+"'>";
+				str +=	""+${cgfaq.faq_category}+"&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q. "+${cgfaq.faq_title}+"</button></h2>";
+				str +=	"<div id='panelsStayOpen-collapse-'"+${number}+" class='accordion-collapse collapse'";
+				str +=	"class='accordion-collapse collapse' aria-labelledby='panelsStayOpen-heading-"+${number}+"'>";
+				str += "<div class='accordion-body'>A. "+${cgfaq.faq_content }+"</div>";
+				str += "</div>";
+				str += "</div>";
+				str += "</div>";
+				str += "</c:forEach></c:if>";
+				$("#listDiv").append(str);
+				console.log(str);
+				$("#listDiv").append(data.categoryList);
 			},
 			error : function(err) {
 				console.log("응 안돼 돌아가");
@@ -265,11 +293,6 @@
 
 	});
 
-	$("#button-addon2").click(function() {
-
-		var keyword = $("#keyword").val();
-		console.log("kw: " + keyword);
-		location.href = "${contextPath}/board/faq";
-	});
+	
 </script>
 <%@ include file="../common/footer.jsp"%>

@@ -50,16 +50,6 @@
 		var faq_content= $("#floatingTextarea").val();
 		
 		console.log("faq_category: ", faq_category);
-	/* 	$.ajax({
-			url:"${contextPath}/board/faqWrite", type:"POST", dataType:"json", 
-			data: {"faq_category": faq_category , "faq_title": faq_title, "faq_content": faq_content },
-			success:function(data){
-				console.log(data);
-			},error:function(err){
-				console.log("응 안돼 돌아가");
-			}
-		});
-	 */	
 		$.ajax({
 			url : "${contextPath}/board/faqWrite", type : "POST",data : $("#writeForm").serialize(), dataType:"json",
 			success : function(data) {

@@ -106,7 +106,7 @@ public class MemberController {
 		return "member/find";
 	}
 	
-
+/*
 	// 아이디 찾기 시도
 	@PostMapping("findInfo")
 	@ResponseBody
@@ -117,10 +117,10 @@ public class MemberController {
 		if(findMember != null) {
 			result = 1;
 			model.addAttribute("findMember",findMember);
-		}
-		
+		}	
 		return result;
 	}
+*/	
 	// 계정정보 찾기 시도
 	@PostMapping("findInfo")
 	@ResponseBody
