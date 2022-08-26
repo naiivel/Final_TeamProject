@@ -57,8 +57,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public String reserve(ProductVO vo) throws Exception {
-		
+	public String reserve(int product_num) throws Exception {
 		return null;
 	}
 
