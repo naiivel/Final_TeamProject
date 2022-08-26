@@ -1,31 +1,31 @@
 package net.koreate.greatescape.reservation.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
+import net.koreate.greatescape.product.service.ProductService;
+import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.service.ReservationService;
+import net.koreate.greatescape.reservation.vo.ReservationVO;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("reservation")
+@RequestMapping("product")
 public class ReservationController {
 
 	private final ReservationService rs;
-	
-	//예약하기 페이지이동
-	@GetMapping("reservation")
-	public String reservatin() {
+	private final ProductService ps;
 		
-		return "reservation/reservation";
-	}
-	
-	//질문과 답변 페이지 이동(문의하기 클릭 시)
-	@GetMapping("qna")
-	public String qna() {
-		
-		return "reservation/qna";
+	//예약완료 후 페이지 이동
+	@PostMapping("/reserve")
+	@ResponseBody
+	public String reservation(int product_num , ReservationVO rvo) throws Exception{
+		rs.reserve(product_num);
+		return "성공";
 	}
 	
 }

@@ -13,25 +13,23 @@
             <table class="table table-borderless" style="font-size: 1rem;">
               <tr>
                 <th>상품명</th>
-                <td colspan="5">자바와 함께하는 개발여행</td>
+                <td colspan="5">상품명 : ${board.product_name}</td>
               </tr>
               <tr>
                 <th>교통편</th>
-                <td colspan="2">대한항공</td>
+                <td colspan="2">${board.product_airplane}</td>
                 <th>여행일정</th>
-                <td colspan="2">아시아 일본 [3박 4일]</td>
+                <td colspan="2">${board.product_plan}</td>
               </tr>
               <tr>
                 <th>출발일정</th>
-                <td colspan="5">출발 2022.09.01 (수) 14:45 | <span class="text-muted" style="font-size: 0.95rem;">현지기준 도착시간
-                    2022.09.02 (수)
-                    16:50</span></td>
+     
+                <td colspan="5"><fmt:formatDate value="${board.product_departure}" pattern="yyyy-MM-dd" />
+                </td>
               </tr>
               <tr>
                 <th>도착일정</th>
-                <td colspan="5"><span class="text-muted" style="font-size: 0.95rem;">출발 2022.09.01 (수)
-                    14:45</span> | 도착 2022.09.02 (수)
-                  16:50</td>
+                <td colspan="5"><fmt:formatDate value="${board.product_arrive}" pattern="yyyy-MM-dd" /></td>
               </tr>
             </table>
           </div>
@@ -316,6 +314,7 @@
             </p>
             </p>
           </div>
+          <form id="reserveForm" action="">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
             <label class="form-check-label" for="flexCheckDefault">
@@ -329,32 +328,43 @@
           <h3 class="card-title text-center m-0">예약</h3>
         </div>
         <div class="card-body">
-          <form action="">
             <div class="mb-3 row">
               <label for="" class="col-sm-2 col-form-label">인원수</label>
               <div class="col-sm-10 row">
                 <div class="col-md-6 row">
                   <label for="opt1" class="col-sm-4 col-form-label">성인</label>
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="opt1">
+                    <input id="inputAdult" type="number" class="form-control" id="opt1" name="rev_adult">
                   </div>
                 </div>
                 <div class="col-md-6 row">
                   <label for="opt2" class="col-sm-4 col-form-label">소인</label>
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="opt2">
+                    <input id="inputMinor" type="number" class="form-control" id="opt2" name="rev_minor">
                   </div>
                 </div>
               </div>
             </div>
             <div class="row mb-3">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+             		 <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
               <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3">
+     
               </div>
             </div>
+             <input type="String" class="form-control" id="inputPhone" value="${userInfo.member_phone}" name="rev_phone">
+              <input type="String" class="form-control" id="inputName" value="${userInfo.member_name}" name="rev_name">
+              <input type="String" class="form-control" id="inputBirth" value="${userInfo.member_birth}" name="rev_birth">
+              <input type="String" class="form-control" id="inputEmail" value="${userInfo.member_email}" name="rev_email">
+              <input id="inputNum" type="hidden" name="product_num" value="${param.product_num}" />
             <div class="text-center">
-              <button class="btn btn-primary">예약확정</button>
+            <c:choose>
+            	<c:when test="${!empty sessionScope.userInfo}">
+              	    <button class="btn btn-primary reserveBtn1">예약확정</button>
+              	</c:when>
+             	<c:otherwise>
+           		    <button class="btn btn-primary reserveBtn2">예약확정</button>
+           		 </c:otherwise>
+            </c:choose>
               <button class="btn btn-warning">취소</button>
             </div>
           </form>
@@ -363,4 +373,77 @@
     </div>
   </div>
 </section>
+<script>
+	$(".reserveBtn1").click(function(e){
+		e.preventDefault();
+		if(!$("#flexCheckDefault").is(":checked")){
+			alert("이용약관에 동의해주세요.");
+			return;
+		}
+		if($("#opt1").val() + $("#opt2").val() < 1){
+			alert("인원수를 선택해주세요.");
+			return;
+		}
+		
+		$.ajax({
+			type : "POST",
+			url : "${contextPath}/product/reserve",
+			data : {
+				product_num : $("#inputNum").val(),
+				rev_phone : $("#inputPhone").val(),
+				rev_name : $("#inputName").val(),
+				rev_birth : $("#inputBirth").val(),
+				rev_email : $("#inputEmail").val(),
+				rev_adult : $("#inputAdult").val(),
+				rev_minor : $("#inputMinor").val()
+			},
+			dataType : "json",
+			success : function (result){
+				alert("result");
+			},
+			error: function (res) {
+				console.log(res);
+			}
+		});
+
+		location.href= "${contextPath}/member/product";
+		alert("예약이 완료되었습니다");
+	});
+	
+	$(".reserveBtn2").click(function(e){
+		e.preventDefault();
+		if(!$("#flexCheckDefault").is(":checked")){
+			alert("이용약관에 동의해주세요.");
+			return;
+		}
+		if($("#opt1").val() + $("#opt2").val() < 1){
+			alert("인원수를 선택해주세요.");
+			return;
+		}
+		
+		$.ajax({
+			type : "POST",
+			url : "${contextPath}/product/reserve",
+			data : {
+				product_num : $("#inputNum").val(),
+				rev_phone : $("#inputPhone").val(),
+				rev_name : $("#inputName").val(),
+				rev_birth : $("#inputBirth").val(),
+				rev_email : $("#inputEmail").val(),
+				rev_adult : $("#inputAdult").val(),
+				rev_minor : $("#inputMinor").val()
+			},
+			dataType : "json",
+			success : function (result){
+				alert("result");
+			},
+			error: function (res) {
+				console.log(res);
+			}
+		});
+		
+		location.href= "${contextPath}/nonmember/show";
+		alert("예약이 완료되었습니다");
+	});
+</script>
 <%@ include file="../common/footer.jsp" %>
