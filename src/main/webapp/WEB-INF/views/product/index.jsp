@@ -11,6 +11,7 @@
 		</section>
 	</c:when>
 	<c:otherwise>
+<button id="newBtn">새상품등록</button>
 		<section class="container d-flex justify-content-center mt-5">
 			<div class="row w-100">
 				<main class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
@@ -86,6 +87,10 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 	const main = document.querySelector("main");
+	
+	$("#newBtn").click(function() {
+		location.href="${contextPath}/product/new?continent=${list[0].product_continent}";
+	});
 
 	document.querySelectorAll(".accordion-body").forEach(tag => tag.addEventListener("click", function () {
 		axios.get("${contextPath}/product/getList", {
@@ -147,7 +152,6 @@
 		if (target.tagName !== "BUTTON") return;
 		location.href = "${contextPath}/product/show/" + target.getAttribute("data-num");
 	});
-
 
 </script>
 <%@ include file="../common/footer.jsp" %>

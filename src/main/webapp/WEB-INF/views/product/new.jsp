@@ -54,7 +54,8 @@
         </div>
         <div class="col-md-10 mb-2">
             <form action="new" method="post">
-            	<input type="hidden" name="continent" value="${param.product_continent}"/>
+            	<input type="text" name="product_continent" value="${param.continent}"/>
+            	<input type="text" name="product_name" />
                 <h3 class="mb-4">여행상품 등록</h3>
                 <div class="row">
                     <div class="col-md-6">
