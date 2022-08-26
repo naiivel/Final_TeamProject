@@ -55,7 +55,10 @@ txt-hlight{
 						id="other">홈페이지/기타</button>
 				</div>
 			</div>
-			<div id="listDiv">
+			
+			<div class="accordion mb-3" id="accordionExample1">
+			</div>
+			<div id="listAll">
 			<c:set var="number" value="0" />
 			<c:choose>
 				<c:when test="${list ne null }">
@@ -81,7 +84,8 @@ txt-hlight{
 						<h1>게시글이 없습니다.</h1>
 				</c:otherwise>
 			</c:choose>
-			</div>
+			</div>		
+			
 			<div id="paging">
 			<nav id="allPaging" aria-label="Page navigation mb-3">
 				<ul class="pagination justify-content-center">
@@ -104,7 +108,7 @@ txt-hlight{
 					</c:forEach>
 					<c:if test="${pm.next}">
 						<li class="page-item"><a class="page-link"
-							href="${contextPath}/board/faq/${pm.makeQuery(pm.endPage+1)}">&rt;</a>
+							href="${contextPath}/board/faq/${pm.makeQuery(pm.endPage+1)}">&gt;</a>
 						</li>
 					</c:if>
 					<c:if test="${pm.last}">
@@ -142,16 +146,16 @@ txt-hlight{
 	});
 
 	$("#all").on("click", function() {
-		var faq_category = $(this).val();
+		let faq_category = $(this).val();
 		console.log("faq_category: ", faq_category);
 		location.href="${contextPath}/board/faq";
 	});
 
 	$("#trip").on("click", function() {
-		$(".accordion").hide();
+		$("#listAll").hide();
 		$("#allPaging").hide();
 		
-		var faq_category = $(this).val();
+		let faq_category = $(this).val();
 		console.log("faq_category: ", faq_category);
 		$.ajax({
 			url : "${contextPath}/board/categoryList",
@@ -165,25 +169,32 @@ txt-hlight{
 				console.log(data.categoryList);
 				console.log(data.categoryPm);
 				var str="";
-				str += "<c:if test='"+data.categoryList+"'>";
-				str += "<c:forEach var='cgfaq' items='"+${data.categoryList}+"'>";
-				str += "<c:set var='number' value="+${number+=1}+" />";
-				str +=	"<div class='accordion mb-3' id='accordionPanelsStayOpenExample'>";
-				str +=	"<div class='accordion-item'>";
-				str +=	"<h2 class='accordion-header' id='panelsStayOpen-heading-"+${number}+"'>";
-				str +=	"<button class='accordion-button collapsed' type='button' data-bs-toggle='collapse'";
-				str +=	"data-bs-target='#panelsStayOpen-collapse-"+${number}+"' aria-controls='panelsStayOpen-collapse-"+${number}+"'>";
-				str +=	""+${cgfaq.faq_category}+"&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q. "+${cgfaq.faq_title}+"</button></h2>";
-				str +=	"<div id='panelsStayOpen-collapse-'"+${number}+" class='accordion-collapse collapse'";
-				str +=	"class='accordion-collapse collapse' aria-labelledby='panelsStayOpen-heading-"+${number}+"'>";
-				str += "<div class='accordion-body'>A. "+${cgfaq.faq_content }+"</div>";
-				str += "</div>";
-				str += "</div>";
-				str += "</div>";
-				str += "</c:forEach></c:if>";
-				$("#listDiv").append(str);
-				console.log(str);
-				$("#listDiv").append(data.categoryList);
+				console.log(data.category);
+				var i = 0;
+				$(data.categoryList).each(function(){
+					
+						let faq_category= this.faq_category;
+						let faq_title= this.faq_title;
+						let faq_content= this.faq_content;
+						console.log(faq_category, faq_title, faq_content);
+						str += '<div class="mb-3 accordion-item">';
+						str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
+						str += '<button class="accordion-button collapsed" type="button"';
+						str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
+						str += 'aria-expanded="true" aria-controls="collapseOne">'; 
+						str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q.'+faq_title;
+						str += '</button></h2>';
+						str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
+						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionExample1">';
+						str += '<div class="accordion-body"> A. ';
+						str += faq_content;
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+						i++;
+				});
+				$("#accordionExample1").html(str);
+				
 			},
 			error : function(err) {
 				console.log("응 안돼 돌아가");
