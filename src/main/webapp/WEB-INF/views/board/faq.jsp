@@ -165,7 +165,7 @@ txt-hlight{
 				console.log(data.categoryList);
 				console.log(data.categoryPm);
 				var str="";
-				str += "<c:if test='"+${data.categoryList ne null }+"'>";
+				str += "<c:if test='"+data.categoryList+"'>";
 				str += "<c:forEach var='cgfaq' items='"+${data.categoryList}+"'>";
 				str += "<c:set var='number' value="+${number+=1}+" />";
 				str +=	"<div class='accordion mb-3' id='accordionPanelsStayOpenExample'>";
