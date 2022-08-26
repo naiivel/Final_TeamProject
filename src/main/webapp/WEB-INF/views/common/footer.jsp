@@ -4,7 +4,7 @@
 	<div class="container">
 		<div class="row align-items-center">
 			<div class="col-md-2 ">
-				<h1 class="fs-2">대탈출</h1>
+				<h1 class="fs-2 m-0">대탈출</h1>
 			</div>
 			<div class="col-md-6">
 				<div>㈜한국기술교육직업전문학교 | 고객상담 051-111-1111</div>
@@ -12,10 +12,12 @@
 				<div>관광사업등록증번호 : 제2022-999999호 </div>
 			</div>
 			<div class="col-md-4 p-3">
-				<button type="button" class="btn btn-outline-secondary">아시아</button>
-				<button type="button" class="btn btn-outline-secondary">유럽</button>
-				<button type="button" class="btn btn-outline-secondary">아메리카</button>
-				<button type="button" class="btn btn-outline-secondary">오세아니아</button>
+				<ul class="d-flex list-group list-group-horizontal">
+					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/asia">아시아</a></li>
+					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/europe">유럽</a></li>
+					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/america">아메리카</a></li>
+					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/oceania">오세아니아</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>

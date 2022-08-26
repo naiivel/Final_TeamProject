@@ -2,14 +2,20 @@ package net.koreate.greatescape.member.service;
 
 import java.util.List;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.dao.MemberDAO;
 import net.koreate.greatescape.member.vo.MemberVO;
+import net.koreate.greatescape.member.vo.SalesVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
+import net.koreate.greatescape.utils.Criteria;
+import net.koreate.greatescape.utils.PageMaker;
+import net.koreate.greatescape.utils.SearchCriteria;
 
 import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
@@ -108,20 +114,50 @@ public class MemberServiceImpl implements MemberService {
 		mdao.deletereserv(noMember.getProduct_num());
 		// 잔여좌석+1
 		mdao.seatPlus(noMember.getProduct_num());
-
+		
 	}
 
 	@Override
-	public List<MemberVO> memberList(SearchCriteria cri) {
+	public List<MemberVO> memberList(Criteria cri) {
 		return mdao.memberList(cri);
 	}
 
 	@Override
-	public PageMaker pageMaker(SearchCriteria cri) {
+	public PageMaker pageMaker(Criteria cri) {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(mdao.listCount());
 		return pageMaker;
 	}
 
+	@Override
+	public List<MemberVO> typeMemberList(Criteria cri, String member_master) {
+		System.out.println(member_master);
+		return mdao.booleanMaster(cri,member_master);
+	}
+
+	@Override
+	public PageMaker typePageMaker(Criteria cri,String member_master) {
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(mdao.typelistCount(member_master));
+		return pageMaker;
+	}
+
+	@Override
+	public void createAdmin(MemberVO vo) {
+		mdao.createAdmin(vo);
+		
+	}
+
+	@Override
+	public int countContinent(String continent) {
+		return mdao.getCountContinent(continent);
+	}
+
+	@Override
+	public List<SalesVO> totalSales(String continent) {
+		return mdao.getTotalSales(continent);
+	}
+	
 }

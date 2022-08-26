@@ -3,8 +3,12 @@ package net.koreate.greatescape.member.service;
 import java.util.List;
 
 import net.koreate.greatescape.member.vo.MemberVO;
+import net.koreate.greatescape.member.vo.SalesVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
+import net.koreate.greatescape.utils.Criteria;
+import net.koreate.greatescape.utils.PageMaker;
+import net.koreate.greatescape.utils.SearchCriteria;
 
 import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
@@ -58,9 +62,25 @@ public interface MemberService {
 	void deleteNP(ReservationVO noMember);
 
 	// 회원번호순 정보 불러오기
-	List<MemberVO> memberList(SearchCriteria cri);
+	List<MemberVO> memberList(Criteria cri);
 
 	// 페이징처리
-	PageMaker pageMaker(SearchCriteria cri);
+	PageMaker pageMaker(Criteria cri);
+
+	// 회원의 관리자 여부
+	List<MemberVO> typeMemberList(Criteria cri, String member_master);
+
+	// 회원 타입 페이징처리 
+	PageMaker typePageMaker(Criteria cri, String member_master);
+
+	// 관리자 계정 생성
+	void createAdmin(MemberVO vo);
+	
+	// 대륙별 상품 판매 개수 검색
+	int countContinent(String continent);
+
+	// 대륙별 상품 판매 총액을 위한 정보검색
+	List<SalesVO> totalSales(String asia);
+	
 
 }

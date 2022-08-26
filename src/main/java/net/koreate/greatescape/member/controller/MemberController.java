@@ -1,6 +1,5 @@
 package net.koreate.greatescape.member.controller;
 
-
 import java.util.List;
 
 import javax.mail.internet.MimeMessage;
@@ -24,14 +23,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.service.MemberService;
+import net.koreate.greatescape.member.vo.EmbassyVO;
 import net.koreate.greatescape.member.vo.MemberVO;
+import net.koreate.greatescape.member.vo.SalesVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 
 import net.koreate.greatescape.reservation.vo.ReservationVO;
-
-import net.koreate.greatescape.reservation.vo.DetailBoardVO;
+import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
-import net.koreate.greatescape.utils.SearchCriteria;
 
 
 @Controller
@@ -46,8 +45,11 @@ public class MemberController {
 	
 	// 로그인 페이지 이동
 	@GetMapping("/login")
-	public String login() {
-		
+	public String login(HttpServletRequest request,HttpSession session) {
+		if(request.getHeader("Referer") != null) {
+			System.out.println(request.getHeader("Referer"));
+			session.setAttribute("url",request.getHeader("Referer"));
+		}
 		return "member/login";
 	}
 	
@@ -66,6 +68,7 @@ public class MemberController {
 			String remember = request.getParameter("remember_id");
 			if(remember.equals("checked")) {
 				Cookie cookie = new Cookie("id",vo.getMember_id());
+				cookie.setMaxAge(24*60*60);
 				response.addCookie(cookie);
 			}
 		}else {
@@ -76,7 +79,14 @@ public class MemberController {
 		
 		if(login != null && login.getMember_leave().equals("Y")) {
 			session.setAttribute("userInfo",login);
-			return "redirect:/";
+			if(session.getAttribute("url") != null) {
+				String url = (String) session.getAttribute("url");
+				System.out.println(url);
+				
+				String prevPage = url.replace("http://localhost:8080/greatescape/", "");
+				System.out.println(prevPage);
+				return "redirect:/"+prevPage;
+			}
 		}
 		String message = "아이디와 비밀번호가 일치하지 않습니다.";
 		model.addAttribute("message",message);
@@ -88,6 +98,9 @@ public class MemberController {
 	public String logOut(HttpSession session){
 		if (session.getAttribute("userInfo") != null) {
 			session.removeAttribute("userInfo");
+			if(session.getAttribute("url") != null) {
+				session.removeAttribute("url");
+			}
 		}
 		return "redirect:/";
 	}
@@ -106,21 +119,7 @@ public class MemberController {
 		return "member/find";
 	}
 	
-/*
-	// 아이디 찾기 시도
-	@PostMapping("findInfo")
-	@ResponseBody
-	public int findId(MemberVO vo,Model model) {
-		MemberVO findMember = ms.findId(vo);
-		int result = 0;
-		
-		if(findMember != null) {
-			result = 1;
-			model.addAttribute("findMember",findMember);
-		}	
-		return result;
-	}
-*/	
+
 	// 계정정보 찾기 시도
 	@PostMapping("findInfo")
 	@ResponseBody
@@ -197,12 +196,19 @@ public class MemberController {
 	// (회원)예약내역 상세보기
 	@GetMapping("/reservDetail")
 
-	@Transactional
 
-	public String reservDetail(HttpSession session,Model model)throws Exception{
+	@Transactional
+	public String reservDetail(HttpSession session,Model model,EmbassyVO url)throws Exception{
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
 		ReservationVO reserv = ms.findpeople(loginMember);
 		String tripInfo = ms.findtripInfo(loginMember.getProduct_num());
+		
+		ProductVO product = ms.findProduct(loginMember.getProduct_num());
+		
+		String embassy = url.findEmbassy(product.getProduct_country());
+		System.out.println(embassy);
+		
+		model.addAttribute("embassy",embassy);
 		
 		model.addAttribute("reservation",reserv);
 		model.addAttribute("tripInfo",tripInfo);
@@ -361,12 +367,33 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	
+
 	// 관리자 페이지 이동
 	@GetMapping("/adminPage")
 	@Transactional
-	public String adminPage(@ModelAttribute("cri") SearchCriteria cri,
-			Model model) throws Exception{
+	public String adminPage(@ModelAttribute("cri") Criteria cri,
+			Model model,HttpServletRequest request) throws Exception{
+		String type = request.getParameter("type");
+		System.out.println(type);
+		if(type != null) {
+			if(type.equals("회원")) {
+				String member_master = "N";
+				List<MemberVO> list = ms.typeMemberList(cri,member_master);
+				PageMaker pm = ms.typePageMaker(cri,member_master);
+				
+				model.addAttribute("list",list);
+				model.addAttribute("pm",pm);
+				return "admin/index";
+			}else {
+				String member_master = "Y";
+				List<MemberVO> list = ms.typeMemberList(cri,member_master);
+				PageMaker pm = ms.typePageMaker(cri,member_master);
+				
+				model.addAttribute("list",list);
+				model.addAttribute("pm",pm);
+				return "admin/index";
+			}
+		}
 		List<MemberVO> list = ms.memberList(cri);
 		
 		PageMaker pm  = ms.pageMaker(cri);

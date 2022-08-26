@@ -9,8 +9,9 @@
 					관리자 페이지
 				</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/admin/index" class="list-group-item active">회원/관리자 목록</a>
-					<a href="${contextPath}/admin/money" class="list-group-item">매출 관리</a>
+
+					<a href="${contextPath}/member/adminPage" class="list-group-item active">회원/관리자 목록</a>
+					<a href="${contextPath}/member/sales" class="list-group-item">매출 관리</a>
 					<a href="${contextPath}/admin/product" class="list-group-item">상품 관리</a>
 				</div>
 			</div>
@@ -24,71 +25,96 @@
 						회원 유형
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">전체</a></li>
-						<li><a class="dropdown-item" href="#">회원</a></li>
-						<li><a class="dropdown-item" href="#">관리자</a></li>
+						<li><a class="dropdown-item" href="${contextPath}/member/adminPage">전체</a></li>
+						<li><a class="dropdown-item" href="${contextPath}/member/adminPage/?type=회원">회원</a></li>
+						<li><a class="dropdown-item" href="${contextPath}/member/adminPage/?type=관리자">관리자</a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="table-responsive">
-				<table class="table">
+				<table class="table table-hover">
 					<thead>
-						<tr>
+
+						<tr class="table-info">
 							<th>아이디</th>
 							<th>이름</th>
 							<th>유형</th>
-							<th>상세내역</th>
+							<th>관리내역</th>
+
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>temp</td>
-							<td>temp</td>
-							<td>temp</td>
-							<td>temp</td>
-						</tr>
+						<c:forEach items="${list}" var="member">
+							<tr>
+								<td><a href="detailInfo?member_num=${member.member_num}">${member.member_id}</a></td>
+								<td>${member.member_name}</td>
+								<td><c:choose>
+									<c:when test="${member.member_master eq 'Y'}">
+										관리자
+									</c:when>
+									<c:otherwise>
+										일반회원
+									</c:otherwise>
+								</c:choose></td>
+								<td><c:if test="${member.member_master eq 'N' and member.product_num ne 0}">
+								<a href="${contextPath}/member/memberReserv/?member_num=${member.member_num}">[예약내역]</a></c:if></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 			<nav aria-label="Page navigation mb-3">
 				<ul class="pagination justify-content-center">
-				
+
 					<c:if test="${pm.prev}">
-								<li><a href="${pm.startPage - 1}">&laquo;</a></li>
-								<li><a href="1">1</a></li>
-								<li><span>...</span></li>
+								<li class="page-item"><a class="page-link" href="${pm.startPage - 1}">&laquo;</a></li>
+								<li class="page-item"><a class="page-link" href="1">1</a></li>
+								<li class="page-item"><span>...</span></li>
 							</c:if>
-							<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
-								<li>
-									<a href="${i}">${i}</a>
+							<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="idx">
+								<li class="page-item" ${pm.cri.page == idx ? ' class=active' : ''}>
+									<a class="page-link" href="${idx}">${idx}</a>
 								</li>
 							</c:forEach>
 							<c:if test="${pm.next}">
-								<li><span>...</span></li>
-								<li><a href="${pm.maxPage}">${pm.maxPage}</a></li>
-								<li><a href="${pm.endPage + 1}">&raquo;</a></li>
+								<li class="page-item"><span>...</span></li>
+								<li class="page-item"><a class="page-link" href="${pm.maxPage}">${pm.maxPage}</a></li>
+								<li class="page-item"><a class="page-link" href="${pm.endPage + 1}">&raquo;</a></li>
 							</c:if>
-					<!-- <li class="page-item disabled">
-						<a class="page-link">Previous</a>
-					</li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item">
-						<a class="page-link" href="#">Next</a>
-					</li> -->
+
 				</ul>
 			</nav>
+			<c:if test="${userInfo.member_id eq 'master'}">
 			<div class="mb-4 text-end">
 				<button class="btn btn-outline-secondary" id="addBtn">관리자 계정 추가</button>
 			</div>
+			</c:if>
 		</div>
 	</div>
 </section>
+
+	<form id="jobForm">
+		<input type="hidden" name="page" value="${pm.cri.page}" /> 
+		<input type="hidden" name="perPageNum" value="${pm.cri.perPageNum}" />
+	</form>
+
 <script src="${contextPath}/resources/js/popper.min.js"></script>
 <script>
 	document.querySelector("#addBtn").addEventListener("click", function () {
-		location.href = "${contextPath}/board/service/new";
+		location.href = "createAdmin";
 	});
+	
+	$(".pagination li a").on("click",function(event){
+		event.preventDefault();
+		// page
+		var targetPage = $(this).attr("href");
+		
+		var jobForm = $("#jobForm");
+		
+		jobForm.find("[name='page']").val(targetPage);
+		jobForm.attr("action","adminPage").attr("method","GET");
+		jobForm.submit();
+	});
+	
 </script>
 <%@ include file="../common/footer.jsp" %>

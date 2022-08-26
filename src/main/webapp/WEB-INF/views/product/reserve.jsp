@@ -48,12 +48,16 @@
                 < 대탈출>('대탈출'이하 '대탈출')
               </em>은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을
               수립·공개합니다.</p>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             <p class="ls2">○ 이 개인정보처리방침은 <em class="emphasis">2022</em>년 <em class="emphasis">1</em>월 <em
                 class="emphasis">1</em>부터 적용됩니다.</p></br>
 =======
             <p class="ls2">○ 이 개인정보처리방침은 <em class="emphasis">2022</em>년 <em class="emphasis">1</em>월 <em class="emphasis">1</em>부터 적용됩니다.</p></br>
 >>>>>>> Stashed changes
+=======
+            <p class="ls2">○ 이 개인정보처리방침은 <em class="emphasis">2022</em>년 <em class="emphasis">1</em>월 <em class="emphasis">1</em>부터 적용됩니다.</p></br>
+>>>>>>> refs/heads/main
             <p class='lh6 bs4'><strong>제1조(개인정보의 처리 목적)<br /><br /><em class="emphasis">
                   < 대탈출>('대탈출'이하 '대탈출')
                 </em>은(는) 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며 이용 목적이 변경되는 경우에는 「개인정보 보호법」

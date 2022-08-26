@@ -33,3 +33,7 @@
     --bs-btn-disabled-border-color: #0d6efdd0;
     --bs-gradient: none;
 }
+
+.text-bg-primary {
+    background-color: #0d6efdd0 !important;
+}
