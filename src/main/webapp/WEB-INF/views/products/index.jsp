@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/product.index.css">
+<button id="newBtn">새상품등록</button>
 <c:choose>
 	<c:when test="${empty list}">
 		<section class="container d-flex flex-column justify-content-center align-items-center h-100">
@@ -145,6 +146,10 @@
 		const target = event.target;
 		if (target.tagName !== "BUTTON") return;
 		location.href = "${contextPath}/products/" + target.getAttribute("data-num");
+	});
+	
+	$("#newBtn").click(function() {
+		location.href="${contextPath}/products/new?continent=${continent}";
 	});
 
 

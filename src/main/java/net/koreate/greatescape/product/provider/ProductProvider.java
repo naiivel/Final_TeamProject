@@ -2,7 +2,11 @@ package net.koreate.greatescape.product.provider;
 
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.jdbc.SQL;
+
+import net.koreate.greatescape.reservation.vo.ReservationVO;
 
 public class ProductProvider {
 
@@ -40,5 +44,5 @@ public class ProductProvider {
 		}
 		return sql.toString();
 	}
-
+	
 }

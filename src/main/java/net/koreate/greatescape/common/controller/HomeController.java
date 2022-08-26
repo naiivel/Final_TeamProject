@@ -99,11 +99,11 @@ public class HomeController {
 //	@GetMapping("/admin/product")
 //	public void adminProduct() {}
 //	
-//	@GetMapping("/nomember/index")
-//	public void nomemberIndex() {}
-//	
-//	@GetMapping("/nomember/show")
-//	public void nomemberShow() {}
+	@GetMapping("/nomember/index")
+	public void nomemberIndex() {}
+	
+	@GetMapping("/nomember/show")
+	public void nomemberShow() {}
 
 	
 }
