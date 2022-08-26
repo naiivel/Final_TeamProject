@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.common.dao.TempDAO;
-import net.koreate.greatescape.product.vo.FullProductVO;
+import net.koreate.greatescape.product.vo.FullProductDTO;
 import net.koreate.greatescape.product.vo.ProductVO;
 
 @Controller
@@ -28,146 +28,81 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String home(Model model) {
-		List<FullProductVO> list = dao.getIndexList();
+		List<FullProductDTO> list = dao.getIndexList();
 		model.addAttribute("list", list);
 		return "index";
 	}
 	
-	@GetMapping("/board/service")
-	public void service() {}
-	
-	@GetMapping("/board/service/show")
-	public String service1show() {
-		return "/board/service_show";
-	}
-	
-	@GetMapping("/board/service/new")
-	public String service1new() {
-		return "/board/service_new";
-	}
-	
-	@GetMapping("/board/service2")
-	public void service2() {}
-	
-	@GetMapping("/board/service2/new")
-	public String service2new() {
-		return "/board/service2_new";
-	}
-	
-	@GetMapping("/board/service3")
-	public void service3() {}
-	
-	@GetMapping("/board/service3/new")
-	public String service3new() {
-		return "/board/service3_new";
-	}
-	
-	@GetMapping("/board/service3/show")
-	public String service3show() {
-		return "/board/service3_show";
-	}
-	
-	
-	@GetMapping("/member/info/product")
-	public String product() {
-		return "/member/product";
-	}
-	
-	@GetMapping("/member/edit/check")
-	public String editCheck() {
-		return "/member/edit_check";
-	}
-	
-	@GetMapping("/member/edit")
-	public void edit() {}
-	
-	@GetMapping("/admin/index")
-	public void adminIndex() {}
-	
-	@GetMapping("/admin/indexShow")
-	public void adminIndexShow() {}
-	
-	@GetMapping("/admin/indexProduct")
-	public void adminIndexProduct() {}
-	
-	@GetMapping("/admin/indexMakeAdmin")
-	public void adminIndexMakeAdmin() {}
-	
-	@GetMapping("/admin/money")
-	public void adminMoney() {}
-	
-	@GetMapping("/admin/product")
-	public void adminProduct() {}
-	
-	@GetMapping("/nomember/index")
-	public void nomemberIndex() {}
-	
-	@GetMapping("/nomember/show")
-	public void nomemberShow() {}
-	
-//	@GetMapping("/product/asia")
-//	public void asia() {}
-
-	@GetMapping("/product/new")
-	public void productNew() {}
-	
-	@GetMapping("/product/show")
-	public void productShow() {}
-	
-	@GetMapping("/product/reserve")
-	public void productReserve() {}
-	
-	@GetMapping("/product/{continent}")
-	public String productIndex(@PathVariable String continent, Model model) throws Exception {
-		List<ProductVO> list = dao.getContinentList(continent);
-		listSplit(model, list);
-		return "/product/index";
-	}
-
-	
-	
-	@GetMapping("/product/getList")
-	@ResponseBody
-	public List<ProductVO> getList(String city) throws Exception {
-		List<ProductVO> list = dao.getCityList(city);
-		return list;
-	}
-	
-	@GetMapping("/product/show/{id}")
-	public String productShow(@PathVariable int id, Model model) throws Exception {
-		model.addAttribute("product", dao.getProductById(id));
-		model.addAttribute("detail", dao.getDetailById(id));
-		return "/product/detail";
-	}
-	
-	@GetMapping("/product/search")
-	public String productSearch(Model model, String country, String departure, String plan, String seat, String city, String money) throws Exception {
-		Map<String, String> map = new HashMap<>();
-		map.put("country", country);
-		map.put("departure", departure);
-		map.put("plan", plan);
-		map.put("seat", seat);
-		map.put("city", city);
-		map.put("money", money);
-		List<ProductVO> list = dao.getSearchList(map);
-		listSplit(model, list);
-		return "/product/index";
-	}
-	
-	private void listSplit(Model model, List<ProductVO> list) {
-		Set<String> countrySet = new HashSet<>();
-		list.stream().forEach(p -> countrySet.add(p.getProduct_country()));
-		
-		Map<String, Set<String>> cityMap = new HashMap<>();
-		countrySet.stream().forEach(country -> {
-			Set<String> citySet = new HashSet<>();
-			list.stream().filter(p -> p.getProduct_country().equals(country)).forEach(p -> citySet.add(p.getProduct_city()));
-			cityMap.put(country, citySet);
-		});
-		model.addAttribute("continent", "검색 결과");
-		model.addAttribute("list", list);
-		model.addAttribute("countrySet", countrySet);
-		model.addAttribute("cityMap", cityMap);
-	}
+//	@GetMapping("/board/service")
+//	public void service() {}
+//	
+//	@GetMapping("/board/service/show")
+//	public String service1show() {
+//		return "/board/service_show";
+//	}
+//	
+//	@GetMapping("/board/service/new")
+//	public String service1new() {
+//		return "/board/service_new";
+//	}
+//	
+//	@GetMapping("/board/service2")
+//	public void service2() {}
+//	
+//	@GetMapping("/board/service2/new")
+//	public String service2new() {
+//		return "/board/service2_new";
+//	}
+//	
+//	@GetMapping("/board/service3")
+//	public void service3() {}
+//	
+//	@GetMapping("/board/service3/new")
+//	public String service3new() {
+//		return "/board/service3_new";
+//	}
+//	
+//	@GetMapping("/board/service3/show")
+//	public String service3show() {
+//		return "/board/service3_show";
+//	}
+//	
+//	
+//	@GetMapping("/member/info/product")
+//	public String product() {
+//		return "/member/product";
+//	}
+//	
+//	@GetMapping("/member/edit/check")
+//	public String editCheck() {
+//		return "/member/edit_check";
+//	}
+//	
+//	@GetMapping("/member/edit")
+//	public void edit() {}
+//	
+//	@GetMapping("/admin/index")
+//	public void adminIndex() {}
+//	
+//	@GetMapping("/admin/indexShow")
+//	public void adminIndexShow() {}
+//	
+//	@GetMapping("/admin/indexProduct")
+//	public void adminIndexProduct() {}
+//	
+//	@GetMapping("/admin/indexMakeAdmin")
+//	public void adminIndexMakeAdmin() {}
+//	
+//	@GetMapping("/admin/money")
+//	public void adminMoney() {}
+//	
+//	@GetMapping("/admin/product")
+//	public void adminProduct() {}
+//	
+//	@GetMapping("/nomember/index")
+//	public void nomemberIndex() {}
+//	
+//	@GetMapping("/nomember/show")
+//	public void nomemberShow() {}
 	
 }

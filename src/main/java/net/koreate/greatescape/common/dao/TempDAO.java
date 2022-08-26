@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 
-import net.koreate.greatescape.product.vo.FullProductVO;
+import net.koreate.greatescape.product.vo.FullProductDTO;
 import net.koreate.greatescape.product.vo.ProductDetailVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 
@@ -39,6 +39,6 @@ public interface TempDAO {
 	List<ProductVO> getSearchList(Map<String, String> map);
 
 	@Select("SELECT p.*, d.detail_info, d.detail_schedule, d.detail_title_image FROM tbl_product AS p, tbl_detail AS d WHERE product_seat > 5 ORDER BY product_seat LIMIT 4")
-	List<FullProductVO> getIndexList();
+	List<FullProductDTO> getIndexList();
 
 }

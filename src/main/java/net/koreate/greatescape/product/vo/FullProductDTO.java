@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FullProductVO extends ProductVO {
+public class FullProductDTO extends ProductVO {
 	
 	private String detail_info;
 	private String detail_schedule;
