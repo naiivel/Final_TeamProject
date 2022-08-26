@@ -29,6 +29,6 @@ public interface ProductService {
 	String regist(ProductVO vo, ProductDetailVO dvo) throws Exception;
 	
 	//예약 하기
-	String reserve(ProductVO vo) throws Exception;
+	String reserve(int product_num) throws Exception;
 	
 }

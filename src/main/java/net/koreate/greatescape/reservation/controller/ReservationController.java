@@ -20,12 +20,6 @@ public class ReservationController {
 	private final ReservationService rs;
 	private final ProductService ps;
 		
-	//예약완료 후 페이지 이동
-	@PostMapping("/reserve")
-	@ResponseBody
-	public String reservation(int product_num , ReservationVO rvo) throws Exception{
-		rs.reserve(product_num);
-		return "성공";
-	}
+	
 	
 }

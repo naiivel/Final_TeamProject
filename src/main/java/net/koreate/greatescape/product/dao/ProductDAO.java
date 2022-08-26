@@ -46,4 +46,11 @@ public interface ProductDAO {
 	@Insert("INSERT INTO tbl_detail VALUES (NULL, LAST_INSERT_ID(), #{detail_info}, #{detail_schedule}, #{detail_title_image})")
 	int createDetail(ProductDetailVO vo) throws Exception;
 	
+	//예약 등록
+//	@Insert()
+	int reserve(ReservationVO vo) throws Exception;
+	
+//	@Insert()
+	int reserveDetail() throws Exception;
+	
 }
