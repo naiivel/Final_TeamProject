@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 
 import net.koreate.greatescape.board.vo.FAQBoardVO;
+import net.koreate.greatescape.board.vo.NoticeBoardVO;
 import net.koreate.greatescape.utils.SearchCriteria;
 
 public interface BoardDAO {
@@ -47,7 +48,7 @@ public interface BoardDAO {
 	@Delete("DELETE FROM tbl_faq WHERE faq_num=#{faq_num}")
 	void deleteFAQ(int faq_num) throws Exception;
 
-	
+
 	/****************************** QNA ************************************/
 	
 	//글 목록
@@ -61,8 +62,11 @@ public interface BoardDAO {
 	//글 삭제
 	
 	/***************************** Notice **********************************/
-	
+	@SelectProvider(type=BoardQueryProvider.class, method="getNoticeCount")
+	int getNoticeCount(SearchCriteria cri)throws Exception;
 	//글 목록
+	@SelectProvider(type=BoardQueryProvider.class, method="getNoticeList")
+	List<NoticeBoardVO> getNoticeList(SearchCriteria cri);
 	
 	//글 쓰기
 	

@@ -54,15 +54,35 @@ public class BoardQueryProvider {
 		String titleQuery = "faq_title LIKE CONCAT('%',#{keyword},'%')";
 		String contentQuery = "faq_content LIKE CONCAT('%',#{keyword},'%')";
 		
-		
 		if (cri.getKeyword() != null && !cri.getKeyword().trim().equals("")) {
-			
 			sql.OR().WHERE(titleQuery);
 			sql.OR().WHERE(contentQuery);
-			
 		}
 		
-	
 	}
 
+	//공지리스트
+	public String getNoticeList(SearchCriteria cri) {
+		SQL sql = new SQL();
+
+		sql.SELECT("*");
+		sql.FROM("tbl_notice");
+		sql.ORDER_BY("notice_num DESC");
+		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
+		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+	
+	public String getNoticeCount(SearchCriteria cri) {
+		SQL sql = new SQL();
+		sql.SELECT("count(*)");
+		sql.FROM("tbl_notice");
+		getSearchWhere(cri, sql);
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+	
 }

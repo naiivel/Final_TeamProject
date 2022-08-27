@@ -7,19 +7,17 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.board.service.BoardService;
 import net.koreate.greatescape.board.vo.FAQBoardVO;
-import net.koreate.greatescape.utils.Criteria;
+import net.koreate.greatescape.board.vo.NoticeBoardVO;
 import net.koreate.greatescape.utils.PageMaker;
 import net.koreate.greatescape.utils.SearchCriteria;
 
@@ -29,16 +27,9 @@ import net.koreate.greatescape.utils.SearchCriteria;
 public class BoardController {
 
 	
-	@GetMapping("/qna")
-	public void qna() {}
-	
-	@GetMapping("/notice")
-	public void notice() {}
-	
 	private final BoardService bs;
 	
-	
-	
+	/*************************************/
 	@GetMapping("faqWrite")
 	public String faqWrite() throws Exception{
 		return "board/faqWrite";
@@ -68,16 +59,16 @@ public class BoardController {
 	}
 	
 	@ResponseBody
-	@PostMapping("categoryList")
-	public ResponseEntity<Map<String, Object>> categoryList(SearchCriteria cri, FAQBoardVO vo){
+	@PostMapping("categoryList/trip")
+	public ResponseEntity<Map<String, Object>> tripList(SearchCriteria cri, FAQBoardVO vo){
 		ResponseEntity<Map<String, Object>> entity= null;
 		try {
 			Map<String,Object> map= new HashMap<>();
 			System.out.println(vo);
-			List<FAQBoardVO> categoryList = bs.categoryList(cri, vo.getFaq_category());
-			map.put("categoryList", categoryList);
-			PageMaker categoryPm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
-			map.put("categoryPm", categoryPm);
+			List<FAQBoardVO> tripList = bs.categoryList(cri, vo.getFaq_category());
+			map.put("tripList", tripList);
+			PageMaker tripPm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
+			map.put("tripPm", tripPm);
 			
 			entity= new ResponseEntity<>(map, HttpStatus.OK);
 		} catch (Exception e) {
@@ -88,5 +79,124 @@ public class BoardController {
 		return entity;
 	}
 	
+	@ResponseBody
+	@PostMapping("categoryList/airline")
+	public ResponseEntity<Map<String, Object>> airlineList(SearchCriteria cri, FAQBoardVO vo){
+		ResponseEntity<Map<String, Object>> entity= null;
+		try {
+			Map<String,Object> map= new HashMap<>();
+			System.out.println(vo);
+			List<FAQBoardVO> airlineList = bs.categoryList(cri, vo.getFaq_category());
+			map.put("airlineList", airlineList);
+			PageMaker airlinePm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
+			map.put("airlinePm", airlinePm);
+			
+			entity= new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception e) {
+			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		System.out.println(entity);
+		
+		return entity;
+	}
+	
+	@ResponseBody
+	@PostMapping("categoryList/reservation")
+	public ResponseEntity<Map<String, Object>> reserveList(SearchCriteria cri, FAQBoardVO vo){
+		ResponseEntity<Map<String, Object>> entity= null;
+		try {
+			Map<String,Object> map= new HashMap<>();
+			System.out.println(vo);
+			List<FAQBoardVO> reserveList = bs.categoryList(cri, vo.getFaq_category());
+			map.put("reserveList", reserveList);
+			PageMaker reservePm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
+			map.put("reservePm", reservePm);
+			
+			entity= new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception e) {
+			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		System.out.println(entity);
+		
+		return entity;
+	}
+	
+	@ResponseBody
+	@PostMapping("categoryList/passport")
+	public ResponseEntity<Map<String, Object>> passList(SearchCriteria cri, FAQBoardVO vo){
+		ResponseEntity<Map<String, Object>> entity= null;
+		try {
+			Map<String,Object> map= new HashMap<>();
+			System.out.println(vo);
+			List<FAQBoardVO> passList = bs.categoryList(cri, vo.getFaq_category());
+			map.put("passList", passList);
+			PageMaker passPm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
+			map.put("passPm", passPm);
+			
+			entity= new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception e) {
+			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		System.out.println(entity);
+		
+		return entity;
+	}
+	
+	@ResponseBody
+	@PostMapping("categoryList/other")
+	public ResponseEntity<Map<String, Object>> otherList(SearchCriteria cri, FAQBoardVO vo){
+		ResponseEntity<Map<String, Object>> entity= null;
+		try {
+			Map<String,Object> map= new HashMap<>();
+			System.out.println(vo);
+			List<FAQBoardVO> otherList = bs.categoryList(cri, vo.getFaq_category());
+			map.put("otherList", otherList);
+			PageMaker otherPm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
+			map.put("otherPm", otherPm);
+			
+			entity= new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception e) {
+			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		System.out.println(entity);
+		
+		return entity;
+	}
+
+	
+	@PostMapping("faqDelete")
+	public String faqDelete(int faq_num) throws Exception {
+		bs.deleteFAQ(faq_num);
+		return "redirect:faq";
+	}
+	
+	/****************************/
+	@GetMapping("/notice")
+	public ModelAndView noticeList(ModelAndView mav, SearchCriteria cri) throws Exception {
+		
+		List<NoticeBoardVO> noticeList = bs.noticeList(cri);
+		PageMaker pm= bs.getNoticePageMaker(cri);
+		System.out.println("noticeList: "+noticeList);
+		System.out.println("pm: "+pm);
+		mav.addObject("noticeList",noticeList);
+		mav.addObject("pm",pm);
+		mav.setViewName("board/notice");
+		
+		return mav;
+	}
+
+	@GetMapping("noticeDetail")
+	public void noticeDetail() {}
+	
+	/*******************************/
+
+	@GetMapping("/qna")
+	public void qna() {}
+	
+	
 	
 }
+
+
+
+

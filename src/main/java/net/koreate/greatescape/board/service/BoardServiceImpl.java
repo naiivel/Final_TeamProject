@@ -58,23 +58,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public String modifyFAQ(FAQBoardVO fvo) throws Exception {
-		bdao.modifyFAQ(fvo);
-		return "redirect:board/faq/modify";
-	}
-
-	@Override
 	public void deleteFAQ(int faq_num) throws Exception {
 		bdao.deleteFAQ(faq_num);
 	}
 	
 	@Override
 	public List<FAQBoardVO> categoryList(SearchCriteria cri, String faq_category) throws Exception {
-		/*
-		 * List<FAQBoardVO> list= null;
-		 * 
-		 * list= bdao.getCategoryList(cri, category);
-		 */
 		return bdao.getCategoryList(cri, faq_category);
 	}
 	
@@ -113,8 +102,10 @@ public class BoardServiceImpl implements BoardService {
 	/***************************** Notice **********************************/
 	@Override
 	public List<NoticeBoardVO> noticeList(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<NoticeBoardVO> list= bdao.getNoticeList(cri);
+		
+		return list;
+		
 	}
 
 	@Override
@@ -142,5 +133,13 @@ public class BoardServiceImpl implements BoardService {
 		return null;
 	}
 
-	
+	@Override
+	public PageMaker getNoticePageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getNoticeCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
+	}
 }

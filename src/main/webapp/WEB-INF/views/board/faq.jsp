@@ -41,23 +41,15 @@ txt-hlight{
 			</div>
 			<div class="row mb-4">
 				<div class="btn-group" role="group">
-					<button value="전체" type="button" class="btn btn-outline-dark"
-						id="all">전체보기</button>
-					<button value="해외여행" type="button" class="btn btn-outline-dark"
-						id="trip">해외여행</button>
-					<button value="항공" type="button" class="btn btn-outline-dark"
-						id="airline">항공</button>
-					<button value="예약/결제" type="button" class="btn btn-outline-dark"
-						id="reservation">예약/결제</button>
-					<button value="여권/비자/환전" type="button" class="btn btn-outline-dark"
-						id="passport">여권/비자/환전</button>
-					<button value="홈페이지/기타" type="button" class="btn btn-outline-dark"
-						id="other">홈페이지/기타</button>
+					<button value="전체" type="button" class="btn btn-outline-dark" id="all">전체보기</button>
+					<button value="해외여행" type="button" class="btn btn-outline-dark" id="trip">해외여행</button>
+					<button value="항공" type="button" class="btn btn-outline-dark" id="airline">항공</button>
+					<button value="예약/결제" type="button" class="btn btn-outline-dark" id="reservation">예약/결제</button>
+					<button value="여권/비자/환전" type="button" class="btn btn-outline-dark" id="passport">여권/비자/환전</button>
+					<button value="홈페이지/기타" type="button" class="btn btn-outline-dark" id="other">홈페이지/기타</button>
 				</div>
 			</div>
 			
-			<div class="accordion mb-3" id="accordionExample1">
-			</div>
 			<div id="listAll">
 			<c:set var="number" value="0" />
 			<c:choose>
@@ -84,9 +76,19 @@ txt-hlight{
 						<h1>게시글이 없습니다.</h1>
 				</c:otherwise>
 			</c:choose>
-			</div>		
+			</div>
 			
-			<div id="paging">
+			<div class="accordion mb-3" id="accordionTrip"></div>
+			
+			<div class="accordion mb-3" id="accordionAirline"></div>
+			
+			<div class="accordion mb-3" id="accordionReserv"></div>
+			
+			<div class="accordion mb-3" id="accordionPass"></div>
+			
+			<div class="accordion mb-3" id="accordionOther"></div>
+			
+			<div id="pagingAll">
 			<nav id="allPaging" aria-label="Page navigation mb-3">
 				<ul class="pagination justify-content-center">
 					<c:if test="${pm.first}">
@@ -102,8 +104,7 @@ txt-hlight{
 					</c:if>
 					<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
 						<li class="page-item" ${pm.cri.page ==i? 'class=active':''}>
-							<a class="page-link"
-							href="${contextPath}/board/faq/${pm.makeQuery(i)}">${i}</a>
+							<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(i)}">${i}</a>
 						</li>
 					</c:forEach>
 					<c:if test="${pm.next}">
@@ -120,11 +121,15 @@ txt-hlight{
 				</ul>
 			</nav>
 			</div>
-			<c:if test="${userInfo.member_master eq 'Y'}">
-				<div class="text-end mb-3">
-					<button class="btn btn-outline-secondary" id="addBtn">추가하기</button>
-				</div>
-			</c:if>
+			<div class="row">
+				<c:if test="${userInfo.member_master eq 'Y'}">
+					<div class="text-end mb-3">
+						<button class="btn btn-outline-secondary" id="addBtn">추가하기</button>
+						<button class="btn btn-outline-secondary" id="addBtn">삭제하기</button>
+					</div>
+				</c:if>
+				
+			</div>
 		</div>
 	</div>
 </section>
@@ -133,6 +138,7 @@ txt-hlight{
 		location.href = "${contextPath}/board/faqWrite";
 	});
 
+	
 	$("#qnaBoard").click(function() {
 		location.href = "board/qna";
 	});
@@ -146,38 +152,49 @@ txt-hlight{
 	});
 
 	$("#all").on("click", function() {
+		$(this).removeClass("active");
+		$("#trip").removeClass("active");
+		$("#airline").removeClass("active");
+		$("#passport").removeClass("active");
+		$("#reservation").removeClass("active");
+		$("#other").removeClass("active");
 		let faq_category = $(this).val();
 		console.log("faq_category: ", faq_category);
 		location.href="${contextPath}/board/faq";
 	});
 
 	$("#trip").on("click", function() {
+		$(this).toggleClass("active");
+		$("#airline").removeClass("active");
+		$("#passport").removeClass("active");
+		$("#reservation").removeClass("active");
+		$("#other").removeClass("active");
 		$("#listAll").hide();
+		$("#accordionReserv").hide();
+		$("#accordionPass").hide();
+		$("#accordionAirline").hide();
+		$("#accordionOther").hide();
+		
 		$("#allPaging").hide();
 		
 		let faq_category = $(this).val();
 		console.log("faq_category: ", faq_category);
 		$.ajax({
-			url : "${contextPath}/board/categoryList",
-			type : "POST",
-			dataType : "json",
-			data : {
-				"faq_category" : faq_category
-			},
+			url : "${contextPath}/board/categoryList/trip", type : "POST", dataType : "json",
+			data : { "faq_category" : faq_category },
 			success : function(data) {
 				console.log(data);
-				console.log(data.categoryList);
-				console.log(data.categoryPm);
-				var str="";
-				console.log(data.category);
-				var i = 0;
-				$(data.categoryList).each(function(){
-					
+				console.log(data.tripList);
+				console.log(data.tripPm);
+				let str="";
+				let i = 0;
+				$(data.tripList).each(function(){
 						let faq_category= this.faq_category;
 						let faq_title= this.faq_title;
 						let faq_content= this.faq_content;
 						console.log(faq_category, faq_title, faq_content);
-						str += '<div class="mb-3 accordion-item">';
+						str += '<div class="accordion mb-3" id="listTrip">';
+						str += '<div class="accordion-item">';
 						str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
 						str += '<button class="accordion-button collapsed" type="button"';
 						str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
@@ -185,124 +202,267 @@ txt-hlight{
 						str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q.'+faq_title;
 						str += '</button></h2>';
 						str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionExample1">';
+						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionTrip">';
 						str += '<div class="accordion-body"> A. ';
 						str += faq_content;
 						str += '</div>';
 						str += '</div>';
 						str += '</div>';
+						str += '</div>';
 						i++;
 				});
-				$("#accordionExample1").html(str);
-				
+				$("#accordionTrip").html(str);
 			},
 			error : function(err) {
 				console.log("응 안돼 돌아가");
 			}
 		});
-
+		$("#accordionTrip").show();
 		
 	});
 
 	$("#airline").on("click", function() {
+		$(this).toggleClass("active");
+		$("#trip").removeClass("active");
+		$("#passport").removeClass("active");
+		$("#reservation").removeClass("active");
+		$("#other").removeClass("active");
+		
+		$("#listAll").hide();
+		$("#accordionReserv").hide();
+		$("#accordionPass").hide();
+		$("#accordionTrip").hide();
+		$("#accordionOther").hide();
+		
+		$("#allPaging").hide();
+		
 		var faq_category = $(this).val();
+		
 		console.log("faq_category: ", faq_category);
 		$.ajax({
-			url : "${contextPath}/board/categoryList",
-			type : "POST",
-			dataType : "json",
-			data : {
-				"faq_category" : faq_category
-			},
+			url : "${contextPath}/board/categoryList/airline", type : "POST", dataType : "json",
+			data : {  "faq_category" : faq_category  },
 			success : function(data) {
 				console.log(data);
+				console.log(data.airlineList);
+				console.log(data.airlinePm);
+				let str="";
+				let i = 0;
+				$(data.airlineList).each(function(){
+						let faq_category= this.faq_category;
+						let faq_title= this.faq_title;
+						let faq_content= this.faq_content;
+						console.log(faq_category, faq_title, faq_content);
+						str += '<div class="accordion mb-3" id="listAirline">';
+						str += '<div class="accordion-item">';
+						str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
+						str += '<button class="accordion-button collapsed" type="button"';
+						str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
+						str += 'aria-expanded="true" aria-controls="collapseOne">'; 
+						str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q.'+faq_title;
+						str += '</button></h2>';
+						str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
+						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionAirline">';
+						str += '<div class="accordion-body"> A. ';
+						str += faq_content;
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+						i++;
+				});
+				$("#accordionAirline").html(str);
 			},
 			error : function(err) {
 				console.log("응 안돼 돌아가");
 			}
 		});
-
-		$(".accordion").hide();
-		$("#allPaging").hide();
+		$("#accordionAirline").show();
 	});
 
 	$("#reservation").on("click", function() {
-		var faq_category = $(this).val();
+		$(this).toggleClass("active");
+		$("#airline").removeClass("active");
+		$("#passport").removeClass("active");
+		$("#trip").removeClass("active");
+		$("#other").removeClass("active");
+		
+		$("#listAll").hide();
+		$("#accordionAirline").hide();
+		$("#accordionPass").hide();
+		$("#accordionTrip").hide();
+		$("#accordionOther").hide();
+		
+		$("#allPaging").hide();
+		
+		let faq_category = $(this).val();
 		console.log("faq_category: ", faq_category);
 		$.ajax({
-			url : "${contextPath}/board/categoryList",
-			type : "POST",
-			dataType : "json",
-			data : {
-				"faq_category" : faq_category
-			},
+			url : "${contextPath}/board/categoryList/reservation", type : "POST", dataType : "json",
+			data : {  "faq_category" : faq_category  },
 			success : function(data) {
 				console.log(data);
+				console.log(data.reserveList);
+				console.log(data.reservePm);
+				let str="";
+				let i = 0;
+				$(data.reserveList).each(function(){
+						let faq_category= this.faq_category;
+						let faq_title= this.faq_title;
+						let faq_content= this.faq_content;
+						console.log(faq_category, faq_title, faq_content);
+						str += '<div class="accordion mb-3" id="listReserv">';
+						str += '<div class="accordion-item">';
+						str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
+						str += '<button class="accordion-button collapsed" type="button"';
+						str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
+						str += 'aria-expanded="true" aria-controls="collapseOne">'; 
+						str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q.'+faq_title;
+						str += '</button></h2>';
+						str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
+						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionReserv">';
+						str += '<div class="accordion-body"> A. ';
+						str += faq_content;
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+						i++;
+				});
+				$("#accordionReserv").html(str);
 			},
 			error : function(err) {
 				console.log("응 안돼 돌아가");
 			}
 		});
-
-		$(".accordion").hide();
-		$("#allPaging").hide();
+		$("#accordionReserv").show();
 	});
 
 	$("#passport").on("click", function() {
-		var faq_category = $(this).val();
+		$(this).toggleClass("active");
+		$("#airline").removeClass("active");
+		$("#trip").removeClass("active");
+		$("#reservation").removeClass("active");
+		$("#other").removeClass("active");
+		
+		$("#listAll").hide();
+		$("#accordionReserv").hide();
+		$("#accordionTrip").hide();
+		$("#accordionAirline").hide();
+		$("#accordionOther").hide();
+		
+		$("#allPaging").hide();
+		
+		let faq_category = $(this).val();
 		console.log("faq_category: ", faq_category);
 		$.ajax({
-			url : "${contextPath}/board/categoryList",
-			type : "POST",
-			dataType : "json",
-			data : {
-				"faq_category" : faq_category
-			},
+			url : "${contextPath}/board/categoryList/passport", type : "POST", dataType : "json",
+			data : {  "faq_category" : faq_category  },
 			success : function(data) {
 				console.log(data);
+				console.log(data.passList);
+				console.log(data.passPm);
+				let str="";
+				let i = 0;
+				$(data.passList).each(function(){
+						let faq_category= this.faq_category;
+						let faq_title= this.faq_title;
+						let faq_content= this.faq_content;
+						console.log(faq_category, faq_title, faq_content);
+						str += '<div class="accordion mb-3" id="listPass">';
+						str += '<div class="accordion-item">';
+						str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
+						str += '<button class="accordion-button collapsed" type="button"';
+						str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
+						str += 'aria-expanded="true" aria-controls="collapseOne">'; 
+						str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q.'+faq_title;
+						str += '</button></h2>';
+						str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
+						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionPass">';
+						str += '<div class="accordion-body"> A. ';
+						str += faq_content;
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+						i++;
+				});
+				$("#accordionPass").html(str);
 			},
 			error : function(err) {
 				console.log("응 안돼 돌아가");
 			}
 		});
+		$("#accordionPass").show();
 	});
 
 	$("#other").on("click", function() {
-		var faq_category = $(this).val();
+		$(this).toggleClass("active");
+		$("#airline").removeClass("active");
+		$("#passport").removeClass("active");
+		$("#reservation").removeClass("active");
+		$("#trip").removeClass("active");
+		
+		$("#listAll").hide();
+		$("#accordionReserv").hide();
+		$("#accordionPass").hide();
+		$("#accordionTrip").hide();
+		$("#accordionOther").hide();
+		
+		$("#allPaging").hide();
+		
+		let faq_category = $(this).val();
 		console.log("faq_category: ", faq_category);
 		$.ajax({
-			url : "${contextPath}/board/categoryList",
-			type : "POST",
-			dataType : "json",
-			data : {
-				"faq_category" : faq_category
-			},
+			url : "${contextPath}/board/categoryList/other", type : "POST", dataType : "json",
+			data : {  "faq_category" : faq_category  },
 			success : function(data) {
 				console.log(data);
+				console.log(data.otherList);
+				console.log(data.otherPm);
+				let str="";
+				let i = 0;
+				$(data.otherList).each(function(){
+						let faq_category= this.faq_category;
+						let faq_title= this.faq_title;
+						let faq_content= this.faq_content;
+						console.log(faq_category, faq_title, faq_content);
+						str += '<div class="accordion mb-3" id="listOther">';
+						str += '<div class="accordion-item">';
+						str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
+						str += '<button class="accordion-button collapsed" type="button"';
+						str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
+						str += 'aria-expanded="true" aria-controls="collapseOne">'; 
+						str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q.'+faq_title;
+						str += '</button></h2>';
+						str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
+						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionOther">';
+						str += '<div class="accordion-body"> A. ';
+						str += faq_content;
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+						str += '</div>';
+						i++;
+				});
+				$("#accordionOther").html(str);
 			},
 			error : function(err) {
 				console.log("응 안돼 돌아가");
 			}
 		});
-
-		$(".accordion").hide();
-		$("#allPaging").hide();
+		$("#accordionOther").show();
 	});
 
-	$("#faqBoard").on("click", function() {
-		$.ajax({
-			url : "faqList",
-			dataType : "json",
-			type : "POST",
-			success : function(data) {
-				console.log(data);
-			},
-			error : function(result) {
-				console.log(result);
-			}
-		});
-
-	});
+	function toggleAndHide(){
+		$(this).toggleClass("active");
+		
+		$("#listAll").hide();
+		$("#accordionReserv").hide();
+		$("#accordionPass").hide();
+		$("#accordionTrip").hide();
+		$("#accordionOther").hide();
+	}
 
 	
 </script>
