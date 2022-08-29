@@ -1,12 +1,16 @@
-package net.koreate.greatescape.common.dao;
+package net.koreate.greatescape.product.provider;
 
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.jdbc.SQL;
 
-public class TempProvider {
+import net.koreate.greatescape.reservation.vo.ReservationVO;
 
-	public String getSearchList(Map<String, String> map) {
+public class ProductProvider {
+
+	public String getListBySearch(Map<String, String> map) {
 		SQL sql = new SQL();
 		sql.SELECT("*");
 		sql.FROM("tbl_product");
@@ -40,5 +44,5 @@ public class TempProvider {
 		}
 		return sql.toString();
 	}
-
+	
 }

@@ -3,7 +3,6 @@
 <%@ include file="common/header.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/index.css">
 <section class="container text-center">
-	<!-- 800*400 배너 공간 시작 -->
 	<div id="carouselExampleDark" class="carousel carousel-dark slide mb-5" data-bs-ride="carousel">
 		<div class="carousel-indicators">
 			<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -42,15 +41,12 @@
 			<span class="visually-hidden">Next</span>
 		</button>
 	</div>
-	<!-- 800*400 배너 공간 끝 -->
 
-	<!-- 여행지 검색 공간 시작 -->
 	<div class="row mb-3">
 		<div class="col-1"></div>
 		<div class="col-10 row p-3">
 			<h2 class="mb-4">여행지 검색</h2>
-
-			<form id="searchForm" action="${contextPath}/product/search">
+			<form id="searchForm" action="${contextPath}/products/search">
 				<div class="row">
 					<div class="col-lg-3">
 						<div class="input-group mb-3">
@@ -95,7 +91,7 @@
 						<button id="formBtn" class="form-control">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 								<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-								
+
 							</svg>
 							검색
 						</button>
@@ -103,12 +99,9 @@
 				</div>
 			</form>
 		</div>
-
 		<div class="col-1"></div>
 	</div>
-	<!-- 여행지 검색 공간 끝 -->
 
-	<!-- 추천 여행지 공간 시작 -->
 	<section class="row mb-3">
 		<h2 class="mb-4">최고의 여행지</h2>
 
@@ -121,14 +114,13 @@
 							<div class="card-body">
 								<h5 class="card-title">${product.product_name}</h5>
 								<p class="card-text">${product.detail_info.length() > 200 ? product.detail_info.substring(0, 200) : product.detail_info}...</p>
-								<a href="${contextPath}/product/show/${product.product_num}"
-									class="btn btn-outline-secondary">바로가기</a>
+								<a href="${contextPath}/products/${product.product_num}" class="btn btn-outline-secondary">바로가기</a>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
-				</c:when>
-				<c:otherwise>
+			</c:when>
+			<c:otherwise>
 				<c:forEach var="i" begin="1" end="4">
 					<div class="col-md-6 col-xl-3">
 						<div class="card border-0 mx-auto" style="width: 18rem;">
@@ -139,10 +131,9 @@
 							</div>
 						</div>
 					</div>
-					</c:forEach>
-				</c:otherwise>
+				</c:forEach>
+			</c:otherwise>
 		</c:choose>
 	</section>
-	<!-- 추천 여행지 공간 끝 -->
 </section>
 <%@ include file="common/footer.jsp" %>

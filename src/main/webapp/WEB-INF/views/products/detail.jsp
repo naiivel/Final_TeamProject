@@ -1,19 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../common/header.jsp" %>
-<style>
-	.aWrap a {
-		text-decoration: none;
-		color: black;
-	}
-
-	.badge.text-bg-primary {
-		font-weight: 400;
-	}
-
-	img {
-		max-height: 500px !important;
-	}
-</style>
+<link rel="stylesheet" href="${contextPath}/resources/css/detail.css">
 <section class="container mb-3">
 	<div class="row mb-3 pt-1">
 		<div class="aWrap ps-3">
@@ -34,7 +21,7 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="card mb-3">
-				<img src="${detail.detail_title_image}" class="card-img-top" alt="...">
+				<img src="${product.detail_title_image}" class="card-img-top" alt="...">
 				<div class="card-header">
 					<h2 class="fs-5 card-title m-0 p-1">[${product.product_country}/${product.product_city}] ${product.product_name}</h2>
 				</div>
@@ -84,8 +71,11 @@
 			</div>
 			<div class="row">
 				<div class="col d-flex justify-content-around">
-					<button id="reserveBtn" class="btn btn-primary">예약하기</button>
-					<button id="qnaBtn" class="btn btn-primary">문의하기</button>
+					<a href="${contextPath}/products/${product.product_num}/reservation" class="btn btn-primary" id="reserveBtn">예약하기</a>
+					<a href="${contextPath}/board/service" class="btn btn-primary" id="qnaBtn">문의하기</a>
+					<c:if test="${userInfo.member_id eq 'master'}">
+						<a href="${contextPath}/products/${product.product_num}/update" class="btn btn-primary" id="reserveBtn">상품 수정</a>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -93,23 +83,14 @@
 			<div class="card">
 				<div class="card-body border-bottom">
 					<h3 class="card-title m-0 fs-5 mb-3">상품 설명</h3>
-					<p class="card-text">${detail.detail_info}</p>
+					<p class="card-text">${product.detail_info}</p>
 				</div>
 				<div class="card-body">
 					<h3 class="card-title m-0 fs-5 mb-3">상세 일정</h3>
-					<p class="card-text">${detail.detail_schedule}</p>
+					<p class="card-text">${product.detail_schedule}</p>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-<script>
-	$("#reserveBtn").click(function(){
-		location.href = "${contextPath}/product/reserve?product_num=${product.product_num}";
-	});
-	
-	$("#qnaBtn").click(function(){
-		location.href = "${contextPath}/board/service";
-	});
-</script>
 <%@ include file="../common/footer.jsp" %>

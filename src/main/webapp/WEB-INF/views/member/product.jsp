@@ -3,6 +3,7 @@
 <%@ include file="../common/header.jsp" %>
 <fmt:formatDate value="${product.product_departure}" var="departure" pattern="yyyy-MM-dd"/>
 <fmt:formatDate value="${product.product_arrive}" var="arrive" pattern="yyyy-MM-dd"/>
+
 <section class="container">
 	<div class="row mb-5">
 		<div class="col-md-2">
@@ -53,4 +54,9 @@
 		location.href='deleteProduct';
 	});
 </script>
+<c:if test="${!empty msg}">
+	<script>
+		alert("${msg}");
+	</script>
+</c:if>
 <%@ include file="../common/footer.jsp" %>
