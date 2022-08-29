@@ -10,20 +10,22 @@ import net.koreate.greatescape.utils.SearchCriteria;
 
 public interface BoardService {
 
+	/****************************** FAQ ************************************/
+	
 	//페이징처리
 	PageMaker getPageMaker(SearchCriteria cri) throws Exception;
-	
-	
-	/****************************** FAQ ************************************/
+	//카테고리별 리스트
+	PageMaker getCategoryPageMaker(SearchCriteria cri, String category) throws Exception;
 	
 	//질문리스트-페이징처리
 	List<FAQBoardVO> faqList(SearchCriteria cri) throws Exception;
 		
-	//새글작성
-	String writeFAQ(FAQBoardVO fvo) throws Exception;
+	//카테고리별 리스트
+	List<FAQBoardVO> categoryList(SearchCriteria cri, String faq_category) throws Exception;
 	
-	//글 수정
-	String modifyFAQ(FAQBoardVO fvo) throws Exception;
+	//새글작성
+	void writeFAQ(FAQBoardVO fvo) throws Exception;
+	
 	
 	//글삭제
 	void deleteFAQ(int faq_num) throws Exception;
@@ -62,6 +64,9 @@ public interface BoardService {
 	
 	//글삭제
 	void deleteNotice(int notice_num) throws Exception;
+	
+	//공지페이지메이커
+	PageMaker getNoticePageMaker(SearchCriteria cri) throws Exception;
 	
 	
 	

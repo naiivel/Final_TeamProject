@@ -3,6 +3,7 @@ package net.koreate.greatescape.member.dao;
 
 import java.util.List;
 
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +14,9 @@ import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.member.vo.SalesVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
+
 import net.koreate.greatescape.utils.Criteria;
+
 
 public interface MemberDAO {
 	
@@ -26,6 +29,7 @@ public interface MemberDAO {
 			+ "member_address_detail,member_email) VALUES(#{member_id},#{member_pw},#{member_name},#{member_gender},#{member_birth},"
 			+ "#{member_phone},#{member_address},#{member_address_detail},#{member_email})")
 	void join(MemberVO vo);
+
 	
 	// ID중복체크
 	@Select("SELECT count(*) FROM tbl_member WHERE member_id = #{member_id}")
