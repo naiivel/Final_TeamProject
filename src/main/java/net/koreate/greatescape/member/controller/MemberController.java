@@ -27,6 +27,7 @@ import net.koreate.greatescape.member.vo.EmbassyVO;
 import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.member.vo.SalesVO;
 import net.koreate.greatescape.product.vo.ProductVO;
+import net.koreate.greatescape.reservation.vo.DetailBoardVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
 import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
@@ -170,66 +171,63 @@ public class MemberController {
 		return result;
 	}
 	
+	
 	// (회원)마이페이지 출력-예약내역
 	@GetMapping("/myPage")
 	@Transactional
-	public String myPage(MemberVO vo,HttpServletRequest request,HttpSession session) throws Exception{
-		vo = (MemberVO) session.getAttribute("userInfo");
-		MemberVO loginMember = ms.memberInfo(vo.getMember_num());
-		if(loginMember.getProduct_num()==0) {
+	public String myPage(MemberVO loginMember,HttpServletRequest request,HttpSession session,Model model) throws Exception{
+		loginMember = (MemberVO) session.getAttribute("userInfo");
+		List<MemberVO> isCheck = ms.revCheck(loginMember.getMember_id());
+		if(isCheck != null) {
+			
+			List<ReservationVO> rev = ms.checkRev(loginMember);
+			List<ProductVO> pList = ms.findProductList(rev);
+			
+			
+			model.addAttribute("product", pList);
+			
 			return "member/info";
 		}
-		
-		ProductVO product = ms.findProduct(loginMember.getProduct_num());
-		
-		session.removeAttribute("userInfo");
-		
-		session.setAttribute("product", product);
-		session.setAttribute("userInfo", loginMember);
-		
 		
 		return "member/info";
 	}
 	
+	
 	// (회원)예약내역 상세보기
 	@GetMapping("/reservDetail")
 	@Transactional
-	public String reservDetail(HttpSession session,Model model,EmbassyVO url)throws Exception{
+	public String reservDetail(ProductVO vo,HttpSession session,Model model,EmbassyVO url)throws Exception{
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
-		ReservationVO reserv = ms.findpeople(loginMember);
-		String tripInfo = ms.findtripInfo(loginMember.getProduct_num());
+		ReservationVO reserv = ms.findNum(loginMember,vo.getProduct_num());
+		DetailBoardVO tripInfo = ms.findtripInfo(vo.getProduct_num());
 		
-		ProductVO product = ms.findProduct(loginMember.getProduct_num());
+		ProductVO product = ms.findProduct(vo.getProduct_num());
 		
 		String embassy = url.findEmbassy(product.getProduct_country());
 		System.out.println(embassy);
 		
 		model.addAttribute("embassy",embassy);
-		
+		model.addAttribute("product",product);
 		model.addAttribute("reservation",reserv);
 		model.addAttribute("tripInfo",tripInfo);
 		
 		return "member/product";
 	}
 	
+	
 	// (회원)예약내역 취소
 	@GetMapping("/deleteProduct")
 	@Transactional
-	public String deleteProduct(HttpSession session,Model model) throws Exception{
+	public String deleteProduct(HttpSession session,Model model,ProductVO vo) throws Exception{
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
-		ms.deleteP(loginMember.getProduct_num());
-		
-		loginMember = ms.memberInfo(loginMember.getMember_num());
-		
-		session.removeAttribute("product");
-		session.removeAttribute("userInfo");
-		
-		session.setAttribute("userInfo",loginMember);
+		ReservationVO rev = ms.findpeople(loginMember,vo.getProduct_num());
+		ms.deleteReserv(rev);
+		ms.seatPlus(rev);
 		
 		String message = "해당 예약이 취소되었습니다.";
 		model.addAttribute("message",message);
 		
-		return "member/info";
+		return "redirect:/member/myPage";
 	}
 	
 	
@@ -300,13 +298,14 @@ public class MemberController {
 		 // 비밀번호 확인
 		 MemberVO loginMember = ms.pwCheck(vo); 
 		 if(loginMember != null) {
+			 List<ReservationVO> list = ms.findRevList(loginMember);
 			 // 회원 가입여부 'N'변경
 			 ms.changeLeave(loginMember);
 			 // 관련데이터 삭제 및 변경
-			 ms.deleteP(loginMember.getProduct_num());
+			 ms.deleteRevId(loginMember);
+			 
 			 
 			 session.removeAttribute("userInfo");
-			 session.removeAttribute("product");
 			 	 
 			 return "redirect:/";
 		 }
@@ -327,17 +326,19 @@ public class MemberController {
 	// 비회원 예약확인시도
 	@PostMapping("/norev")
 	@Transactional
-	public String norev(ReservationVO vo,Model model,HttpSession session) throws Exception{
+	public String norev(ReservationVO vo,Model model,HttpSession session,EmbassyVO url) throws Exception{
 		ReservationVO noMember = ms.findrev(vo);
 		
 		if(noMember != null) {
 			session.setAttribute("noMember", noMember);
 			
 			ProductVO noproduct = ms.findProduct(noMember.getProduct_num());
-			
 			model.addAttribute("noproduct",noproduct);
 			
-			String tripInfo = ms.findtripInfo(noproduct.getProduct_num());
+			String embassy = url.findEmbassy(noproduct.getProduct_country());
+			model.addAttribute("embassy",embassy);
+			
+			DetailBoardVO tripInfo = ms.findtripInfo(noproduct.getProduct_num());
 			model.addAttribute("tripInfo",tripInfo);
 			
 			return "nomember/show";
@@ -358,6 +359,8 @@ public class MemberController {
 		
 		String message = "예약이 취소되었습니다.";
 		model.addAttribute("message",message);
+		session.removeAttribute("noMember");
+		
 		
 		return "member/login";
 	}
@@ -373,9 +376,11 @@ public class MemberController {
 		if(type != null) {
 			if(type.equals("회원")) {
 				String member_master = "N";
+				List<ReservationVO> rev = ms.allRev();
 				List<MemberVO> list = ms.typeMemberList(cri,member_master);
 				PageMaker pm = ms.typePageMaker(cri,member_master);
 				
+				model.addAttribute("rev",rev);
 				model.addAttribute("list",list);
 				model.addAttribute("pm",pm);
 				return "admin/index";
@@ -391,8 +396,11 @@ public class MemberController {
 		}
 		List<MemberVO> list = ms.memberList(cri);
 		
+		List<ReservationVO> rev = ms.allRev();
+		
 		PageMaker pm  = ms.pageMaker(cri);
 		
+		model.addAttribute("rev",rev);
 		model.addAttribute("list",list);
 		model.addAttribute("pm",pm);
 		return "admin/index";
@@ -411,11 +419,11 @@ public class MemberController {
 	// (관리자)회원 예약내역 보기
 	@GetMapping("memberReserv")
 	@Transactional
-	public String memberReserv(MemberVO vo,Model model,EmbassyVO url) throws Exception{
-		MemberVO member = ms.memberInfo(vo.getMember_num());
-		ProductVO product = ms.findProduct(member.getProduct_num());
-		ReservationVO reserv = ms.findpeople(member);
-		String tripInfo = ms.findtripInfo(member.getProduct_num());
+	public String memberReserv(Model model,EmbassyVO url,ReservationVO r) throws Exception{
+		ReservationVO reserv = ms.revFind(r);
+		MemberVO member = ms.findInfo(reserv);
+		ProductVO product = ms.findProduct(reserv.getProduct_num());
+		DetailBoardVO tripInfo = ms.findtripInfo(product.getProduct_num());
 		
 		String embassy = url.findEmbassy(product.getProduct_country());
 		System.out.println(embassy);
@@ -444,6 +452,7 @@ public class MemberController {
 		return "redirect:/member/adminPage";
 	}
 	
+
 	// 매출페이지 이동
 	@GetMapping("sales")
 	public String sales(Model model) throws Exception{
@@ -476,19 +485,19 @@ public class MemberController {
 		int totalEurope = 0;
 		
 		for(SalesVO a : asiaSales) {
-			totalAsia = a.getProduct_adult()*a.getRev_adult()+a.getProduct_minor()*a.getRev_minor();
+			totalAsia += a.getProduct_adult()*a.getRev_adult()+a.getProduct_minor()*a.getRev_minor();
 		}
 		
 		for(SalesVO am : americaSales) {
-			totalAmerica = am.getProduct_adult()*am.getRev_adult()+am.getProduct_minor()*am.getRev_minor();
+			totalAmerica += am.getProduct_adult()*am.getRev_adult()+am.getProduct_minor()*am.getRev_minor();
 		}
 		
 		for(SalesVO o : oseaniaSales) {
-			totalOseania = o.getProduct_adult()*o.getRev_adult()+o.getProduct_minor()*o.getRev_minor();
+			totalOseania += o.getProduct_adult()*o.getRev_adult()+o.getProduct_minor()*o.getRev_minor();
 		}
 		
 		for(SalesVO e : europeSales) {
-			totalEurope = e.getProduct_adult()*e.getRev_adult()+e.getProduct_minor()*e.getRev_minor();
+			totalEurope += e.getProduct_adult()*e.getRev_adult()+e.getProduct_minor()*e.getRev_minor();
 		}
 		
 		int totalSales = totalAsia+totalAmerica+totalEurope+totalOseania;
@@ -502,6 +511,62 @@ public class MemberController {
 
 		return "admin/money";
 	}
+	
+	// 체크 필요
+	// 상품관리 페이지이동
+	@GetMapping("control")
+	public String control(@ModelAttribute("cri") Criteria cri,
+			Model model,HttpServletRequest request) throws Exception{
+		String continent = request.getParameter("continent");
+		System.out.println(continent);
+		if(continent != null) {
+			if(continent.equals("아시아")) {
+				String product_continent = "아시아";
+				List<ProductVO> list = ms.typeProductList(cri,product_continent);
+				PageMaker pm = ms.typeProPageMaker(cri,product_continent);
+				
+				model.addAttribute("list",list);
+				model.addAttribute("pm",pm);
+				return "admin/product";
+			}else if(continent.equals("유럽")){
+				String product_continent = "유럽";
+				List<ProductVO> list = ms.typeProductList(cri,product_continent);
+				PageMaker pm = ms.typeProPageMaker(cri,product_continent);
+				
+				model.addAttribute("list",list);
+				model.addAttribute("pm",pm);
+				return "admin/product";
+			}else if(continent.equals("아메리카")){
+				String product_continent = "아메리카";
+				List<ProductVO> list = ms.typeProductList(cri,product_continent);
+				PageMaker pm = ms.typeProPageMaker(cri,product_continent);
+				
+				model.addAttribute("list",list);
+				model.addAttribute("pm",pm);
+				return "admin/product";
+			}else{
+				String product_continent = "오세아니아";
+				List<ProductVO> list = ms.typeProductList(cri,product_continent);
+				PageMaker pm = ms.typeProPageMaker(cri,product_continent);
+				
+				model.addAttribute("list",list);
+				model.addAttribute("pm",pm);
+				return "admin/product";
+			}
+			
+		}
+		List<ProductVO> list = ms.productList(cri);
+		
+		PageMaker pm  = ms.pPageMaker(cri);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("pm",pm);
+		
+		return "admin/product";
+	}
+	
+	
+	
 }	
 
 

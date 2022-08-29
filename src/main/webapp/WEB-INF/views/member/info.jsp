@@ -30,11 +30,13 @@
 					</thead>
 					<tbody>
 					<c:choose>
-					<c:when test="${!empty sessionScope.product}">
-						<tr>
-							<td><span>${product.product_name}</span><span> </span><span>/ ${product.product_plan - 1}박 ${product.product_plan}일</span></td>
-							<td><a href="reservDetail">[예약상세내역]</a></td>
-						</tr>
+					<c:when test="${!empty product}">
+						<c:forEach items="${product}" var="rProduct">
+							<tr>
+								<td><span>${rProduct.product_name}</span><span> </span><span>/ ${rProduct.product_plan - 1}박 ${rProduct.product_plan}일</span></td>
+								<td><a href="reservDetail?product_num=${rProduct.product_num}">[예약상세내역]</a></td>
+							</tr>
+						</c:forEach>
 					</c:when>
 					<c:otherwise>
 						<tr>

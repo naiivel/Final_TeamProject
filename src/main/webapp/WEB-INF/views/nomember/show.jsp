@@ -29,7 +29,7 @@
 					<p class="card-text">성인 : ${noMember.rev_adult*noproduct.product_adult}원</p>
 					<p class="card-text">소인 : ${noMember.rev_minor*noproduct.product_minor}원</p>
 					<p class="card-text">${noproduct.product_plan - 1}박 ${noproduct.product_plan}일</p>
-					<a href="#" class="card-link">링크</a>
+					<a href="${embassy}" class="card-link">${product.product_country} 대사관</a>
 					<p class="card-text">
 						<small class="text-muted">작은글씨</small>
 					</p>

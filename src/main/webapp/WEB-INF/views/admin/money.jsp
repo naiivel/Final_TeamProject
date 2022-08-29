@@ -16,24 +16,13 @@
 				<div class="list-group list-group-flush">
 					<a href="${contextPath}/member/adminPage" class="list-group-item">회원/관리자 목록</a>
 					<a href="${contextPath}/member/sales" class="list-group-item active">매출 관리</a>
-					<a href="${contextPath}/admin/product" class="list-group-item">상품 관리</a>
+					<a href="${contextPath}/member/control" class="list-group-item">상품 관리</a>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-10 mb-5">
 			<h2 class="mb-5">매출 내역</h2>
 			<div class="mb-4">
-				<div class="dropdown">
-					<a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
-						data-bs-toggle="dropdown" aria-expanded="false">
-						지역 선택
-					</a>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">아시아</a></li>
-						<li><a class="dropdown-item" href="#">유럽</a></li>
-						<li><a class="dropdown-item" href="#">....</a></li>
-					</ul>
-				</div>
 			</div>
 			<div class="table-responsive">
 				<table class="table">

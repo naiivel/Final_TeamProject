@@ -13,5 +13,6 @@ public class ReservationVO {
 	private int product_num;
 	private int rev_adult;
 	private int rev_minor;
+	private String member_id;
 	
 }

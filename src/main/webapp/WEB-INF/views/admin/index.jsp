@@ -11,7 +11,7 @@
 				<div class="list-group list-group-flush">
 					<a href="${contextPath}/member/adminPage" class="list-group-item active">회원/관리자 목록</a>
 					<a href="${contextPath}/member/sales" class="list-group-item">매출 관리</a>
-					<a href="${contextPath}/admin/product" class="list-group-item">상품 관리</a>
+					<a href="${contextPath}/member/control" class="list-group-item">상품 관리</a>
 				</div>
 			</div>
 		</div>
@@ -46,15 +46,18 @@
 								<td><a href="detailInfo?member_num=${member.member_num}">${member.member_id}</a></td>
 								<td>${member.member_name}</td>
 								<td><c:choose>
-									<c:when test="${member.member_master eq 'Y'}">
+										<c:when test="${member.member_master eq 'Y'}">
 										관리자
 									</c:when>
-									<c:otherwise>
+										<c:otherwise>
 										일반회원
 									</c:otherwise>
-								</c:choose></td>
-								<td><c:if test="${member.member_master eq 'N' and member.product_num ne 0}">
-								<a href="${contextPath}/member/memberReserv/?member_num=${member.member_num}">[예약내역]</a></c:if></td>
+									</c:choose></td>
+										<c:forEach items="${rev}" var="R"><td><c:if
+										test="${member.member_master eq 'N' and member.member_id == R.member_id}"><a
+											href="${contextPath}/member/memberReserv/?rev_num=${R.rev_num}">[예약내역]</a>
+									</c:if></td></c:forEach>
+										
 							</tr>
 						</c:forEach>
 					</tbody>

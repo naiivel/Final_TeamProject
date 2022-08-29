@@ -43,6 +43,7 @@
 				</div>
 				<div class="card-footer">
 					<button id="deleteBtn" class="btn btn-outline-secondary">예약 취소</button>
+					<input type="hidden" id="product_num" value="${product.product_num}"/>
 				</div>
 			</div>
 		</div>
@@ -50,7 +51,8 @@
 </section>
 <script>
 	$("#deleteBtn").click(function(){
-		location.href='deleteProduct';
+		var product_num = $("#product_num").val();
+		location.href='deleteProduct?product_num='+product_num;
 	});
 </script>
 <%@ include file="../common/footer.jsp" %>
