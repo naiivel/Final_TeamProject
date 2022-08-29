@@ -11,6 +11,7 @@ import net.koreate.greatescape.board.vo.NoticeBoardVO;
 import net.koreate.greatescape.board.vo.QNABoardVO;
 import net.koreate.greatescape.utils.PageMaker;
 import net.koreate.greatescape.utils.SearchCriteria;
+import net.koreate.greatescape.utils.SearchPageMaker;
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +21,25 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public PageMaker getPageMaker(SearchCriteria cri) throws Exception {
-		
-		return null;
+		int totalCount= bdao.getCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
+	}
+	
+	@Override
+	public PageMaker getCategoryPageMaker(SearchCriteria cri, String category) throws Exception {
+		int totalCount= bdao.getCategoryCount(cri, category);
+		PageMaker categoryPM= new SearchPageMaker();
+		categoryPM.setDisplayPageNum(5);
+		categoryPM.setCri(cri);
+		categoryPM.setTotalCount(totalCount);
+		return categoryPM;
 	}
 
+	
 	/****************************** FAQ ************************************/
 	
 	@Override
@@ -36,21 +52,19 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public String writeFAQ(FAQBoardVO fvo) throws Exception {
+	public void writeFAQ(FAQBoardVO fvo) throws Exception {
 		bdao.writeFAQ(fvo);
 		
-		return "redirect:board/faq/list";
-	}
-
-	@Override
-	public String modifyFAQ(FAQBoardVO fvo) throws Exception {
-		bdao.modifyFAQ(fvo);
-		return "redirect:board/faq/modify";
 	}
 
 	@Override
 	public void deleteFAQ(int faq_num) throws Exception {
 		bdao.deleteFAQ(faq_num);
+	}
+	
+	@Override
+	public List<FAQBoardVO> categoryList(SearchCriteria cri, String faq_category) throws Exception {
+		return bdao.getCategoryList(cri, faq_category);
 	}
 	
 	/****************************** QNA ************************************/
@@ -88,8 +102,10 @@ public class BoardServiceImpl implements BoardService {
 	/***************************** Notice **********************************/
 	@Override
 	public List<NoticeBoardVO> noticeList(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<NoticeBoardVO> list= bdao.getNoticeList(cri);
+		
+		return list;
+		
 	}
 
 	@Override
@@ -115,5 +131,15 @@ public class BoardServiceImpl implements BoardService {
 	public NoticeBoardVO readNotice(int notice_num) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public PageMaker getNoticePageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getNoticeCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
 	}
 }

@@ -9,9 +9,9 @@
 					고객센터
 				</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/board/service" class="list-group-item active">질문과 답변</a>
-					<a href="${contextPath}/board/service2" class="list-group-item">자주 묻는 질문</a>
-					<a href="${contextPath}/board/service3" class="list-group-item">공지사항</a>
+					<a href="${contextPath}/board/faq/${pm.makeQuery(1)}" class="list-group-item" id="faqBoard">자주 묻는 질문</a>
+					<a href="${contextPath}/board/qna" class="list-group-item active" id="qnaBoard">질문과 답변</a>
+					<a href="${contextPath}/board/notice" class="list-group-item" id="noticeBoard">공지사항</a>
 				</div>
 			</div>
 		</div>
@@ -92,7 +92,7 @@
 <script src="${contextPath}/resources/js/popper.min.js"></script>
 <script>
 	document.querySelector("#addBtn").addEventListener("click", function () {
-		location.href = "${contextPath}/board/service/new";
+		location.href = "${contextPath}/board/qnaWrite";
 	});
 </script>
 <%@ include file="../common/footer.jsp" %>

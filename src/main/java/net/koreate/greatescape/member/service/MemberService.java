@@ -10,14 +10,18 @@ import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
 import net.koreate.greatescape.utils.SearchCriteria;
 
+import net.koreate.greatescape.utils.Criteria;
+import net.koreate.greatescape.utils.PageMaker;
+import net.koreate.greatescape.utils.SearchCriteria;
+
 public interface MemberService {
-	
+
 	// 로그인
 	MemberVO loginCheck(MemberVO vo);
 
 	// 회원가입
 	void join(MemberVO vo);
-	
+
 	// ID중복체크
 	int reduplcationCheck(MemberVO vo);
 
@@ -77,10 +81,6 @@ public interface MemberService {
 
 	// 대륙별 상품 판매 총액을 위한 정보검색
 	List<SalesVO> totalSales(String asia);
-
-
 	
-	
-
 
 }
