@@ -57,4 +57,9 @@
 		location.href='deleteProduct?product_num='+product_num;
 	});
 </script>
+<c:if test="${!empty msg}">
+	<script>
+		alert("${msg}");
+	</script>
+</c:if>
 <%@ include file="../common/footer.jsp" %>

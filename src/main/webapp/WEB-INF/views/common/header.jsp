@@ -29,15 +29,20 @@
 
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/product/asia">아시아</a></li>
-					<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/product/europe">유럽</a></li>
-					<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/product/america">아메리카</a></li>
-					<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/product/oceania">오세아니아</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/products/continent/아시아">아시아</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/products/continent/유럽">유럽</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/products/continent/아메리카">아메리카</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/products/continent/오세아니아">오세아니아</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 					<c:choose>
 						<c:when test="${!empty sessionScope.userInfo}">
-							<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/member/logOut">로그아웃</a></li>
+							<li class="nav-item">
+							<form action="${contextPath}/member/logOut" method="POST">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+								<button class="border-0 bg-transparent nav-link active" aria-current="page">로그아웃</button>
+							</form>
+							</li>
 							<c:choose>
 								<c:when test="${userInfo.member_master eq 'Y'}">
 									<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/member/adminPage">관리자페이지</a></li>
@@ -53,8 +58,20 @@
 							</li>
 						</c:otherwise>
 					</c:choose>
-					<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/board/service">고객센터</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/board/faq">고객센터</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
+	<c:if test="${!empty flashMessage}">
+		<div class="container">
+			<div class="row">
+				<div class="col-6 offset-3">
+					<div class="alert alert-primary alert-dismissible fade show" role="alert">
+						${flashMessage}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>

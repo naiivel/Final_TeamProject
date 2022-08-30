@@ -3,6 +3,7 @@
 <%@ include file="../common/header.jsp" %>
 <section class="container d-flex flex-column justify-content-center align-items-center h-100">
 	<form id="joinForm" action="joinPost" method="post" class="row mb-3">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<h3 class="mb-3">회원가입</h3>
 		<div class="col-md-6">
 			<label for="id" class="form-label">아이디</label>
@@ -69,6 +70,7 @@
 		<button id="submitBtn" class="btn btn-primary mx-3">가입하기</button>
 		<button id="cancelBtn" class="btn btn-primary mx-3">가입취소</button>
 	</div>
+	</form>
 </section>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -158,5 +160,8 @@
 		});
 	});
 
+	$(document).ajaxSend(function (e, xhr, options) {
+		xhr.setRequestHeader('${_csrf.headerName}', '${_csrf.token}');
+	});
 </script>
 <%@ include file="../common/footer.jsp" %>

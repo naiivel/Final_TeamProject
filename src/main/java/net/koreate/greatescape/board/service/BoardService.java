@@ -10,20 +10,22 @@ import net.koreate.greatescape.utils.SearchCriteria;
 
 public interface BoardService {
 
+	/****************************** FAQ ************************************/
+	
 	//페이징처리
 	PageMaker getPageMaker(SearchCriteria cri) throws Exception;
-	
-	
-	/****************************** FAQ ************************************/
+	//카테고리별 리스트
+	PageMaker getCategoryPageMaker(SearchCriteria cri, String category) throws Exception;
 	
 	//질문리스트-페이징처리
 	List<FAQBoardVO> faqList(SearchCriteria cri) throws Exception;
 		
-	//새글작성
-	String writeFAQ(FAQBoardVO fvo) throws Exception;
+	//카테고리별 리스트
+	List<FAQBoardVO> categoryList(SearchCriteria cri, String faq_category) throws Exception;
 	
-	//글 수정
-	String modifyFAQ(FAQBoardVO fvo) throws Exception;
+	//새글작성
+	void writeFAQ(FAQBoardVO fvo) throws Exception;
+	
 	
 	//글삭제
 	void deleteFAQ(int faq_num) throws Exception;
@@ -31,10 +33,13 @@ public interface BoardService {
 	/****************************** QNA ************************************/
 	
 	//질문리스트-페이징처리
-	List<QNABoardVO> qnaList(SearchCriteria cri) throws Exception;
+	List<QNABoardVO> getQnaList(SearchCriteria cri) throws Exception;
 		
+	//qna페이지메이커
+	PageMaker getQnaPageMaker(SearchCriteria cri) throws Exception;
+	
 	//새글작성
-	String writeQNA(QNABoardVO qvo) throws Exception;
+	void writeQNA(QNABoardVO qvo) throws Exception;
 	
 	//qna상세보기
 	QNABoardVO readQNA(int QNA_num) throws Exception;
@@ -45,6 +50,11 @@ public interface BoardService {
 	//글삭제
 	void deleteQNA(int QNA_num) throws Exception;
 	
+	//문답게시판 들어갈 공지
+	List<NoticeBoardVO> qnaNoticeList();
+	
+	
+	
 	
 	/******************************Notice************************************/
 	
@@ -52,9 +62,9 @@ public interface BoardService {
 	List<NoticeBoardVO> noticeList(SearchCriteria cri) throws Exception;
 		
 	//새글작성
-	String writeNotice(NoticeBoardVO nvo) throws Exception;
+	void writeNotice(NoticeBoardVO nvo) throws Exception;
 	
-	//qna상세보기
+	//상세보기
 	NoticeBoardVO readNotice(int notice_num) throws Exception;
 	
 	//글 수정
@@ -63,6 +73,16 @@ public interface BoardService {
 	//글삭제
 	void deleteNotice(int notice_num) throws Exception;
 	
+	//공지페이지메이커
+	PageMaker getNoticePageMaker(SearchCriteria cri) throws Exception;
+	
+	//공지게시판 카테고리별
+	PageMaker getNoticeCategoryPageMaker(SearchCriteria cri, String category) throws Exception;
+	
+	//구분별 공지리스트
+	List<NoticeBoardVO> noticeCategoryList(SearchCriteria cri, String notice_category);
+	
+
 	
 	
 }

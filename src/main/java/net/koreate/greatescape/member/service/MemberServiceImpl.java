@@ -1,5 +1,6 @@
 package net.koreate.greatescape.member.service;
 
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,10 @@ import net.koreate.greatescape.reservation.vo.DetailBoardVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
 import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
+
+import net.koreate.greatescape.utils.Criteria;
+import net.koreate.greatescape.utils.PageMaker;
+import net.koreate.greatescape.utils.SearchCriteria;
 
 @Service
 @RequiredArgsConstructor
@@ -51,20 +56,20 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int modify(MemberVO vo) {
-		
+
 		return mdao.modify(vo);
 	}
 
 	@Override
 	public void changeRev(MemberVO changeMember) {
 		mdao.reservChange(changeMember);
-		
+
 	}
 
 	@Override
 	public void changeLeave(MemberVO loginMember) {
 		mdao.changeLeave(loginMember);
-		
+
 	}
 
 	@Override
@@ -256,11 +261,5 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return list;
 	}
-
-
-
-	
-	
-	
 
 }

@@ -34,7 +34,6 @@ import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
 
 
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("member")
@@ -96,7 +95,7 @@ public class MemberController {
 	}
 	
 	// 로그아웃 시도
-	@GetMapping("/logOut")
+	@PostMapping("/logOut")
 	public String logOut(HttpSession session){
 		if (session.getAttribute("userInfo") != null) {
 			session.removeAttribute("userInfo");
@@ -121,13 +120,15 @@ public class MemberController {
 		return "member/find";
 	}
 	
+
 	// 계정정보 찾기 시도
 	@PostMapping("findInfo")
 	@ResponseBody
-	public MemberVO findInfo(MemberVO vo) {
+	public MemberVO findId(MemberVO vo) {
 		MemberVO findMember = ms.findId(vo);
 		
 		return findMember;
+
 	}
 	
 
@@ -196,6 +197,8 @@ public class MemberController {
 	
 	// (회원)예약내역 상세보기
 	@GetMapping("/reservDetail")
+
+
 	@Transactional
 	public String reservDetail(ProductVO vo,HttpSession session,Model model,EmbassyVO url)throws Exception{
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
@@ -214,7 +217,6 @@ public class MemberController {
 		
 		return "member/product";
 	}
-	
 	
 	// (회원)예약내역 취소
 	@GetMapping("/deleteProduct")
@@ -323,7 +325,7 @@ public class MemberController {
 	public String rev_check() {
 		return "nomember/index";
 	}
-	
+
 	// 비회원 예약확인시도
 	@PostMapping("/norev")
 	@Transactional
@@ -366,7 +368,7 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	
+
 	// 관리자 페이지 이동
 	@GetMapping("/adminPage")
 	@Transactional
@@ -597,8 +599,6 @@ public class MemberController {
 	}
 	
 }	
-
-
 
 
 

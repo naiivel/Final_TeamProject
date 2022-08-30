@@ -6,6 +6,7 @@ import lombok.Data;
 public class ReservationVO {
 	
 	private int rev_num;
+	private String member_id;
 	private String rev_name;
 	private String rev_birth;
 	private String rev_phone;

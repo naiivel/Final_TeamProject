@@ -11,14 +11,18 @@ import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
 import net.koreate.greatescape.utils.SearchCriteria;
 
+import net.koreate.greatescape.utils.Criteria;
+import net.koreate.greatescape.utils.PageMaker;
+import net.koreate.greatescape.utils.SearchCriteria;
+
 public interface MemberService {
-	
+
 	// 로그인
 	MemberVO loginCheck(MemberVO vo);
 
 	// 회원가입
 	void join(MemberVO vo);
-	
+
 	// ID중복체크
 	int reduplcationCheck(MemberVO vo);
 
@@ -126,11 +130,5 @@ public interface MemberService {
 
 	// 선택한 상품들 잔여좌석 마감시키기
 	List<ProductVO> deadlineSet(int[] product_nums);
-
-
-
-	
-	
-
 
 }

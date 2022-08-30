@@ -11,6 +11,7 @@ import net.koreate.greatescape.board.vo.NoticeBoardVO;
 import net.koreate.greatescape.board.vo.QNABoardVO;
 import net.koreate.greatescape.utils.PageMaker;
 import net.koreate.greatescape.utils.SearchCriteria;
+import net.koreate.greatescape.utils.SearchPageMaker;
 
 @Service
 @RequiredArgsConstructor
@@ -18,14 +19,30 @@ public class BoardServiceImpl implements BoardService {
 
 	private final BoardDAO bdao;
 	
-	@Override
-	public PageMaker getPageMaker(SearchCriteria cri) throws Exception {
-		
-		return null;
-	}
-
+	
+	
 	/****************************** FAQ ************************************/
 	
+	@Override
+	public PageMaker getPageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
+	}
+	
+	@Override
+	public PageMaker getCategoryPageMaker(SearchCriteria cri, String category) throws Exception {
+		int totalCount= bdao.getCategoryCount(cri, category);
+		PageMaker categoryPM= new SearchPageMaker();
+		categoryPM.setDisplayPageNum(5);
+		categoryPM.setCri(cri);
+		categoryPM.setTotalCount(totalCount);
+		return categoryPM;
+	}
+
 	@Override
 	public List<FAQBoardVO> faqList(SearchCriteria cri) throws Exception {
 		List<FAQBoardVO> list= null;
@@ -36,16 +53,8 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public String writeFAQ(FAQBoardVO fvo) throws Exception {
+	public void writeFAQ(FAQBoardVO fvo) throws Exception {
 		bdao.writeFAQ(fvo);
-		
-		return "redirect:board/faq/list";
-	}
-
-	@Override
-	public String modifyFAQ(FAQBoardVO fvo) throws Exception {
-		bdao.modifyFAQ(fvo);
-		return "redirect:board/faq/modify";
 	}
 
 	@Override
@@ -53,24 +62,49 @@ public class BoardServiceImpl implements BoardService {
 		bdao.deleteFAQ(faq_num);
 	}
 	
+	@Override
+	public List<FAQBoardVO> categoryList(SearchCriteria cri, String faq_category) throws Exception {
+		return bdao.getCategoryList(cri, faq_category);
+	}
+	
 	/****************************** QNA ************************************/
 	
+	//qna게시글
 	@Override
-	public List<QNABoardVO> qnaList(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<QNABoardVO> getQnaList(SearchCriteria cri) throws Exception {
+		List<QNABoardVO> list= null;
+		list= bdao.getQNAList(cri);
+		
+		return list;
 	}
-
+	
+	//상단에 띄워줄 공지사항 
 	@Override
-	public String writeQNA(QNABoardVO qvo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<NoticeBoardVO> qnaNoticeList() {
+		return bdao.getQnaNoticeList();
+	}
+	
+	//qna 페이지메이커
+	@Override
+	public PageMaker getQnaPageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getQnaCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		cri.setPerPageNum(7);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
 	}
 	
 	@Override
-	public QNABoardVO readQNA(int QNA_num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public void writeQNA(QNABoardVO qvo) throws Exception {
+		bdao.writeQNA(qvo);
+	}
+	
+	@Override
+	public QNABoardVO readQNA(int qna_num) throws Exception {
+		QNABoardVO vo= bdao.readQNA(qna_num);
+		return vo;
 	}
 	
 	@Override
@@ -88,14 +122,14 @@ public class BoardServiceImpl implements BoardService {
 	/***************************** Notice **********************************/
 	@Override
 	public List<NoticeBoardVO> noticeList(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<NoticeBoardVO> list= bdao.getNoticeList(cri);
+		
+		return list;
 	}
 
 	@Override
-	public String writeNotice(NoticeBoardVO nvo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public void writeNotice(NoticeBoardVO nvo) throws Exception {
+		bdao.noticeWrite(nvo);
 	}
 
 	@Override
@@ -113,7 +147,35 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public NoticeBoardVO readNotice(int notice_num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		NoticeBoardVO vo= bdao.readNotice(notice_num);
+		return vo;
 	}
+
+	@Override
+	public PageMaker getNoticePageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getNoticeCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
+	}
+
+	@Override
+	public PageMaker getNoticeCategoryPageMaker(SearchCriteria cri, String category) throws Exception {
+		int totalCount= bdao.getNoticeCategoryCount(cri, category);
+		PageMaker categoryPM= new SearchPageMaker();
+		categoryPM.setDisplayPageNum(5);
+		categoryPM.setCri(cri);
+		categoryPM.setTotalCount(totalCount);
+		return categoryPM;
+	}
+
+	@Override
+	public List<NoticeBoardVO> noticeCategoryList(SearchCriteria cri, String notice_category) {
+		return bdao.getNoticeCategoryList(cri, notice_category);
+	}
+
+
+	
 }

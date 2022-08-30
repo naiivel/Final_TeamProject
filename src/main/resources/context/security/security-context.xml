@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.7.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="gsMemberDetail" class="net.koreate.greatescape.security.GSMemberDetailsService" />
+	<bean id="no" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
+	<bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<bean id="loginSuccessHandler" class="net.koreate.greatescape.security.LoginSuccessHandler" />
+
+	<!-- <bean id="encFirewall" class="org.springframework.security.web.firewall.StrictHttpFirewall" >
+		<property name="allowUrlEncodedSlash" value="true" />
+	</bean> -->
+
+	<!-- 
+		hasRole
+		hasAnyRole
+		anonymous
+		authenticated
+		permitAll
+		denyAll
+	 -->
+	<security:http auto-config="true">
+		<security:form-login 
+			login-page="/member/login"
+			login-processing-url="/member/loginPost"
+			username-parameter="member_id"
+			password-parameter="member_pw"
+			authentication-success-handler-ref="loginSuccessHandler"
+		/>
+		<security:logout
+			logout-url="/member/logOut"
+			logout-success-url="/"
+			delete-cookies="userCookie"
+		/>
+		
+		<security:access-denied-handler error-page="/" />
+		
+		<!-- 
+		<security:remember-me 
+			remember-me-cookie="userCookie"
+			remember-me-parameter="remember_id"
+			token-validity-seconds="604800" 
+		/>
+		<security:session-management>
+			<security:concurrency-control 
+				max-sessions="1" 
+				error-if-maximum-exceeded="false"
+				expired-url="/" 
+			/>
+		</security:session-management>
+		-->
+		<security:intercept-url
+			pattern="/member/myPage"
+			access="authenticated"
+		/>
+		<security:intercept-url
+			pattern="/member/reservDetail"
+			access="authenticated"
+		/>
+		<security:intercept-url
+			pattern="/member/deleteProduct"
+			access="authenticated"
+		/>
+		<security:intercept-url
+			pattern="/member/edit_check"
+			access="authenticated"
+		/>
+		<security:intercept-url
+			pattern="/member/insertPass"
+			access="authenticated"
+		/>
+		<security:intercept-url
+			pattern="/member/modify"
+			access="authenticated"
+		/>
+		<security:intercept-url
+			pattern="/member/withdraw"
+			access="authenticated"
+		/>
+		<security:intercept-url
+			pattern="/member/delete"
+			access="authenticated"
+		/>
+		<security:intercept-url
+			pattern="/member/adminPage"
+			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
+		/>
+
+		
+		<security:intercept-url
+			pattern="/products/{id}/update"
+			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
+		/>
+		<security:intercept-url
+			pattern="/products/new"
+			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
+		/>
+		<security:intercept-url
+			pattern="/products/{id}"
+			method="POST"
+			access="permitAll"
+		/>
+		<security:intercept-url
+			pattern="/products"
+			method="POST"
+			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
+		/>
+		<security:intercept-url
+			pattern="/**"
+			access="permitAll"
+		/>
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="gsMemberDetail">
+			<security:password-encoder ref="no"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>

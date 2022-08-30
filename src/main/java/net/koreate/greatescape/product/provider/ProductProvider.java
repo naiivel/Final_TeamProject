@@ -1,12 +1,12 @@
-package net.koreate.greatescape.common.dao;
+package net.koreate.greatescape.product.provider;
 
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
 
-public class TempProvider {
+public class ProductProvider {
 
-	public String getSearchList(Map<String, String> map) {
+	public String getListBySearch(Map<String, String> map) {
 		SQL sql = new SQL();
 		sql.SELECT("*");
 		sql.FROM("tbl_product");
@@ -24,7 +24,7 @@ public class TempProvider {
 		}
 		String seat = map.get("seat");
 		if (seat != null && !seat.equals("")) {
-			sql.WHERE("product_seat >= #{seat}");
+			sql.WHERE("(product_seat * 4) >= #{seat}");
 		}
 		String city = map.get("city");
 		if (city != null && !city.equals("")) {
@@ -40,5 +40,5 @@ public class TempProvider {
 		}
 		return sql.toString();
 	}
-
+	
 }
