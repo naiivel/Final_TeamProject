@@ -1,19 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../common/header.jsp" %>
-<style>
-	.aWrap a {
-		text-decoration: none;
-		color: black;
-	}
-
-	.badge.text-bg-primary {
-		font-weight: 400;
-	}
-
-	img {
-		max-height: 500px !important;
-	}
-</style>
+<link rel="stylesheet" href="${contextPath}/resources/css/detail.css">
 <section class="container mb-3">
 	<div class="row mb-3 pt-1">
 		<div class="aWrap ps-3">
@@ -34,7 +21,7 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="card mb-3">
-				<img src="${detail.detail_title_image}" class="card-img-top" alt="...">
+				<img src="${contextPath}/attach${product.detail_title_image.replace('s_','')}" class="card-img-top" alt="...">
 				<div class="card-header">
 					<h2 class="fs-5 card-title m-0 p-1">[${product.product_country}/${product.product_city}] ${product.product_name}</h2>
 				</div>
@@ -47,7 +34,7 @@
 						<div class="col">
 							<span class="fs-6 badge text-bg-primary me-2 p-2">잔여좌석</span>
 							<span class="card-text d-inline-block">${product.product_seat}</span>
-							<c:if test="${product.product_seat < 10}">
+							<c:if test="${product.product_seat <= 5}">
 								<span class="ms-2 badge text-bg-danger">마감 임박</span>
 							</c:if>
 						</div>
@@ -84,8 +71,11 @@
 			</div>
 			<div class="row">
 				<div class="col d-flex justify-content-around">
-					<button class="btn btn-primary">예약하기</button>
-					<button class="btn btn-primary">문의하기</button>
+					<a href="${contextPath}/products/${product.product_num}/reservation" class="btn btn-primary" id="reserveBtn">예약하기</a>
+					<a href="${contextPath}/board/service" class="btn btn-primary" id="qnaBtn">문의하기</a>
+					<c:if test="${userInfo.member_id eq 'master'}">
+						<a href="${contextPath}/products/${product.product_num}/update" class="btn btn-primary" id="reserveBtn">상품 수정</a>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -93,37 +83,14 @@
 			<div class="card">
 				<div class="card-body border-bottom">
 					<h3 class="card-title m-0 fs-5 mb-3">상품 설명</h3>
-					<p class="card-text">${detail.detail_info}</p>
+					<p class="card-text">${product.detail_info}</p>
 				</div>
 				<div class="card-body">
 					<h3 class="card-title m-0 fs-5 mb-3">상세 일정</h3>
-					<p class="card-text">${detail.detail_schedule}</p>
+					<p class="card-text">${product.detail_schedule}</p>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-<script>
-</script>
-
-<!-- 
-	product_num;
-	product_continent;
-	product_country;
-	product_city;
-	product_name;
-	product_airplane;
-	product_departure;
-	product_arrive;
-	product_plan;
-	product_adult;
-	product_minor;
-	product_seat;
-
-	product_num;
-	detail_info;
-	schedule;
-	title_image;
-
- -->
 <%@ include file="../common/footer.jsp" %>

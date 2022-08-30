@@ -8,6 +8,9 @@
 			<div class="alert alert-danger" role="alert">
 				<h4 class="alert-heading m-0">일치하는 상품 정보가 존재하지 않습니다.</h4>
 			</div>
+			<c:if test="${userInfo.member_id eq 'master'}">
+				<a id="newBtn" href="${contextPath}/products/new" class="btn btn-primary">상품 등록</a>
+			</c:if>
 		</section>
 	</c:when>
 	<c:otherwise>
@@ -15,7 +18,12 @@
 			<div class="row w-100">
 				<main class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
 					<%-- <h3 class="mb-3">${list[0].product_continent}</h3> --%>
-					<h3 class="mb-3">${continent}</h3>
+					<div>
+					<h3 class="mb-3 d-inline-block">${continent}</h3>
+					<c:if test="${userInfo.member_id eq 'master'}">
+						<a id="newBtn" href="${contextPath}/products/new" class="btn btn-sm btn-primary ms-3">상품 등록</a>
+					</c:if>
+					</div>
 					<c:forEach var="country" items="${countrySet}">
 						<div class="card mb-4">
 							<div class="card-header">
@@ -36,7 +44,7 @@
 											<div class="col-sm-2 col-md-3 col-lg-4 col-xl-5 text-center text-sm-end">
 												<p class="card-text">잔여좌석: ${product.product_seat}</p>
 												<c:choose>
-													<c:when test="${product.product_seat > 10}">
+													<c:when test="${product.product_seat > 5}">
 														<button class="btn btn-primary" data-num="${product.product_num}">상세보기</button>
 													</c:when>
 													<c:otherwise>
@@ -64,12 +72,12 @@
 					<div class="accordion" id="accordion">
 						<div class="accordion-item">
 							<h4 class="accordion-header" id="heading${countryNum}">
-								<button class="accordion-button <c:if test="${countryNum ne 1}">collapsed</c:if>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${countryNum}" aria-expanded="true" aria-controls="collapse${countryNum}">
+								<button class="accordion-button <c:if test=" ${countryNum ne 1}">collapsed</c:if>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${countryNum}" aria-expanded="true" aria-controls="collapse${countryNum}">
 									${country}
 								</button>
 							</h4>
 
-							<div id="collapse${countryNum}" class="accordion-collapse collapse <c:if test="${countryNum eq 1}">show</c:if>" aria-labelledby="heading${countryNum}">
+							<div id="collapse${countryNum}" class="accordion-collapse collapse <c:if test=" ${countryNum eq 1}">show</c:if>" aria-labelledby="heading${countryNum}">
 								<c:forEach var="city" items="${cityMap.get(country)}">
 									<div class="accordion-body" data-city="${city}">
 										${city}
@@ -90,17 +98,14 @@
 	const main = document.querySelector("main");
 
 	document.querySelectorAll(".accordion-body").forEach(tag => tag.addEventListener("click", function () {
-		axios.get("${contextPath}/product/getList", {
-			params: {
-				city: this.getAttribute("data-city")
-			}
-		}).then(function (response) {
-			let html = makeHtml(response.data);
-			main.innerHTML = html;
-		}).catch(function (error) {
-			console.log(error);
-		}).then(function () {
-		});
+		axios.get("${contextPath}/products/city/" + this.getAttribute("data-city"))
+			.then(function (response) {
+				let html = makeHtml(response.data);
+				main.innerHTML = html;
+			})
+			.catch(function (error) {
+				console.log(error);
+			})
 	}));
 
 	const makeHtml = array => {
@@ -124,7 +129,7 @@
 			html += '<div class="col-sm-2 col-md-3 col-lg-4 col-xl-5 text-center text-sm-end">';
 			html += '<p class="card-text">잔여좌석:' + product.product_seat + '</p>';
 			const seat = product.product_seat;
-			if (seat > 10) {
+			if (seat > 5) {
 				html += '<button class="btn btn-primary" data-num="' + product.product_num + '">상세보기</button>';
 			} else {
 				html += '<button type="button" class="btn btn-danger position-relative" data-num="' + product.product_num + '">상세보기';
@@ -147,9 +152,7 @@
 	main.addEventListener("click", function (event) {
 		const target = event.target;
 		if (target.tagName !== "BUTTON") return;
-		location.href = "${contextPath}/product/show/" + target.getAttribute("data-num");
+		location.href = "${contextPath}/products/" + target.getAttribute("data-num");
 	});
-
-
 </script>
 <%@ include file="../common/footer.jsp" %>
