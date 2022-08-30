@@ -32,10 +32,11 @@
 					</ul>
 				</div>
 			</div>
+			<form id="checkForm" method="post" action="deleteP">
 			<div class="table-responsive">
-				<table class="table">
+				<table class="table table-bordered text-center">
 					<thead>
-						<tr>
+						<tr class="table-info">
 							<th>대륙</th>
 							<th>상품명</th>
 							<th>잔여좌석</th>
@@ -47,20 +48,17 @@
 							<tr>
 								<td>${product.product_continent}</td>
 								<td>${product.product_name}</td>
-								<td>${product.product_seat}/15</td>
-								<td>
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="${product.product_num}"
-											id="flexCheckDefault"> <label
-											class="form-check-label" for="flexCheckDefault">
-										</label>
-									</div>
+								<td class="seat" id="${product.product_num}">${product.product_seat}/15</td>
+								<td >
+									<input class="form-check-input" name="product_num" type="checkbox" value="${product.product_num}"
+											id="flexCheckDefault">
 								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</div>
+			</form>
 			<nav aria-label="Page navigation mb-3">
 				<ul class="pagination justify-content-center">
 					<c:if test="${pm.prev}">
@@ -81,7 +79,8 @@
 				</ul>
 			</nav>
 			<div class="mb-4 text-end">
-				<button class="btn btn-outline-secondary">삭제</button>
+				<button id="closeBtn" class="btn btn-outline-secondary">마감</button>
+				<button id="deleteBtn" class="btn btn-outline-secondary">삭제</button>
 			</div>
 		</div>
 	</div>
@@ -92,10 +91,43 @@
 </form>
 <script src="${contextPath}/resources/js/popper.min.js"></script>
 <script>
-	document.querySelector("#addBtn").addEventListener("click", function() {
-		location.href = "createAdmin";
-	});
 
+	$("#deleteBtn").click(function(){
+		
+		var checked = $("#flexCheckDefault:checked").val();
+		var seat = "#"+checked;
+		
+		if($(seat).attr('id') == checked){
+			if($(seat).text() != '15/15'){
+				alert('선택하신 상품들중 예약이 있는 상품이 있기에 삭제하실수 없습니다.');
+				$("#flexCheckDefault").prop("checked", false);
+				return;
+			}
+		}
+		$("#checkForm").submit();
+	});
+	
+	$("#closeBtn").click(function(){
+		var list = '';
+		$('#flexCheckDefault:checked').each(function(){
+			list += $(this).val()+'/';
+		})
+		
+		$.ajax({
+			type : 'get',
+			url : 'deadline',
+			dateType : 'json',
+			data : {list : list},
+			success : function(data){
+				$(data).each(function(){
+					var selector = "#" + this.product_num;
+					$(selector).text("0/15");
+					$("#flexCheckDefault").prop("checked", false);
+				});
+			}
+		});
+	});
+	
 	$(".pagination li a").on("click", function(event) {
 		event.preventDefault();
 		// page

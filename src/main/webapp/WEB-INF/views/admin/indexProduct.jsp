@@ -3,6 +3,8 @@
 <%@ include file="../common/header.jsp" %>
 <fmt:formatDate value="${product.product_departure}" var="departure" pattern="yyyy-MM-dd"/>
 <fmt:formatDate value="${product.product_arrive}" var="arrive" pattern="yyyy-MM-dd"/>
+<fmt:formatNumber value="${reservation.rev_adult*product.product_adult}" var="totalAdult" maxFractionDigits="3" />
+<fmt:formatNumber value="${reservation.rev_minor*product.product_minor}" var="totalMinor" maxFractionDigits="3" />
 <section class="container">
 	<div class="row">
 		<div class="col-md-2">
@@ -25,18 +27,18 @@
 					<p class="text-end card-text">여행 기간 : ${departure} ~ ${arrive}</p>
 				</div>
 				<div class="card-body">
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item text-muted"> 예약자 명 : ${member.member_name}</li>
+					<ul class="list-group">
+						<li class="list-group-item"> 예약자 명 : ${member.member_name}</li>
 						<li class="list-group-item"> 연락처 : ${member.member_phone}</li>
 						<li class="list-group-item"> 이메일 : ${member.member_email}</li>
 					</ul>
 				</div>
 				<div class="card-body">
-					<p class="card-text">항공편 : ${product.product_airplane}</p>
-					<p class="card-text">성인 : ${reservation.rev_adult*product.product_adult}원</p>
-					<p class="card-text">소인 : ${reservation.rev_minor*product.product_minor}원</p>
+					<p class="card-text">항공편 - ${product.product_airplane}</p>
+					<p class="card-text">성인 : ${reservation.rev_adult}명 / ${totalAdult}원</p>
+					<p class="card-text">소인 : ${reservation.rev_minor}명 / ${totalMinor}원</p>
 					<p class="card-text">${product.product_plan - 1}박 ${product.product_plan}일</p>
-					<a href="${embassy}" class="card-link">${product.product_country} 대사관</a>
+					<a href="${embassy}" class="card-link" target="_blank">*${product.product_country} 대사관</a>
 					<p class="card-text">${tripInfo}</p>
 				</div>
 			</div>

@@ -1,5 +1,6 @@
 package net.koreate.greatescape.member.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.mail.internet.MimeMessage;
@@ -512,7 +513,7 @@ public class MemberController {
 		return "admin/money";
 	}
 	
-	// 체크 필요
+	
 	// 상품관리 페이지이동
 	@GetMapping("control")
 	public String control(@ModelAttribute("cri") Criteria cri,
@@ -565,7 +566,35 @@ public class MemberController {
 		return "admin/product";
 	}
 	
+	//(관리자) 체크된 상품 삭제하기
+	@PostMapping("deleteP")
+	public String deleteP(HttpServletRequest request)throws Exception{
+		String[] nums = request.getParameterValues("product_num");
+		 int[] product_nums = Arrays.stream(nums)
+                 .mapToInt(Integer::parseInt)
+                 .toArray();
+		 
+		 ms.deleteProduct(product_nums);
+
+		 
+		return "redirect:/member/control";
+	}
 	
+	// (관리자) 상품 강제 마감
+	@GetMapping("deadline")
+	@ResponseBody
+	public List<ProductVO> deadline(@RequestParam String list) throws Exception{
+		String[] listArr = list.split("/");
+		System.out.println(Arrays.toString(listArr));
+		int[] product_nums = Arrays.stream(listArr)
+                .mapToInt(Integer::parseInt)
+                .toArray();
+		System.out.println(Arrays.toString(product_nums));
+		List<ProductVO> pList = ms.deadlineSet(product_nums);
+		
+		
+		return pList;
+	}
 	
 }	
 

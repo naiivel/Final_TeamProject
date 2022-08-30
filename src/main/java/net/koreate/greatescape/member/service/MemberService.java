@@ -121,6 +121,12 @@ public interface MemberService {
 	// 아이디로 회원정보 찾기
 	MemberVO findInfo(ReservationVO reserv);
 
+	// 상품번호들에 해당하는 상품 삭제
+	void deleteProduct(int[] product_nums);
+
+	// 선택한 상품들 잔여좌석 마감시키기
+	List<ProductVO> deadlineSet(int[] product_nums);
+
 
 
 	

@@ -182,7 +182,7 @@
 						$("#idFinder").show();
 						$("#sendIds").attr("value", data.member_id);
 					} else {
-						alert('죄송합니다. 관리자에게 문의해주세요.');
+						alert('해당 이메일은 등록되지않은 이메일 입니다. 가입하실때 입력하신 이메일을 입력해주세요.');
 					}
 				}
 			});
@@ -262,7 +262,7 @@
 						$("#sendId").attr("value", data.member_id);
 						$("#sendPw").attr("value", data.member_pw);
 					} else {
-						alert('죄송합니다. 관리자에게 문의해주세요.');
+						alert('해당 이메일은 등록되지않은 이메일 입니다. 가입하실때 입력하신 이메일을 입력해주세요.');
 					}
 				}
 			});

@@ -236,6 +236,27 @@ public class MemberServiceImpl implements MemberService {
 		return mdao.findInfo(reserv);
 	}
 
+	@Override
+	public void deleteProduct(int[] product_nums) {
+		for(int i=0;i<product_nums.length;i++) {
+			int product_num = product_nums[i];
+			mdao.deleteProduct(product_num);
+		}
+		
+	}
+
+	@Override
+	public List<ProductVO> deadlineSet(int[] product_nums) {
+		List<ProductVO> list = new ArrayList<>();
+		for(int i=0;i<product_nums.length;i++) {
+			int product_num = product_nums[i];
+			mdao.deadlineSet(product_num);
+			ProductVO vo = mdao.findProduct(product_num);
+			list.add(vo);
+		}
+		return list;
+	}
+
 
 
 	

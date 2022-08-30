@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
 <section class="container d-flex flex-column justify-content-center align-items-center h-100">
-	<form id="noForm" action="norev" method="post" class="mb-3 row w-100">
+	<form id="noForm" action="${contextPath}/member/norev" method="post" class="mb-3 row w-100">
 		<div class="col-md-8 offset-md-2 col-xl-6 offset-xl-3">
 			<h2 class="mb-4">비회원 예약확인</h2>
 			<input type="text" name="rev_name" id="" class="mb-3 form-control" placeholder="이름">

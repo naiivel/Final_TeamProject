@@ -31,7 +31,7 @@
 				</div>
 			</div>
 			<div class="table-responsive">
-				<table class="table table-hover">
+				<table class="table table-hover table-bordered text-center">
 					<thead>
 						<tr class="table-info">
 							<th>아이디</th>
@@ -53,11 +53,10 @@
 										일반회원
 									</c:otherwise>
 									</c:choose></td>
-										<c:forEach items="${rev}" var="R"><td><c:if
+										<td><c:forEach items="${rev}" var="R"><c:if
 										test="${member.member_master eq 'N' and member.member_id == R.member_id}"><a
 											href="${contextPath}/member/memberReserv/?rev_num=${R.rev_num}">[예약내역]</a>
-									</c:if></td></c:forEach>
-										
+									</c:if></c:forEach></td>
 							</tr>
 						</c:forEach>
 					</tbody>

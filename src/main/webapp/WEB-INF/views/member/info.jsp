@@ -21,9 +21,9 @@
 				</div>
 			</div>
 			<div class="table-responsive">
-				<table class="table">
+				<table class="table table-bordered text-center">
 					<thead>
-						<tr>
+						<tr class="table-info">
 							<th>예약 상품</th>
 							<th></th>
 						</tr>

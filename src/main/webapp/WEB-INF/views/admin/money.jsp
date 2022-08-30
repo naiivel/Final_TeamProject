@@ -25,9 +25,9 @@
 			<div class="mb-4">
 			</div>
 			<div class="table-responsive">
-				<table class="table">
+				<table class="table table-bordered text-center">
 					<thead>
-						<tr>
+						<tr class="table-info">
 							<th>대륙명</th>
 							<th>판매 상품수</th>
 							<th>매출합계</th>

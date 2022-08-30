@@ -168,6 +168,14 @@ public interface MemberDAO {
 	@Select("select * from tbl_member where member_id = #{member_id}")
 	MemberVO findInfo(ReservationVO reserv);
 
+	// 상품번호 받아서 해당 상품 삭제하기
+	@Delete("DELETE FROM tbl_product WHERE product_num = #{product_num}")
+	void deleteProduct(int product_num);
+	
+	// 상품 번호 받아서 해당 상품 seat를 0으로 만들어 예약마감 상태 만들기
+	@Update("update tbl_product set product_seat = 0 where product_num = #{product_num}")
+	void deadlineSet(int product_num);
+
 
 	
 }
