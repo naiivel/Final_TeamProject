@@ -48,8 +48,8 @@ public interface BoardDAO {
 	//글 삭제
 	@Delete("DELETE FROM tbl_faq WHERE faq_num=#{faq_num}")
 	void deleteFAQ(int faq_num) throws Exception;
-
-
+	
+	
 	/****************************** QNA ************************************/
 	//맨위에 띄워줄 공지목록
 	@Select("SELECT * FROM tbl_notice ORDER BY notice_num DESC limit 0,3")
@@ -79,6 +79,10 @@ public interface BoardDAO {
 	@Select("SELECT * FROM tbl_comment WHERE qna_num=#{qna_num}")
 	List<CommentVO> getCommentList(int qna_num);
 	
+	@Update("UPDATE tbl_qna SET qna_answer = #{qna_answer} WHERE qna_num=#{qna_num}")
+	void updateQNAanswer(CommentVO vo);
+
+	
 	//글 수정
 	
 	//글 삭제
@@ -107,6 +111,8 @@ public interface BoardDAO {
 	@Select("SELECT count(*) FROM tbl_notice WHERE notice_category=#{category} limit #{cri.startRow}, #{cri.perPageNum}")
 	int getNoticeCategoryCount(@Param("cri")SearchCriteria cri, @Param("category")String category) throws Exception;
 
+
+	
 
 
 

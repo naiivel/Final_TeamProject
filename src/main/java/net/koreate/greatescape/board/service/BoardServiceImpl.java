@@ -68,6 +68,7 @@ public class BoardServiceImpl implements BoardService {
 		return bdao.getCategoryList(cri, faq_category);
 	}
 	
+	
 	/****************************** QNA ************************************/
 	
 	//qna게시글
@@ -116,6 +117,11 @@ public class BoardServiceImpl implements BoardService {
 	//댓글리스트
 	public List<CommentVO> getCommentList(int qna_num) throws Exception{
 		return bdao.getCommentList(qna_num);
+	}
+	
+	@Override
+	public void updateQNAanswer(CommentVO vo) throws Exception {
+		bdao.updateQNAanswer(vo);
 	}
 	
 	
@@ -188,6 +194,9 @@ public class BoardServiceImpl implements BoardService {
 		return bdao.getNoticeCategoryList(cri, notice_category);
 	}
 
+	
+
+	
 
 	
 }

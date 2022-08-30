@@ -67,17 +67,12 @@ txt-hlight {
 							<c:set var="number" value="${number+=1}" />
 							<div class="accordion mb-2" id="accordionPanelsStayOpenExample">
 								<div class="accordion-item">
-									<h2 class="accordion-header"
-										id="panelsStayOpen-heading-${number}">
-										<button class="accordion-button collapsed" type="button"
-											data-bs-toggle="collapse"
-											data-bs-target="#panelsStayOpen-collapse-${number}"
-											aria-controls="panelsStayOpen-collapse-${number}">
-											${faq.faq_category}&nbsp;&nbsp;|&nbsp;&nbsp;
-											Q.&nbsp;${faq.faq_title }</button>
+									<h2 class="accordion-header" id="panelsStayOpen-heading-${number}">
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+											data-bs-target="#panelsStayOpen-collapse-${number}" aria-controls="panelsStayOpen-collapse-${number}">
+											${faq.faq_category}&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;${faq.faq_title }</button>
 									</h2>
-									<div id="panelsStayOpen-collapse-${number}"
-										class="accordion-collapse collapse"
+									<div id="panelsStayOpen-collapse-${number}" class="accordion-collapse collapse"
 										aria-labelledby="panelsStayOpen-heading-${number}">
 										<div class="accordion-body">${faq.faq_content }
 											<c:if test="${userInfo.member_master eq 'Y'}">
@@ -101,8 +96,7 @@ txt-hlight {
 			</div>
 
 			<!-- Modal -->
-			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-				data-bs-keyboard="false" tabindex="-1"
+			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 				aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -126,7 +120,11 @@ txt-hlight {
 			</div>
 
 			<div class="accordion mb-3" id="accordionTrip"></div>
-			<div id="pagingTrip"></div>
+			<div id="pagingTrip">
+				
+			</div>
+			
+			
 
 			<div class="accordion mb-3" id="accordionAirline"></div>
 			<div id="pagingAirline"></div>
@@ -140,40 +138,42 @@ txt-hlight {
 			<div class="accordion mb-3" id="accordionOther"></div>
 			<div id="pagingOther"></div>
 
-			<div id="pagingAll">
-				<nav id="allPaging" aria-label="Page navigation mb-3">
+			<div id="allPaging">
+				<nav id="pagingAll" aria-label="Page navigation mb-3">
 					<ul class="pagination justify-content-center">
 						<c:if test="${pm.first}">
-							<li class="page-item"><a class="page-link"
-								href="${contextPath}/board/faq/${pm.makeQuery(1)}"
-								aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
+							<li class="page-item">
+								<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(1)}"> 
+									<span aria-hidden="true">&laquo;</span>
+								</a>
 							</li>
 						</c:if>
 						<c:if test="${pm.prev}">
-							<li class="page-item"><a class="page-link"
-								href="${contextPath}/board/faq/${pm.makeQuery(pm.startPage-1)}">&lt;</a>
+							<li class="page-item">
+								<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(pm.startPage-1)}">&lt;</a>
 							</li>
 						</c:if>
 						<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
-							<li class="page-item" aria-current="page"
-								${pm.cri.page ==i? 'class="active"':''}><a
-								class="page-link"
-								href="${contextPath}/board/faq/${pm.makeQuery(i)}">${i}</a></li>
+							<li class="page-item" aria-current="page" ${pm.cri.page ==i? 'class="active"':''}>
+								<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(i)}">${i}</a>
+							</li>
 						</c:forEach>
 						<c:if test="${pm.next}">
-							<li class="page-item"><a class="page-link"
-								href="${contextPath}/board/faq/${pm.makeQuery(pm.endPage+1)}">&gt;</a>
+							<li class="page-item">
+								<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(pm.endPage+1)}">&gt;</a>
 							</li>
 						</c:if>
 						<c:if test="${pm.last}">
-							<li class="page-item"><a class="page-link"
-								href="${contextPath}/board/faq/${pm.makeQuery(pm.maxPage)}"
-								aria-label="Previous"> <span aria-hidden="true">&raquo;</span></a>
+							<li class="page-item">
+								<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(pm.maxPage)}"> 
+									<span aria-hidden="true">&raquo;</span>
+								</a>
 							</li>
 						</c:if>
 					</ul>
 				</nav>
 			</div>
+			
 			<div class="row">
 				<c:if test="${userInfo.member_master eq 'Y'}">
 					<div class="text-end mb-3">
@@ -183,7 +183,7 @@ txt-hlight {
 
 			</div>
 		</div>
-	</div>
+	
 </section>
 
 
@@ -198,9 +198,11 @@ txt-hlight {
 	var userMaster= '${userInfo.member_master}';
 	
 	var pm= "${pm}";
+	var pmTrip= "${pmTrip}";
 	var cri= '${pm.cri}';
 	
 	console.log("pm: "+pm);
+	console.log("pmTrip: "+pmTrip);
 	console.log("pm.cri: "+cri);
 
 	$("#addBtn").click(function() {
@@ -221,18 +223,19 @@ txt-hlight {
 	});
 
 	$("#all").on("click", function() {
+		
 		$(this).removeClass("active");
 		$("#trip").removeClass("active");
 		$("#airline").removeClass("active");
 		$("#passport").removeClass("active");
 		$("#reservation").removeClass("active");
 		$("#other").removeClass("active");
-		let faq_category = $(this).val();
-		console.log("faq_category: ", faq_category);
-		location.href="${contextPath}/board/faq";
+		
+		
 	});
 
 	$("#trip").on("click", function() {
+		
 		$(this).toggleClass("active");
 		$("#airline").removeClass("active");
 		$("#passport").removeClass("active");
@@ -512,6 +515,7 @@ txt-hlight {
 				let str="";
 				let i = 0;
 				$(data.otherList).each(function(){
+					let faq_num= this.faq_num;
 					let faq_category= this.faq_category;
 					let faq_title= this.faq_title;
 					let faq_content= this.faq_content;
@@ -530,11 +534,14 @@ txt-hlight {
 					str += faq_content;
 					if(userMaster=='Y'){
 						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
-						str +=	'data-bs-target="#staticBackdrop"></button></div>';
+						str +=	'data-bs-target="#staticBackdrop" onclick="setNum('+faqnum+')"></button></div>';
 					}
 					str += '</div>';
 					str += '</div>';
 					str += '</div>';
+					str += '<form name="faqInfo">';
+					str += '<input type="hidden" name="faq_num" value="'+faqnum+'">';
+					str += '</form>';
 					i++;
 				});
 				$("#accordionOther").html(str);
@@ -551,7 +558,7 @@ txt-hlight {
 	function clickDel(formName) {
 		for (var tag of formName) {
 			if (tag.faq_num.value == faqnum) {
-				tag.action = "faqDelete";
+				tag.action = "${contextPath}/board/faqDelete";
 				tag.method = "post";
 				tag.submit();
 			}

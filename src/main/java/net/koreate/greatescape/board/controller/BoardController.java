@@ -61,6 +61,8 @@ public class BoardController {
 		return mav;
 	}
 	
+	
+	
 	@ResponseBody
 	@PostMapping("categoryList/trip")
 	public ResponseEntity<Map<String, Object>> tripList(SearchCriteria cri, FAQBoardVO vo){
@@ -308,6 +310,7 @@ public class BoardController {
 		vo.setComment_writer(comment_writer);
 		System.out.println("CommentVO: "+vo);
 		bs.addComment(vo);
+		bs.updateQNAanswer(vo);
 		String redirectURL="redirect:qnaDetail?qna_num="+qna_num;
 		
 		return redirectURL;

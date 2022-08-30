@@ -31,8 +31,8 @@
 			<div class="table-responsive">
 				<table class="table">
 					<thead>
-						<tr>
-							<th>번호</th>
+						<tr class="table-warning">
+							<th colspan="2">번호</th>
 							<th>제목</th>
 							<th>글쓴이</th>
 							<th>등록일</th>
@@ -43,9 +43,9 @@
 							<c:when test="${qnaNoticeList ne null }">
 								<c:forEach var="n" items="${qnaNoticeList }">
 									<tr>
-										<td class="col-sm-2">${n.notice_category}</td>
-										<td class="col-sm-6"><a
-											href="${contextPath}/board/noticeDetail?notice_num=${n.notice_num}">${n.notice_title}</a></td>
+										<td colspan="2" class="col-sm-2">${n.notice_category}</td>
+										<td class="col-sm-6">
+											<a href="${contextPath}/board/noticeDetail?notice_num=${n.notice_num}">${n.notice_title}</a></td>
 										<td class="col-sm-2">${n.notice_writer}</td>
 										<td class="col-sm-2"><f:formatDate value="${n.notice_regdate}" pattern="yyyy.MM.dd" /></td>
 									</tr>
@@ -53,7 +53,7 @@
 							</c:when>
 							<c:otherwise>
 								<tr>
-									<td colspan="4"><h1>현재 게시글이 존재하지 않습니다.</h1></td>
+									<td colspan="5"><h1>현재 게시글이 존재하지 않습니다.</h1></td>
 								</tr>
 							</c:otherwise>
 						</c:choose>
@@ -63,8 +63,24 @@
 						<c:when test="${qnaList ne null}">
 							<c:forEach var="q" items="${qnaList }">
 								<tr>
-									<td class="col-sm-2">${q.qna_num}</td>
-									<td class="col-sm-6"><a href="${contextPath}/board/qnaDetail?qna_num=${q.qna_num}">${q.qna_title}</a></td>
+									<td class="col-sm-1">${q.qna_num}</td>
+									<c:choose>
+										<c:when test="${q.qna_answer eq null}">
+											<td id="qna_status" class="col-sm-1">확인중</td>
+										</c:when>
+										<c:otherwise>
+											<td id="qna_status" class="col-sm-1">답변완료</td>
+										</c:otherwise>
+									</c:choose>
+									
+									<c:choose>
+										<c:when test="${q.qna_writer eq userInfo.member_name or userInfo.member_master eq 'Y' }">
+											<td class="col-sm-6"><a href="${contextPath}/board/qnaDetail?qna_num=${q.qna_num}">${q.qna_title}</a></td>
+										</c:when>
+										<c:otherwise>
+											<td class="col-sm-6">작성자 외에는 확인할수 없습니다.</td>
+										</c:otherwise>
+									</c:choose>
 									<td id="writer" class="col-sm-2">${q.qna_writer}</td>
 									<td class="col-sm-2"><f:formatDate value="${q.qna_regdate}" pattern="yyyy.MM.dd" /></td>
 								</tr>
@@ -109,13 +125,6 @@
 	console.log("qnaWriter: "+qnaWriter);
 	console.log("maskingName: "+maskingName(writer));
 	
-	/* var qnaList='${qnaList}';
-	$(qnaList).each(function(){
-		for (var i=0; i<=qnaList.length; i++){
-			
-			$("#writer").text(maskingName(qnaList.qna_writer));
-		}
-	}); */
 	
 	
 	function maskingName(strName) {

@@ -31,6 +31,7 @@ public interface BoardService {
 	//글삭제
 	void deleteFAQ(int faq_num) throws Exception;
 	
+	
 	/****************************** QNA ************************************/
 	
 	//질문리스트-페이징처리
@@ -59,6 +60,9 @@ public interface BoardService {
 	
 	//댓글리스트
 	List<CommentVO> getCommentList(int qna_num) throws Exception;
+	
+	//댓글 쓰면 qna테이블 업데이트
+	void updateQNAanswer(CommentVO vo) throws Exception;
 	
 	/******************************Notice************************************/
 	
