@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Update;
 
 import net.koreate.greatescape.board.vo.FAQBoardVO;
 import net.koreate.greatescape.board.vo.NoticeBoardVO;
+import net.koreate.greatescape.board.vo.QNABoardVO;
 import net.koreate.greatescape.utils.SearchCriteria;
 
 public interface BoardDAO {
@@ -33,7 +34,6 @@ public interface BoardDAO {
 	@Select("select * from tbl_faq where faq_category = #{category} order by faq_num desc limit #{cri.startRow}, #{cri.perPageNum}")
 	List<FAQBoardVO> getCategoryList(@Param("cri") SearchCriteria cri, @Param("category")String faq_category );
 	
-	
 	//글 쓰기
 	@Insert("INSERT INTO tbl_faq VALUES(null, #{faq_category}, #{faq_title}, #{faq_content})")
 	void writeFAQ(FAQBoardVO fvo) throws Exception;
@@ -50,12 +50,26 @@ public interface BoardDAO {
 
 
 	/****************************** QNA ************************************/
+	//맨위에 띄워줄 공지목록
+	@Select("SELECT * FROM tbl_notice ORDER BY notice_num DESC limit 0,3")
+	List<NoticeBoardVO> getQnaNoticeList();
 	
 	//글 목록
-
-	//글 쓰기
+	@Select("SELECT * FROM tbl_qna ORDER BY qna_num DESC")
+	List<QNABoardVO> getQNAList(SearchCriteria cri) throws Exception;
 	
+	//게시글 개수
+	@SelectProvider(type=BoardQueryProvider.class, method="getQnaCount")
+	int getQnaCount(SearchCriteria cri) throws Exception;
+	
+	//글 쓰기
+	@Insert("INSERT INTO tbl_qna(qna_title, qna_question, qna_writer) VALUES (#{qna_title}, #{qna_question}, #{qna_writer})")
+	void writeQNA(QNABoardVO qvo);
+
 	//상세보기
+	@Select("SELECT * FROM tbl_qna WHERE qna_num = #{qna_num}")
+	QNABoardVO readQNA(int qna_num);
+
 	
 	//글 수정
 	
@@ -64,13 +78,31 @@ public interface BoardDAO {
 	/***************************** Notice **********************************/
 	@SelectProvider(type=BoardQueryProvider.class, method="getNoticeCount")
 	int getNoticeCount(SearchCriteria cri)throws Exception;
+	
 	//글 목록
 	@SelectProvider(type=BoardQueryProvider.class, method="getNoticeList")
 	List<NoticeBoardVO> getNoticeList(SearchCriteria cri);
-	
-	//글 쓰기
-	
+
+	//새글 쓰기
+	@Insert("INSERT INTO tbl_notice(notice_category, notice_title, notice_content) VALUES (#{notice_category}, #{notice_title}, #{notice_content})")
+	void noticeWrite(NoticeBoardVO nvo);
+
 	//상세보기
+	@Select("SELECT * FROM tbl_notice WHERE notice_num = #{notice_num}")
+	NoticeBoardVO readNotice(int notice_num);
+
+	//카테고리별 공지 리스트
+	@Select("SELECT * FROM tbl_notice WHERE notice_category = #{category} ORDER BY notice_num DESC limit #{cri.startRow}, #{cri.perPageNum}")
+	List<NoticeBoardVO> getNoticeCategoryList(@Param("cri")SearchCriteria cri, @Param("category")String notice_category);
+	
+	//카테고리별 공지 개수
+	@Select("SELECT count(*) FROM tbl_notice WHERE notice_category=#{category} limit #{cri.startRow}, #{cri.perPageNum}")
+	int getNoticeCategoryCount(@Param("cri")SearchCriteria cri, @Param("category")String category) throws Exception;
+
+
+	
+
+	
 	
 	//글 수정
 	

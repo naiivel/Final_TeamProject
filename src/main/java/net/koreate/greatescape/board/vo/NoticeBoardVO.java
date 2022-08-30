@@ -14,4 +14,15 @@ public class NoticeBoardVO {
     private String notice_content;
     private String notice_writer;
     private Date notice_regdate;
+	
+    
+    public NoticeBoardVO(String notice_category, String notice_title, String notice_content) {
+		this.notice_category = notice_category;
+		this.notice_title = notice_title;
+		this.notice_content = notice_content;
+	}
+    
+    
+    
+    
 }

@@ -15,7 +15,7 @@ txt-hlight{
 			<div class="card mb-3">
 				<div class="card-header">고객센터</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/board/faq/${pm.makeQuery(1)}" class="list-group-item active" id="faqBoard">자주 묻는 질문</a> 
+					<a href="${contextPath}/board/faq" class="list-group-item active" id="faqBoard">자주 묻는 질문</a> 
 					<a href="${contextPath}/board/qna" class="list-group-item" id="qnaBoard">질문과 답변</a> 
 					<a href="${contextPath}/board/notice" class="list-group-item" id="noticeBoard">공지사항</a>
 				</div>
@@ -50,23 +50,28 @@ txt-hlight{
 				</div>
 			</div>
 			
-			<div id="listAll">
+			<div id="listAll" class="accordion mb-3">
 			<c:set var="number" value="0" />
 			<c:choose>
 				<c:when test="${list ne null }">
 					<c:forEach var="faq" items="${list}">
 						<c:set var="number" value="${number+=1}" />
-						<div class="accordion mb-3" id="accordionPanelsStayOpenExample">
+						<div class="accordion mb-2" id="accordionPanelsStayOpenExample">
 							<div class="accordion-item">
 								<h2 class="accordion-header" id="panelsStayOpen-heading-${number}">
 									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 										data-bs-target="#panelsStayOpen-collapse-${number}" aria-controls="panelsStayOpen-collapse-${number}">
-										${faq.faq_category}&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q. ${faq.faq_title }
+										${faq.faq_category}&nbsp;&nbsp;|&nbsp;&nbsp; Q.&nbsp;${faq.faq_title }
 									</button>
 								</h2>
 								<div id="panelsStayOpen-collapse-${number}"
 									class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading-${number}">
-									<div class="accordion-body">A. ${faq.faq_content }</div>
+									<div class="accordion-body">${faq.faq_content } 
+										<c:if test="${userInfo.member_master eq 'Y'}">	
+										<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal" 
+												data-bs-target="#staticBackdrop"></button>
+										</c:if>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -78,15 +83,39 @@ txt-hlight{
 			</c:choose>
 			</div>
 			
+			<!-- Modal -->
+			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="staticBackdropLabel">해당 글을 삭제하시겠습니까?</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        	삭제된 게시글 정보는 다시 불러올수 없습니다. <br/>주의사항을 확인 후 삭제하시겠습니까?
+			      </div>
+			      <div class="modal-footer">
+			        <button id="btnDelCancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+			        <button id="btnDelAgree" type="button" class="btn btn-primary">삭제</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
 			<div class="accordion mb-3" id="accordionTrip"></div>
+			<div id="pagingTrip"></div>
 			
 			<div class="accordion mb-3" id="accordionAirline"></div>
+			<div id="pagingAirline"></div>
 			
 			<div class="accordion mb-3" id="accordionReserv"></div>
+			<div id="pagingReserv"></div>
 			
 			<div class="accordion mb-3" id="accordionPass"></div>
+			<div id="pagingPass"></div>
 			
 			<div class="accordion mb-3" id="accordionOther"></div>
+			<div id="pagingOther"></div>
 			
 			<div id="pagingAll">
 			<nav id="allPaging" aria-label="Page navigation mb-3">
@@ -103,7 +132,7 @@ txt-hlight{
 						</li>
 					</c:if>
 					<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
-						<li class="page-item" ${pm.cri.page ==i? 'class=active':''}>
+						<li class="page-item" ${pm.cri.page ==i? 'class="active"':''}>
 							<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(i)}">${i}</a>
 						</li>
 					</c:forEach>
@@ -125,7 +154,6 @@ txt-hlight{
 				<c:if test="${userInfo.member_master eq 'Y'}">
 					<div class="text-end mb-3">
 						<button class="btn btn-outline-secondary" id="addBtn">추가하기</button>
-						<button class="btn btn-outline-secondary" id="addBtn">삭제하기</button>
 					</div>
 				</c:if>
 				
@@ -133,7 +161,19 @@ txt-hlight{
 		</div>
 	</div>
 </section>
+
+
 <script>
+	var userInfo= "<%= session.getAttribute("userInfo") %>";
+	console.log("userInfo: "+userInfo);
+	var userMaster= '${userInfo.member_master}';
+	
+	var pm= "${pm}";
+	var cri= '${pm.cri}';
+	
+	console.log("pm: "+pm);
+	console.log("pm.cri: "+cri);
+
 	$("#addBtn").click(function() {
 		location.href = "${contextPath}/board/faqWrite";
 	});
@@ -169,6 +209,7 @@ txt-hlight{
 		$("#passport").removeClass("active");
 		$("#reservation").removeClass("active");
 		$("#other").removeClass("active");
+		
 		$("#listAll").hide();
 		$("#accordionReserv").hide();
 		$("#accordionPass").hide();
@@ -179,6 +220,7 @@ txt-hlight{
 		
 		let faq_category = $(this).val();
 		console.log("faq_category: ", faq_category);
+		
 		$.ajax({
 			url : "${contextPath}/board/categoryList/trip", type : "POST", dataType : "json",
 			data : { "faq_category" : faq_category },
@@ -188,31 +230,38 @@ txt-hlight{
 				console.log(data.tripPm);
 				let str="";
 				let i = 0;
+			
 				$(data.tripList).each(function(){
-						let faq_category= this.faq_category;
-						let faq_title= this.faq_title;
-						let faq_content= this.faq_content;
-						console.log(faq_category, faq_title, faq_content);
-						str += '<div class="accordion mb-3" id="listTrip">';
-						str += '<div class="accordion-item">';
-						str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-						str += '<button class="accordion-button collapsed" type="button"';
-						str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-						str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-						str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q.'+faq_title;
-						str += '</button></h2>';
-						str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionTrip">';
-						str += '<div class="accordion-body"> A. ';
-						str += faq_content;
-						str += '</div>';
-						str += '</div>';
-						str += '</div>';
-						str += '</div>';
-						i++;
+					let faq_category= this.faq_category;
+					let faq_title= this.faq_title;
+					let faq_content= this.faq_content;
+					console.log(faq_category, faq_title, faq_content);
+					str += '<div class="accordion mb-2" id="listTrip">';
+					str += '<div class="accordion-item mb-2">';
+					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
+					str += '<button class="accordion-button collapsed" type="button"';
+					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
+					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
+					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
+					str += '</button></h2>';
+					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
+					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionTrip">';
+					str += '<div class="accordion-body">';
+					str += faq_content;
+					if(userMaster=='Y'){
+						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
+						str +=	'data-bs-target="#staticBackdrop"></button></div>';
+					}
+					str += '</div>';
+					str += '</div>';
+					str += '</div>';
+					i++;
 				});
 				$("#accordionTrip").html(str);
-			},
+				
+		
+				//$("#pagingTrip").html(strPaging);
+			},// success
 			error : function(err) {
 				console.log("응 안돼 돌아가");
 			}
@@ -221,6 +270,8 @@ txt-hlight{
 		
 	});
 
+
+	
 	$("#airline").on("click", function() {
 		$(this).toggleClass("active");
 		$("#trip").removeClass("active");
@@ -249,27 +300,30 @@ txt-hlight{
 				let str="";
 				let i = 0;
 				$(data.airlineList).each(function(){
-						let faq_category= this.faq_category;
-						let faq_title= this.faq_title;
-						let faq_content= this.faq_content;
-						console.log(faq_category, faq_title, faq_content);
-						str += '<div class="accordion mb-3" id="listAirline">';
-						str += '<div class="accordion-item">';
-						str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-						str += '<button class="accordion-button collapsed" type="button"';
-						str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-						str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-						str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q.'+faq_title;
-						str += '</button></h2>';
-						str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionAirline">';
-						str += '<div class="accordion-body"> A. ';
-						str += faq_content;
-						str += '</div>';
-						str += '</div>';
-						str += '</div>';
-						str += '</div>';
-						i++;
+					let faq_category= this.faq_category;
+					let faq_title= this.faq_title;
+					let faq_content= this.faq_content;
+					console.log(faq_category, faq_title, faq_content);
+					str += '<div class="accordion mb-2" id="listAirline">';
+					str += '<div class="accordion-item mb-2">';
+					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
+					str += '<button class="accordion-button collapsed" type="button"';
+					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
+					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
+					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
+					str += '</button></h2>';
+					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
+					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionAirline">';
+					str += '<div class="accordion-body">';
+					str += faq_content;
+					if(userMaster=='Y'){
+						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
+						str +=	'data-bs-target="#staticBackdrop"></button></div>';
+					}
+					str += '</div>';
+					str += '</div>';
+					str += '</div>';
+					i++;
 				});
 				$("#accordionAirline").html(str);
 			},
@@ -307,27 +361,30 @@ txt-hlight{
 				let str="";
 				let i = 0;
 				$(data.reserveList).each(function(){
-						let faq_category= this.faq_category;
-						let faq_title= this.faq_title;
-						let faq_content= this.faq_content;
-						console.log(faq_category, faq_title, faq_content);
-						str += '<div class="accordion mb-3" id="listReserv">';
-						str += '<div class="accordion-item">';
-						str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-						str += '<button class="accordion-button collapsed" type="button"';
-						str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-						str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-						str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q.'+faq_title;
-						str += '</button></h2>';
-						str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionReserv">';
-						str += '<div class="accordion-body"> A. ';
-						str += faq_content;
-						str += '</div>';
-						str += '</div>';
-						str += '</div>';
-						str += '</div>';
-						i++;
+					let faq_category= this.faq_category;
+					let faq_title= this.faq_title;
+					let faq_content= this.faq_content;
+					console.log(faq_category, faq_title, faq_content);
+					str += '<div class="accordion mb-2" id="listReserv">';
+					str += '<div class="accordion-item mb-2">';
+					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
+					str += '<button class="accordion-button collapsed" type="button"';
+					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
+					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
+					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
+					str += '</button></h2>';
+					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
+					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionReserv">';
+					str += '<div class="accordion-body">';
+					str += faq_content;
+					if(userMaster=='Y'){
+						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
+						str +=	'data-bs-target="#staticBackdrop"></button></div>';
+					}
+					str += '</div>';
+					str += '</div>';
+					str += '</div>';
+					i++;
 				});
 				$("#accordionReserv").html(str);
 			},
@@ -365,27 +422,30 @@ txt-hlight{
 				let str="";
 				let i = 0;
 				$(data.passList).each(function(){
-						let faq_category= this.faq_category;
-						let faq_title= this.faq_title;
-						let faq_content= this.faq_content;
-						console.log(faq_category, faq_title, faq_content);
-						str += '<div class="accordion mb-3" id="listPass">';
-						str += '<div class="accordion-item">';
-						str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-						str += '<button class="accordion-button collapsed" type="button"';
-						str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-						str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-						str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q.'+faq_title;
-						str += '</button></h2>';
-						str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionPass">';
-						str += '<div class="accordion-body"> A. ';
-						str += faq_content;
-						str += '</div>';
-						str += '</div>';
-						str += '</div>';
-						str += '</div>';
-						i++;
+					let faq_category= this.faq_category;
+					let faq_title= this.faq_title;
+					let faq_content= this.faq_content;
+					console.log(faq_category, faq_title, faq_content);
+					str += '<div class="accordion mb-2" id="listPass">';
+					str += '<div class="accordion-item mb-2">';
+					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
+					str += '<button class="accordion-button collapsed" type="button"';
+					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
+					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
+					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
+					str += '</button></h2>';
+					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
+					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionPass">';
+					str += '<div class="accordion-body">';
+					str += faq_content;
+					if(userMaster=='Y'){
+						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
+						str +=	'data-bs-target="#staticBackdrop"></button></div>';
+					}
+					str += '</div>';
+					str += '</div>';
+					str += '</div>';
+					i++;
 				});
 				$("#accordionPass").html(str);
 			},
@@ -423,27 +483,30 @@ txt-hlight{
 				let str="";
 				let i = 0;
 				$(data.otherList).each(function(){
-						let faq_category= this.faq_category;
-						let faq_title= this.faq_title;
-						let faq_content= this.faq_content;
-						console.log(faq_category, faq_title, faq_content);
-						str += '<div class="accordion mb-3" id="listOther">';
-						str += '<div class="accordion-item">';
-						str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-						str += '<button class="accordion-button collapsed" type="button"';
-						str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-						str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-						str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Q.'+faq_title;
-						str += '</button></h2>';
-						str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-						str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionOther">';
-						str += '<div class="accordion-body"> A. ';
-						str += faq_content;
-						str += '</div>';
-						str += '</div>';
-						str += '</div>';
-						str += '</div>';
-						i++;
+					let faq_category= this.faq_category;
+					let faq_title= this.faq_title;
+					let faq_content= this.faq_content;
+					console.log(faq_category, faq_title, faq_content);
+					str += '<div class="accordion mb-2" id="listOther">';
+					str += '<div class="accordion-item mb-2">';
+					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
+					str += '<button class="accordion-button collapsed" type="button"';
+					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
+					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
+					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
+					str += '</button></h2>';
+					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
+					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionOther">';
+					str += '<div class="accordion-body">';
+					str += faq_content;
+					if(userMaster=='Y'){
+						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
+						str +=	'data-bs-target="#staticBackdrop"></button></div>';
+					}
+					str += '</div>';
+					str += '</div>';
+					str += '</div>';
+					i++;
 				});
 				$("#accordionOther").html(str);
 			},
@@ -454,16 +517,9 @@ txt-hlight{
 		$("#accordionOther").show();
 	});
 
-	function toggleAndHide(){
-		$(this).toggleClass("active");
+	$("#btnDelAgree").on("click", function(){
 		
-		$("#listAll").hide();
-		$("#accordionReserv").hide();
-		$("#accordionPass").hide();
-		$("#accordionTrip").hide();
-		$("#accordionOther").hide();
-	}
-
+	});
 	
 </script>
 <%@ include file="../common/footer.jsp"%>

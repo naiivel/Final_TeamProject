@@ -75,11 +75,38 @@ public class BoardQueryProvider {
 		return query;
 	}
 	
+	//공지사항 게시글 개수
 	public String getNoticeCount(SearchCriteria cri) {
 		SQL sql = new SQL();
 		sql.SELECT("count(*)");
 		sql.FROM("tbl_notice");
 		getSearchWhere(cri, sql);
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+	
+	//qna게시글 개수
+	public String getQnaCount(SearchCriteria cri) {
+		SQL sql = new SQL();
+		sql.SELECT("count(*)");
+		sql.FROM("tbl_qna");
+		getSearchWhere(cri, sql);
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+	
+	//qna 리스트
+	//공지리스트
+	public String getQnaList(SearchCriteria cri) {
+		SQL sql = new SQL();
+
+		sql.SELECT("*");
+		sql.FROM("tbl_qna");
+		sql.ORDER_BY("qna_num DESC");
+		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
+		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
 		String query = sql.toString();
 		System.out.println(query);
 		return query;
