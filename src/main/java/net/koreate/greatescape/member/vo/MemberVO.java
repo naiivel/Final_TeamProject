@@ -37,7 +37,7 @@ public class MemberVO {
 		this.member_email = member_email;
 		this.member_master = member_master;
 	}
-	
-	
+
+	public MemberVO() {}
 	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.member.vo.SalesVO;
 import net.koreate.greatescape.product.vo.ProductVO;
+import net.koreate.greatescape.reservation.vo.DetailBoardVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
 import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
@@ -26,7 +27,7 @@ public interface MemberService {
 	int reduplcationCheck(MemberVO vo);
 
 	// 예약 인원 찾기
-	ReservationVO findpeople(MemberVO vo);
+	ReservationVO findpeople(MemberVO vo,int product_num);
 
 	// 비밀번호 확인
 	MemberVO pwCheck(MemberVO vo);
@@ -41,16 +42,13 @@ public interface MemberService {
 	void changeLeave(MemberVO loginMember);
 
 	// 예약페이지의 정보가져오기
-	String findtripInfo(int member_product_num);
+	DetailBoardVO findtripInfo(int product_num);
 
 	// 회원번호로 회원정보 찾기
 	MemberVO memberInfo(int member_num);
 
-	// 상품번호로 상품찾기
-	ProductVO findProduct(int member_product_num);
-
-	// 예약상품 취소
-	void deleteP(int product_num);
+	// 상품번호로 상품들찾기
+	List<ProductVO> findProductList(List<ReservationVO> rev);
 
 	// 아이디 찾기
 	MemberVO findId(MemberVO vo);
@@ -64,7 +62,7 @@ public interface MemberService {
 	// 회원번호순 정보 불러오기
 	List<MemberVO> memberList(Criteria cri);
 
-	// 페이징처리
+	// 회원 페이징처리
 	PageMaker pageMaker(Criteria cri);
 
 	// 회원의 관리자 여부
@@ -82,5 +80,55 @@ public interface MemberService {
 	// 대륙별 상품 판매 총액을 위한 정보검색
 	List<SalesVO> totalSales(String asia);
 	
+	// 상품 전체 찾기
+	List<ProductVO> productList(Criteria cri);
+
+	// 상품 페이징처리
+	PageMaker pPageMaker(Criteria cri);
+
+	// 상품 대륙별 리스트
+	List<ProductVO> typeProductList(Criteria cri, String product_continent);
+
+	// 상품 대륙별 리스트 페이징 처리
+	PageMaker typeProPageMaker(Criteria cri, String product_continent);
+
+	// 회원id로 예약상품 여부확인
+	List<ReservationVO> checkRev(MemberVO loginMember);
+
+	// 회원 예약이 있는지 확인
+	List<MemberVO> revCheck(String member_id);
+
+	// 상세보기용 상품찾기
+	ProductVO findProduct(int product_num);
+
+	// 해당하는 예약 인원 찾기
+	ReservationVO findNum(MemberVO loginMember, int product_num);
+
+	// 예약 삭제
+	void deleteReserv(ReservationVO rev);
+
+	// 잔여좌석 추가
+	void seatPlus(ReservationVO rev);
+
+	// 회원에 해당하는 예약전부 찾기
+	List<ReservationVO> findRevList(MemberVO loginMember);
+
+	// 회원 아이디에 해당하는 모든 예약 삭제
+	void deleteRevId(MemberVO loginMember);
+
+	// 모든예약 리스트
+	List<ReservationVO> allRev();
+
+	// 예약번호로 해당 예약찾기
+	ReservationVO revFind(ReservationVO r);
+
+	// 아이디로 회원정보 찾기
+	MemberVO findInfo(ReservationVO reserv);
+
+	// 상품번호들에 해당하는 상품 삭제
+	void deleteProduct(int[] product_nums);
+
+	// 선택한 상품들 잔여좌석 마감시키기
+	List<ProductVO> deadlineSet(int[] product_nums);
 
 }
