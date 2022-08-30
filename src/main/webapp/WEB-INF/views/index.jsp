@@ -110,7 +110,8 @@
 				<c:forEach var="product" items="${list}">
 					<div class="col-md-6 col-xl-3">
 						<div class="card border-0 mx-auto" style="width: 18rem;">
-							<img src="${product.detail_title_image}" class="card-img-top" alt="...">
+						
+							<img src="${contextPath}/attach${product.detail_title_image}" class="card-img-top" alt="...">
 							<div class="card-body">
 								<h5 class="card-title">${product.product_name}</h5>
 								<p class="card-text">${product.detail_info.length() > 200 ? product.detail_info.substring(0, 200) : product.detail_info}...</p>

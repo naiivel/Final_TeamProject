@@ -21,7 +21,7 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="card mb-3">
-				<img src="${product.detail_title_image}" class="card-img-top" alt="...">
+				<img src="${contextPath}/attach${product.detail_title_image.replace('s_','')}" class="card-img-top" alt="...">
 				<div class="card-header">
 					<h2 class="fs-5 card-title m-0 p-1">[${product.product_country}/${product.product_city}] ${product.product_name}</h2>
 				</div>
@@ -34,7 +34,7 @@
 						<div class="col">
 							<span class="fs-6 badge text-bg-primary me-2 p-2">잔여좌석</span>
 							<span class="card-text d-inline-block">${product.product_seat}</span>
-							<c:if test="${product.product_seat < 10}">
+							<c:if test="${product.product_seat <= 5}">
 								<span class="ms-2 badge text-bg-danger">마감 임박</span>
 							</c:if>
 						</div>

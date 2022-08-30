@@ -37,7 +37,12 @@
 				<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 					<c:choose>
 						<c:when test="${!empty sessionScope.userInfo}">
-							<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/member/logOut">로그아웃</a></li>
+							<li class="nav-item">
+							<form action="${contextPath}/member/logOut" method="POST">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+								<button class="border-0 bg-transparent nav-link active" aria-current="page">로그아웃</button>
+							</form>
+							</li>
 							<c:choose>
 								<c:when test="${userInfo.member_master eq 'Y'}">
 									<li class="nav-item"><a class="nav-link active" aria-current="page" href="${contextPath}/member/adminPage">관리자페이지</a></li>

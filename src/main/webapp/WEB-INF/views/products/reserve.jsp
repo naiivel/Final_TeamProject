@@ -5,6 +5,7 @@
 	<div class="row">
 		<div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
 			<form id="reserveForm" action="${contextPath}/products/${product.product_num}" method="POST">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<div class="card mb-3">
 					<div class="card-header">
 						<h3 class="card-title text-center m-0">상품 정보</h3>
@@ -386,15 +387,13 @@
 								<div class="col-md-6 row">
 									<label for="opt1" class="col-sm-4 col-form-label">성인</label>
 									<div class="col-sm-8">
-										<input id="inputAdult" type="number" class="form-control"
-											id="opt1" name="rev_adult">
+										<input id="inputAdult" type="number" class="form-control" name="rev_adult" value="0">
 									</div>
 								</div>
 								<div class="col-md-6 row">
 									<label for="opt2" class="col-sm-4 col-form-label">소인</label>
 									<div class="col-sm-8">
-										<input id="inputMinor" type="number" class="form-control"
-											id="opt2" name="rev_minor">
+										<input id="inputMinor" type="number" class="form-control" name="rev_minor" value="0">
 									</div>
 								</div>
 							</div>
@@ -414,9 +413,6 @@
 							<input required="required"
 							type="String" class="form-control" id="inputEmail"
 							value="${userInfo.member_email}" name="rev_email"> 
-							<input
-							id="inputProductNum" type="hidden" name="product_num"
-							value="${product.product_num}" />
 							<input type="hidden" id="inputMemberId" name="member_id" value="${userInfo.member_id}">
 						<div class="text-center">
 									<button id="reserveBtn" class="btn btn-primary">예약확정</button>
@@ -435,7 +431,7 @@ $("#reserveBtn").click(function(e) {
 		alert("이용약관에 동의해주세요.");
 		return;
 	}
-	if ($("#opt1").val() + $("#opt2").val() < 1) {
+	if ($("#inputAdult").val() + $("#inputMinor").val() < 1) {
 		alert("인원수를 선택해주세요.");
 		return;
 	}

@@ -1,15 +1,13 @@
 package net.koreate.greatescape.product.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -18,16 +16,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.vo.MemberVO;
+import net.koreate.greatescape.product.service.ProductFileService;
 import net.koreate.greatescape.product.service.ProductServiceREST;
 import net.koreate.greatescape.product.vo.FullProductDTO;
-import net.koreate.greatescape.product.vo.ProductDetailVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
 
@@ -37,6 +35,7 @@ import net.koreate.greatescape.reservation.vo.ReservationVO;
 public class ProductControllerREST {
 	
 	private final ProductServiceREST ps;
+	private final ProductFileService pfs;
 	
 	@GetMapping({"/", ""})
 	public String renderIndex(Model model) {
@@ -47,7 +46,16 @@ public class ProductControllerREST {
 	}
 	
 	@PostMapping({"/", ""})
-	public String createProduct(FullProductDTO dto, String departure, String arrive, RedirectAttributes rttr) throws UnsupportedEncodingException, ParseException {
+	public String createProduct(FullProductDTO dto, String departure, String arrive, MultipartFile titleImage, RedirectAttributes rttr) throws Exception {
+		String redirectUrl = "redirect:/products/";
+		if (titleImage != null) {
+			String uploadedName = pfs.uploadFile(titleImage);
+			if (uploadedName == null || uploadedName.equals("")) {
+				rttr.addFlashAttribute("flashMessage", "타이틀 이미지 등록 중 오류가 발생하였습니다.");
+				return redirectUrl + "new";
+			}
+			dto.setDetail_title_image(uploadedName);
+		}
 		int result = ps.createProduct(dto, departure, arrive);
 		if (result == 2) {
 			rttr.addFlashAttribute("flashMessage", "성공적으로 상품 등록이 완료되었습니다.");
@@ -55,8 +63,8 @@ public class ProductControllerREST {
 			rttr.addFlashAttribute("flashMessage", "상품 등록 중 오류가 발생하였습니다.");
 		}
 		int id = dto.getProduct_num();
-		if (id != 0) return "redirect:/products/" + id;
-		return "redirect:/products/new";
+		if (id != 0) return redirectUrl + id;
+		return redirectUrl + "new";
 	}
 	
 	@GetMapping("/new")
@@ -75,7 +83,8 @@ public class ProductControllerREST {
 	}
 	
 	@GetMapping("/{id}")
-	public String renderDetail(@PathVariable String id, Model model) {
+	public String renderDetail(@PathVariable String id, HttpServletRequest req, HttpServletResponse res, Model model) {
+		ps.updateViewcnt(req, res, id);
 		FullProductDTO product = ps.getFullProductById(id);
 		if (product == null) return "/products/index";
 		model.addAttribute("product", product);
@@ -83,13 +92,14 @@ public class ProductControllerREST {
 	}
 	
 	@PostMapping("/{id}")
-	public String reservation(HttpSession session, int product_num, String member_id, ReservationVO rvo, RedirectAttributes rttr) {
+	public String reservation(HttpSession session, @PathVariable int id, ReservationVO rvo, RedirectAttributes rttr) {
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
-		if (loginMember != null && !loginMember.getMember_id().equals(member_id)) {
+		if (loginMember != null && !loginMember.getMember_id().equals(rvo.getMember_id())) {
 			rttr.addFlashAttribute("flashMessage", "비정상적인 접근입니다.");
 			return "redirect:/";
 		}
-		int result = ps.reserve(product_num, rvo);
+		rvo.setProduct_num(id);
+		int result = ps.reserve(rvo);
 		if (result > 0) {
 			rttr.addFlashAttribute("flashMessage", "예약이 완료되었습니다.");
 			if (loginMember != null) {
@@ -101,19 +111,6 @@ public class ProductControllerREST {
 			rttr.addFlashAttribute("flashMessage", "예약 중 오류가 발생하였습니다.");
 			return "redirect:/products/reserve";
 		}
-	}
-	
-	@PutMapping("/{id}")
-	public String updateProduct(@PathVariable String id, FullProductDTO dto, String departure, String arrive, RedirectAttributes rttr) throws ParseException {
-		int result = ps.updateProduct(id, dto, departure, arrive);
-		String redirectURL = "redirect:/products/" + id;
-		if (result == 0) {
-			redirectURL += "/update";
-			rttr.addFlashAttribute("flashMessage", "수정 중 오류가 발생하였습니다.");
-		} else {
-			rttr.addFlashAttribute("flashMessage", "정상적으로 수정이 완료되었습니다.");
-		}
-		return redirectURL;
 	}
 	
 	@GetMapping("/continent/{continent}")
@@ -132,7 +129,14 @@ public class ProductControllerREST {
 	}
 	
 	@GetMapping("/{id}/reservation")
-	public String renderReservationForm(@PathVariable String id, Model model) {
+	public String renderReservationForm(@PathVariable String id, Model model, HttpSession session, RedirectAttributes rttr) {
+		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
+		if (loginMember != null) {
+			if (ps.getReservationOfMember(loginMember.getMember_id()) != null) {
+				rttr.addFlashAttribute("flashMessage", "이미 예약하신 상품입니다.");
+				return "redirect:/products/" + id;
+			}
+		}
 		model.addAttribute("product", ps.getProductById(id));
 		return "/products/reserve";
 	}
@@ -142,12 +146,34 @@ public class ProductControllerREST {
 		model.addAttribute("product", ps.getFullProductById(id));
 		return "/products/update";
 	}
+	
+	@PostMapping("/{id}/update")
+	public String updateProduct(@PathVariable int id, String originalTitleImage, MultipartFile titleImage, FullProductDTO dto, String departure, String arrive, RedirectAttributes rttr) throws Exception {
+		String redirectUrl = "redirect:/products/" + id; 
+		if (titleImage != null) {
+			String uploadedName = pfs.updateFile(originalTitleImage, titleImage);
+			if (uploadedName == null || uploadedName.equals("")) {
+				rttr.addFlashAttribute("flashMessage", "타이틀 이미지 수정 중 오류가 발생하였습니다.");
+				return redirectUrl;
+			}
+			dto.setDetail_title_image(uploadedName);
+		}
+		int result = ps.updateProduct(id, dto, departure, arrive);
+		if (result == 0) {
+			redirectUrl += "/update";
+			rttr.addFlashAttribute("flashMessage", "수정 중 오류가 발생하였습니다.");
+		} else {
+			rttr.addFlashAttribute("flashMessage", "정상적으로 수정이 완료되었습니다.");
+		}
+		return redirectUrl;
+	}
+	
 
 	@ExceptionHandler
 	public String exceptionHandler(Exception e, RedirectAttributes rttr) {
 		e.printStackTrace();
 		rttr.addFlashAttribute("flashMessage", "예상치 못한 오류가 발생하였습니다! 관리자에게 문의하여 주세요!");
-		return "index";
+		return "redirect:/";
 	}
 	
 	private void listSplitAndAdd(Model model, List<ProductVO> list) {

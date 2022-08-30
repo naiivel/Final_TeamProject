@@ -12,5 +12,6 @@ public class FullProductDTO extends ProductVO {
 	private String detail_info;
 	private String detail_schedule;
 	private String detail_title_image;
+	private int detail_viewcnt;
 
 }

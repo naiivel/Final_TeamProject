@@ -44,7 +44,7 @@
 											<div class="col-sm-2 col-md-3 col-lg-4 col-xl-5 text-center text-sm-end">
 												<p class="card-text">잔여좌석: ${product.product_seat}</p>
 												<c:choose>
-													<c:when test="${product.product_seat > 10}">
+													<c:when test="${product.product_seat > 5}">
 														<button class="btn btn-primary" data-num="${product.product_num}">상세보기</button>
 													</c:when>
 													<c:otherwise>
@@ -129,7 +129,7 @@
 			html += '<div class="col-sm-2 col-md-3 col-lg-4 col-xl-5 text-center text-sm-end">';
 			html += '<p class="card-text">잔여좌석:' + product.product_seat + '</p>';
 			const seat = product.product_seat;
-			if (seat > 10) {
+			if (seat > 5) {
 				html += '<button class="btn btn-primary" data-num="' + product.product_num + '">상세보기</button>';
 			} else {
 				html += '<button type="button" class="btn btn-danger position-relative" data-num="' + product.product_num + '">상세보기';

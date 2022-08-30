@@ -3,8 +3,8 @@
 <%@ include file="../common/header.jsp" %>
 <section class="container mb-3">
     <h3 class="mb-3">여행상품 수정</h3>
-    <form action="${contextPath}/products/${product.product_num}" method="post">
-        <input type="hidden" name="_method" value="PUT">
+    <form action="${contextPath}/products/${product.product_num}/update" method="post" enctype="multipart/form-data">
+    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <div class="row mb-3">
             <div class="col-lg-6 ">
                 <div class="card p-3 border-0 h-100 d-flex flex-column justify-content-between ">
@@ -85,9 +85,34 @@
         </div>
         <div class="mb-3 text-center p-3">
             <label for="inputFile" class="form-label">이미지를 첨부하세요.</label>
-            <input class="form-control form-control-sm mb-3" id="inputFile" type="file" name="detail_title_image" multiple>
-            <button class="btn btn-success regist" data-num="${param.product_continent}">등록</button>
+            <input class="form-control form-control-sm mb-3" id="inputFile" type="file" name="titleImage" accept="image/*">
+            <input type="hidden" id="originalTitleImage" name="originalTitleImage" value="${product.detail_title_image}" />
+            <img id="displayImage" class="img-fluid mb-3" alt="" src="${contextPath}/attach${product.detail_title_image}">
+            <button id="updateBtn" class="btn btn-success regist">수정</button>
         </div>
     </form>
 </section>
+<script>
+	const imgTag = document.querySelector("#displayImage");
+	const fileTag = document.querySelector("#inputFile");
+	let formData = new FormData();
+	fileTag.addEventListener("change", function() {
+		if (this.files && this.files[0]) {
+			if (this.files[0].size > 10485760) {
+				alert("10MB를 초과하는 사진은 업로드할 수 없습니다.");
+				this.files = null;
+				this.value = "";
+				return
+			}
+			let reader = new FileReader();
+			reader.onload = function(e) {
+				imgTag.src = e.target.result;
+			}
+			reader.readAsDataURL(this.files[0]);
+			formData.set("titleImage", this.files[0]);
+		} else {
+			imgTag.src = "";
+		}
+	});
+</script>
 <%@ include file="../common/footer.jsp" %>
