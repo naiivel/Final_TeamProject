@@ -94,7 +94,7 @@ public class MemberController {
 	}
 	
 	// 로그아웃 시도
-	@GetMapping("/logOut")
+	@PostMapping("/logOut")
 	public String logOut(HttpSession session){
 		if (session.getAttribute("userInfo") != null) {
 			session.removeAttribute("userInfo");

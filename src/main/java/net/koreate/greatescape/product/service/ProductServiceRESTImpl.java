@@ -6,13 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.product.dao.ProductDAO;
 import net.koreate.greatescape.product.vo.FullProductDTO;
-import net.koreate.greatescape.product.vo.ProductDetailVO;
 import net.koreate.greatescape.product.vo.ProductVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
 
@@ -72,19 +75,16 @@ public class ProductServiceRESTImpl implements ProductServiceREST {
 
 	@Override
 	@Transactional
-	public int reserve(int product_num, ReservationVO rvo) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("num", product_num);
-		map.put("rvo", rvo);
+	public int reserve(ReservationVO rvo) {
 		int result = 0;
-		result += dao.reserve(map);
-		result += dao.seatMinus(map);
+		result += dao.reserve(rvo);
+		result += dao.seatMinus(rvo);
 		return result;
 	}
 
 	@Override
-	public int updateProduct(String id, FullProductDTO dto, String departure, String arrive) throws ParseException {
-		dto.setProduct_num(Integer.parseInt(id));
+	public int updateProduct(int id, FullProductDTO dto, String departure, String arrive) throws ParseException {
+		dto.setProduct_num(id);
 		setDate(dto, departure, arrive);
 		return dao.updateProduct(dto);
 	}
@@ -93,6 +93,30 @@ public class ProductServiceRESTImpl implements ProductServiceREST {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		dto.setProduct_departure(formatter.parse(departure));
 		dto.setProduct_arrive(formatter.parse(arrive));
+	}
+
+	@Override
+	public int updateViewcnt(HttpServletRequest req, HttpServletResponse res, String id) {
+		Cookie[] cookies = req.getCookies();
+		String cookieName = "escape" + id;
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equals(cookieName)) {
+					return 0;
+				}
+			}
+		}
+		int result = dao.updateViewcntById(id);
+		Cookie cookie = new Cookie(cookieName, "");
+		cookie.setPath(req.getContextPath() + "/products/");
+		cookie.setMaxAge(60 * 60 * 24);
+		res.addCookie(cookie);
+		return result;
+	}
+
+	@Override
+	public ReservationVO getReservationOfMember(String member_id) {
+		return dao.getReservationOfMember(member_id);
 	}
 
 }

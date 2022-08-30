@@ -3,7 +3,8 @@
 <%@ include file="../common/header.jsp" %>
 <section class="container mb-3">
     <h3 class="mb-3">여행상품 등록</h3>
-    <form action="${contextPath}/products" method="post">
+    <form action="${contextPath}/products" method="post" enctype="multipart/form-data">
+    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <div class="row">
             <div class="col-lg-6 ">
                 <div class="card p-3 border-0 h-100 d-flex flex-column justify-content-between ">
@@ -82,11 +83,31 @@
                 </div>
             </div>
         </div>
-    </form>
     <div class="mb-3 text-center p-3">
         <label for="inputFile" class="form-label">이미지를 첨부하세요.</label>
-        <input class="form-control form-control-sm mb-3" id="inputFile" type="file" name="detail_title_image" multiple>
-        <button class="btn btn-success regist" data-num="${param.product_continent}">등록</button>
+        <input class="form-control form-control-sm mb-3" id="inputFile" type="file" name="titleImage" accept="image/*">
+        <img id="displayImage" class="img-fluid mb-3" alt="" src="">
+        <button class="btn btn-success regist">등록</button>
     </div>
+    </form>
 </section>
+<script>
+	document.querySelector("#inputFile").addEventListener("change", function() {
+		if (this.files && this.files[0]) {
+			if (this.files[0].size > 10485760) {
+				alert("10MB를 초과하는 사진은 업로드할 수 없습니다.");
+				this.files = null;
+				this.value = "";
+				return
+			}
+			let reader = new FileReader();
+			reader.onload = function(e) {
+				document.querySelector("#displayImage").src = e.target.result;
+			}
+			reader.readAsDataURL(this.files[0]);
+		} else {
+			document.querySelector("#displayImage").src = "";
+		}
+	});
+</script>
 <%@ include file="../common/footer.jsp" %>

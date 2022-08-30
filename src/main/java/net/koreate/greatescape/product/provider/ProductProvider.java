@@ -2,11 +2,7 @@ package net.koreate.greatescape.product.provider;
 
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.jdbc.SQL;
-
-import net.koreate.greatescape.reservation.vo.ReservationVO;
 
 public class ProductProvider {
 
@@ -28,7 +24,7 @@ public class ProductProvider {
 		}
 		String seat = map.get("seat");
 		if (seat != null && !seat.equals("")) {
-			sql.WHERE("product_seat >= #{seat}");
+			sql.WHERE("(product_seat * 4) >= #{seat}");
 		}
 		String city = map.get("city");
 		if (city != null && !city.equals("")) {
