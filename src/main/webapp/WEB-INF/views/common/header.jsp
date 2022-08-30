@@ -74,7 +74,7 @@
 							</c:otherwise>
 						</c:choose>
 						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="${contextPath}/board/faq">고객센터</a></li>
+							aria-current="page" href="${contextPath}/board/faq/">고객센터</a></li>
 					</ul>
 				</div>
 			</div>
