@@ -27,30 +27,47 @@
 					<p class="catd-text">${qna.qna_question}</p>
 				</div>
 			</div>
-			<div class="card mb-5">
-				<div class="card-header">
-					<button class="btn-close float-end"></button>
-					<h3 class="card-title">답변 제목</h3>
-					<p class="card-text text-muted d-inline">작성자</p>
-					<p class="card-text text-muted d-inline">2022-11-11</p>
+			
+			<c:if test="${!empty commentList }">
+
+				<div class="card" >
+					<div class="card-header">등록된 답변</div>
+					<ul class="list-group list-group-flush">
+						<c:forEach var="reply" items="${commentList}">
+							<li class="list-group-item">${reply.qna_answer }</li>
+						</c:forEach>
+					</ul>
 				</div>
+
+			</c:if>
+			<div id="addedcommentList"></div>
+			
+			<c:if test="${userInfo.member_master eq 'Y'}">
+			<!-- Comments Form -->
+			<div class="card my-4">
+				<h5 class="card-header">답변을 작성하세요</h5>
 				<div class="card-body">
-					<p class="catd-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae sint quidem quam
-						quis voluptas totam autem corrupti error libero expedita. Nostrum illo unde vitae, laudantium
-						modi ullam impedit numquam. Dolores?
-						Incidunt soluta, deserunt ullam quibusdam earum voluptas. Facere, praesentium! Voluptatem,
-						doloremque libero. Necessitatibus placeat quas sit dolorem laborum eaque architecto debitis
-						corporis officiis in rem, mollitia temporibus molestiae neque eum!
-						Odit aperiam repellendus, facere odio fugiat autem ipsum blanditiis, ipsa rerum minus
-						voluptatibus sequi magnam at ipsam? Aliquam culpa placeat numquam! Cumque quis, deserunt rem
-						voluptas et quasi deleniti qui.</p>
+					<form name="comment-form" action="comment" method="post" autocomplete="off">
+						<div class="form-group">
+							<input type="hidden" name="qna_num" value="${qna.qna_num}">
+							<input type="hidden" name="comment_writer" value="${userInfo.member_name }">
+							<textarea name="qna_answer" class="form-control" rows="3"></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary">등록</button>
+					</form>
 				</div>
 			</div>
+			</c:if>
 		</div>
 	</div>
 </section>
 
 <script>
+	window.onload= function(){
+		getCommentList();
+	};
+	
+	
 	var qnaWriter='${qna.qna_writer}';
 	console.log(qnaWriter);
 	console.log(maskingName(qnaWriter));
@@ -72,6 +89,36 @@
 	  }
 	};
 	
-
+	
+	
+	function getCommentList(){
+		var qna_num= $('input[name=qna_num]').val();
+		$.ajax({
+			type: 'GET', url:"getCommentList", data:{"qna_num":qna_num},
+			success: function(result) {
+				for(var i=0; i<result.length; i++){
+					var str='<div class="comment">';
+					str += '관리자 답변';
+					str += '</div><div>&nbsp;&nbsp;&nbsp;';
+					str += result[i].qna_answer;
+					str += '</div><hr/>';
+					$("#commentList").append(str);
+				}
+			},error: function(err){
+				console.log("안되누");
+			} 
+		});//ajax
+			
+			
+	}
+		
+		
+	
+	
+	
+	
+	
+	
+	
 </script>
 <%@ include file="../common/footer.jsp" %>

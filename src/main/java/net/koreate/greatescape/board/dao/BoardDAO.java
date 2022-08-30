@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 
+import net.koreate.greatescape.board.vo.CommentVO;
 import net.koreate.greatescape.board.vo.FAQBoardVO;
 import net.koreate.greatescape.board.vo.NoticeBoardVO;
 import net.koreate.greatescape.board.vo.QNABoardVO;
@@ -63,13 +64,20 @@ public interface BoardDAO {
 	int getQnaCount(SearchCriteria cri) throws Exception;
 	
 	//글 쓰기
-	@Insert("INSERT INTO tbl_qna(qna_title, qna_question, qna_writer) VALUES (#{qna_title}, #{qna_question}, #{qna_writer})")
+	@Insert("INSERT INTO tbl_qna(member_num, qna_title, qna_question, qna_writer) VALUES (#{member_num}, #{qna_title}, #{qna_question}, #{qna_writer})")
 	void writeQNA(QNABoardVO qvo);
 
 	//상세보기
 	@Select("SELECT * FROM tbl_qna WHERE qna_num = #{qna_num}")
 	QNABoardVO readQNA(int qna_num);
 
+	//댓글
+	@Insert("INSERT INTO tbl_comment VALUES (null, #{qna_num},#{qna_answer}, #{comment_writer})")
+	void addComment(CommentVO vo);
+	
+	//댓글 리스트
+	@Select("SELECT * FROM tbl_comment WHERE qna_num=#{qna_num}")
+	List<CommentVO> getCommentList(int qna_num);
 	
 	//글 수정
 	
@@ -98,6 +106,11 @@ public interface BoardDAO {
 	//카테고리별 공지 개수
 	@Select("SELECT count(*) FROM tbl_notice WHERE notice_category=#{category} limit #{cri.startRow}, #{cri.perPageNum}")
 	int getNoticeCategoryCount(@Param("cri")SearchCriteria cri, @Param("category")String category) throws Exception;
+
+
+
+
+	
 
 
 	

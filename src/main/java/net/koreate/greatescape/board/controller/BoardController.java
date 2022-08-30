@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.board.service.BoardService;
+import net.koreate.greatescape.board.vo.CommentVO;
 import net.koreate.greatescape.board.vo.FAQBoardVO;
 import net.koreate.greatescape.board.vo.NoticeBoardVO;
 import net.koreate.greatescape.board.vo.QNABoardVO;
@@ -167,7 +168,7 @@ public class BoardController {
 
 	
 	@PostMapping("faqDelete")
-	public String faqDelete(int faq_num) throws Exception {
+	public String faqDelete(@RequestParam("faq_num")int faq_num) throws Exception {
 		bs.deleteFAQ(faq_num);
 		return "redirect:faq";
 	}
@@ -275,7 +276,9 @@ public class BoardController {
 	@GetMapping("qnaDetail")
 	public String readQNA(int qna_num, Model model) throws Exception {
 		QNABoardVO vo = bs.readQNA(qna_num);
+		List<CommentVO> comments= bs.getCommentList(qna_num);
 		model.addAttribute("qna", vo);
+		model.addAttribute("commentList", comments);
 		return "board/qnaDetail";
 	}
 	//글쓰기
@@ -285,15 +288,39 @@ public class BoardController {
 	}
 	
 	@PostMapping("qnaWrite")
-	public String writeQNA(@RequestParam("qna_title")String qna_title, @RequestParam("qna_question")String qna_question, 
-			@RequestParam("qna_writer")String qna_writer) throws Exception {
+	public String writeQNA(@RequestParam("member_num")int member_num, @RequestParam("qna_title")String qna_title, 
+			@RequestParam("qna_question")String qna_question, @RequestParam("qna_writer")String qna_writer) throws Exception {
 		QNABoardVO vo= new QNABoardVO(qna_title, qna_question, qna_writer);
+		vo.setMember_num(member_num);
 		bs.writeQNA(vo);
 		System.out.println("controller 에서 vo : "+vo);
 		return "redirect:qna";
 	}
 	
-	
+	//댓글 쓰기
+	@PostMapping("comment")
+	public String addComment(@RequestParam("qna_num")int qna_num, @RequestParam("qna_answer")String qna_answer,
+			@RequestParam("comment_writer")String comment_writer) throws Exception{
+		CommentVO vo= new CommentVO();
+		
+		vo.setQna_num(qna_num);
+		vo.setQna_answer(qna_answer);
+		vo.setComment_writer(comment_writer);
+		System.out.println("CommentVO: "+vo);
+		bs.addComment(vo);
+		String redirectURL="redirect:qnaDetail?qna_num="+qna_num;
+		
+		return redirectURL;
+	}
+	//댓글리스트
+	@GetMapping("getCommentList")
+	@ResponseBody
+	public List<CommentVO> getCommentList(@RequestParam("qna_num")int qna_num)throws Exception{
+		CommentVO vo= new CommentVO();
+		vo.setQna_num(qna_num);
+		return bs.getCommentList(qna_num);
+		
+	}
 }
 
 

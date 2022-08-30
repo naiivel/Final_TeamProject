@@ -109,12 +109,14 @@
 	console.log("qnaWriter: "+qnaWriter);
 	console.log("maskingName: "+maskingName(writer));
 	
-	var qnaList='${qnaList}';
+	/* var qnaList='${qnaList}';
+	$(qnaList).each(function(){
+		for (var i=0; i<=qnaList.length; i++){
+			
+			$("#writer").text(maskingName(qnaList.qna_writer));
+		}
+	}); */
 	
-	for (var i=0; i<=qnaList.length; i++){
-		var writer= $("#writer").text();
-		$("#writer").text(maskingName(writer));
-	}
 	
 	function maskingName(strName) {
 		if (strName.length > 2) {

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.board.dao.BoardDAO;
+import net.koreate.greatescape.board.vo.CommentVO;
 import net.koreate.greatescape.board.vo.FAQBoardVO;
 import net.koreate.greatescape.board.vo.NoticeBoardVO;
 import net.koreate.greatescape.board.vo.QNABoardVO;
@@ -95,17 +96,28 @@ public class BoardServiceImpl implements BoardService {
 		pm.setTotalCount(totalCount);
 		return pm;
 	}
-	
+	//게시글 작성
 	@Override
 	public void writeQNA(QNABoardVO qvo) throws Exception {
 		bdao.writeQNA(qvo);
 	}
-	
+	//상세보기
 	@Override
 	public QNABoardVO readQNA(int qna_num) throws Exception {
 		QNABoardVO vo= bdao.readQNA(qna_num);
+		
 		return vo;
 	}
+	//댓글작성
+	@Override
+	public void addComment(CommentVO vo) throws Exception{
+		bdao.addComment(vo);
+	}
+	//댓글리스트
+	public List<CommentVO> getCommentList(int qna_num) throws Exception{
+		return bdao.getCommentList(qna_num);
+	}
+	
 	
 	@Override
 	public String modifyQNA(QNABoardVO qvo) throws Exception {
