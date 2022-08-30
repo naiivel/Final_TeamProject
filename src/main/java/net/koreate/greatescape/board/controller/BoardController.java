@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.board.service.BoardService;
 import net.koreate.greatescape.board.vo.FAQBoardVO;
 import net.koreate.greatescape.board.vo.NoticeBoardVO;
+import net.koreate.greatescape.board.vo.QNABoardVO;
 import net.koreate.greatescape.utils.PageMaker;
 import net.koreate.greatescape.utils.SearchCriteria;
 
@@ -41,7 +43,7 @@ public class BoardController {
 		
 		FAQBoardVO vo= new FAQBoardVO(faq_category,faq_title,faq_content);
 		bs.writeFAQ(vo);
-		
+		System.out.println("controller-writeFAQ: "+vo);
 		return "redirect:faq";
 	}
 
@@ -171,28 +173,125 @@ public class BoardController {
 	}
 	
 	/****************************/
-	@GetMapping("/notice")
+	@GetMapping("notice")
 	public ModelAndView noticeList(ModelAndView mav, SearchCriteria cri) throws Exception {
 		
 		List<NoticeBoardVO> noticeList = bs.noticeList(cri);
 		PageMaker pm= bs.getNoticePageMaker(cri);
 		System.out.println("noticeList: "+noticeList);
 		System.out.println("pm: "+pm);
+		
 		mav.addObject("noticeList",noticeList);
 		mav.addObject("pm",pm);
 		mav.setViewName("board/notice");
 		
 		return mav;
 	}
-
+	
+	@GetMapping("noticeWrite")
+	public String noticeWrite() throws Exception{
+		return "board/noticeWrite";
+	}
+	
+	@PostMapping("noticeWrite")
+	public String writeNotice( @RequestParam("notice_category")String notice_category, 
+			@RequestParam("notice_title")String notice_title, @RequestParam("notice_content")String notice_content) throws Exception {
+		
+		NoticeBoardVO vo= new NoticeBoardVO(notice_category,notice_title,notice_content);
+		bs.writeNotice(vo);
+		System.out.println("controller 에서 vo : "+vo);
+		return "redirect:notice";
+	}
+	
 	@GetMapping("noticeDetail")
-	public void noticeDetail() {}
+	public String readNotice(int notice_num, Model model) throws Exception {
+		NoticeBoardVO vo = bs.readNotice(notice_num);
+		model.addAttribute("notice", vo);
+		return "board/noticeDetail";
+	}
 	
-	/*******************************/
+	@ResponseBody
+	@PostMapping("categoryList/notice")
+	public ResponseEntity<Map<String, Object>> noticeCategoryList(SearchCriteria cri, NoticeBoardVO vo){
+		ResponseEntity<Map<String, Object>> entity= null;
+		try {
+			Map<String,Object> map= new HashMap<>();
+			System.out.println(vo);
+			List<NoticeBoardVO> noticeList = bs.noticeCategoryList(cri, vo.getNotice_category());
+			map.put("noticeCategoryList", noticeList);
+			PageMaker noticePm = bs.getNoticeCategoryPageMaker(cri, vo.getNotice_category());
+			map.put("noticePm", noticePm);
+			
+			entity= new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception e) {
+			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		System.out.println(entity);
+		
+		return entity;
+	}
+	
+	@ResponseBody
+	@PostMapping("categoryList/mofa")
+	public ResponseEntity<Map<String, Object>> mofaList(SearchCriteria cri, NoticeBoardVO vo) throws Exception{
+		ResponseEntity<Map<String, Object>> entity= null;
+		try {
+			Map<String,Object> map= new HashMap<>();
+			System.out.println(vo);
+			List<NoticeBoardVO> mofaList = bs.noticeCategoryList(cri, vo.getNotice_category());
+			map.put("mofaList", mofaList);
+			PageMaker mofaPm = bs.getNoticeCategoryPageMaker(cri, vo.getNotice_category());
+			map.put("mofaPm", mofaPm);
+			
+			entity= new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception e) {
+			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		System.out.println(entity);
+		
+		return entity;
+	}
 
-	@GetMapping("/qna")
-	public void qna() {}
+	/********************** qna ************************/
 	
+	@GetMapping("/qna")
+	public ModelAndView qna(ModelAndView mav, SearchCriteria cri) throws Exception {
+		
+		List<NoticeBoardVO> qnaNoticeList = bs.qnaNoticeList();
+		mav.addObject("qnaNoticeList",qnaNoticeList);
+		System.out.println("qnaNoticeList: "+qnaNoticeList);
+		
+		List<QNABoardVO> qnaList = bs.getQnaList(cri);
+		
+		PageMaker pm= bs.getQnaPageMaker(cri);
+		System.out.println("qnaPM: "+pm);
+		mav.addObject("qnaList",qnaList);
+		mav.addObject("pm",pm);
+		mav.setViewName("board/qna");
+		
+		return mav;
+	}
+	//상세보기
+	@GetMapping("qnaDetail")
+	public String readQNA(int qna_num, Model model) throws Exception {
+		QNABoardVO vo = bs.readQNA(qna_num);
+		model.addAttribute("qna", vo);
+		return "board/qnaDetail";
+	}
+	//글쓰기
+	@GetMapping("qnaWrite")
+	public String qnaWrite() throws Exception{
+		return "board/qnaWrite";
+	}
+	
+	@PostMapping("qnaWrite")
+	public String writeQNA(@RequestParam("qna_title")String qna_title, @RequestParam("qna_question")String qna_question, 
+			@RequestParam("qna_writer")String qna_writer) throws Exception {
+		QNABoardVO vo= new QNABoardVO(qna_title, qna_question, qna_writer);
+		bs.writeQNA(vo);
+		System.out.println("controller 에서 vo : "+vo);
+		return "redirect:qna";
+	}
 	
 	
 }

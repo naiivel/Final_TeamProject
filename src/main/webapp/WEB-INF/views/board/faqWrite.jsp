@@ -10,7 +10,7 @@
 					고객센터
 				</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/board/faq/${pm.makeQuery(1)}" class="list-group-item active" id="faqBoard">자주 묻는 질문</a>
+					<a href="${contextPath}/board/faq" class="list-group-item active" id="faqBoard">자주 묻는 질문</a>
 					<a href="${contextPath}/board/qna" class="list-group-item" id="qnaBoard">질문과 답변</a>
 					<a href="${contextPath}/board/notice" class="list-group-item" id="noticeBoard">공지사항</a>
 				</div>
@@ -18,7 +18,7 @@
 		</div>
 		<div class="col-md-10 mb-5">
 			<h2 class="mb-4">자주 묻는 질문</h2>
-			<form action="faqWrite" method="POST" class="h-100" id="writeForm">
+			<form action="faqWrite" method="POST" class="h-100" id="writeFaqForm">
 				<div class="form-floating mb-3">
 					<select name="faq_category" class="form-select" id="floatingSelectCategory" aria-label="category">
 						<option value="해외여행">해외여행</option>
@@ -37,29 +37,10 @@
 					<textarea class="form-control h-100" id="floatingTextarea" name="faq_content"></textarea>
 					<label for="floatingTextarea">내용</label>
 				</div>
-				<button class="btn btn-outline-secondary" onclick="location.href='${contextPath}/board/faq';">작성 완료</button>
+				<button class="btn btn-outline-secondary" >작성 완료</button>
 			</form>
 		</div>
 	</div>
 </section>
 
-<script>
-	$(".btn-oulinee-secondary").click(function(){
-		var faq_category= $("#floatingSelectCategory").val();	
-		var faq_title= $("#floatingInputTitle").val();
-		var faq_content= $("#floatingTextarea").val();
-		
-		console.log("faq_category: ", faq_category);
-		$.ajax({
-			url : "${contextPath}/board/faqWrite", type : "POST",data : $("#writeForm").serialize(), dataType:"json",
-			success : function(data) {
-				console.log(data)
-			},error:function(err){
-				console.log("응 안돼 돌아가");
-			}
-
-		});
-		location.href="${contextPath}/board/faq";
-	});
-</script>
 <%@ include file="../common/footer.jsp" %>
