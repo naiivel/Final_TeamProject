@@ -13,10 +13,10 @@
 			</div>
 			<div class="col-md-4 p-3">
 				<ul class="d-flex list-group list-group-horizontal">
-					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/asia">아시아</a></li>
-					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/europe">유럽</a></li>
-					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/america">아메리카</a></li>
-					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/product/oceania">오세아니아</a></li>
+					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/products/continent/아시아">아시아</a></li>
+					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/products/continent/유럽">유럽</a></li>
+					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/products/continent/아메리카">아메리카</a></li>
+					<li class="list-group-item fs-6 border-0"><a class="text-decoration-none text-body" href="${contextPath}/products/continent/오세아니아">오세아니아</a></li>
 				</ul>
 			</div>
 		</div>

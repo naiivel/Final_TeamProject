@@ -3,6 +3,8 @@
 <%@ include file="../common/header.jsp" %>
 <fmt:formatDate value="${product.product_departure}" var="departure" pattern="yyyy-MM-dd"/>
 <fmt:formatDate value="${product.product_arrive}" var="arrive" pattern="yyyy-MM-dd"/>
+<fmt:formatNumber value="${reservation.rev_adult*product.product_adult}" var="totalAdult" maxFractionDigits="3" />
+<fmt:formatNumber value="${reservation.rev_minor*product.product_minor}" var="totalMinor" maxFractionDigits="3" />
 <section class="container">
 	<div class="row mb-5">
 		<div class="col-md-2">
@@ -24,25 +26,26 @@
 					<p class="text-end card-text">여행 기간 : ${departure} ~ ${arrive}</p>
 				</div>
 				<div class="card-body">
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item text-muted"> 예약자 명 : ${userInfo.member_name}</li>
+					<ul class="list-group">
+						<li class="list-group-item"> 예약자 명 : ${userInfo.member_name}</li>
 						<li class="list-group-item"> 연락처 : ${userInfo.member_phone}</li>
 						<li class="list-group-item"> 이메일 : ${userInfo.member_email}</li>
 					</ul>
 				</div>
 				<div class="card-body">
-					<p class="card-text">항공편 : ${product.product_airplane}</p>
-					<p class="card-text">성인 : ${reservation.rev_adult*product.product_adult}원</p>
-					<p class="card-text">소인 : ${reservation.rev_minor*product.product_minor}원</p>
+					<p class="card-text">항공편 - ${product.product_airplane}</p>
+					<p class="card-text">성인 : ${reservation.rev_adult}명 / ${totalAdult}원</p>
+					<p class="card-text">소인 : ${reservation.rev_minor}명 / ${totalMinor}원</p>
 					<p class="card-text">${product.product_plan - 1}박 ${product.product_plan}일</p>
-					<a href="${embassy}" class="card-link">${product.product_country} 대사관</a>
+					<a href="${embassy}" class="card-link" target="_blank">*${product.product_country} 대사관</a>
 					<p class="card-text">
-						<small class="text-muted">작은글씨</small>
+						<small class="text-muted">문제가 있으신 부분은 고객센터로 문의해주시길 바랍니다.</small>
 					</p>
 					<p class="card-text">${tripInfo}</p>
 				</div>
 				<div class="card-footer">
 					<button id="deleteBtn" class="btn btn-outline-secondary">예약 취소</button>
+					<input type="hidden" id="product_num" value="${product.product_num}"/>
 				</div>
 			</div>
 		</div>
@@ -50,7 +53,13 @@
 </section>
 <script>
 	$("#deleteBtn").click(function(){
-		location.href='deleteProduct';
+		var product_num = $("#product_num").val();
+		location.href='deleteProduct?product_num='+product_num;
 	});
 </script>
+<c:if test="${!empty msg}">
+	<script>
+		alert("${msg}");
+	</script>
+</c:if>
 <%@ include file="../common/footer.jsp" %>

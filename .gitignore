@@ -127,3 +127,5 @@ MANIFEST.MF
 */target/*
 **/META-INF/
 */META-INF/*
+**/attach/
+*/attach/*

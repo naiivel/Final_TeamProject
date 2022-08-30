@@ -2,6 +2,7 @@ package net.koreate.greatescape.member.service;
 
 import java.util.List;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -12,10 +13,10 @@ import net.koreate.greatescape.member.dao.MemberDAO;
 import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.member.vo.SalesVO;
 import net.koreate.greatescape.product.vo.ProductVO;
+import net.koreate.greatescape.reservation.vo.DetailBoardVO;
 import net.koreate.greatescape.reservation.vo.ReservationVO;
 import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
-import net.koreate.greatescape.utils.SearchCriteria;
 
 import net.koreate.greatescape.utils.Criteria;
 import net.koreate.greatescape.utils.PageMaker;
@@ -44,8 +45,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public ReservationVO findpeople(MemberVO vo) {
-		return mdao.findPeople(vo);
+	public ReservationVO findpeople(MemberVO vo,int product_num) {
+		return mdao.findPeople(vo,product_num);
 	}
 
 	@Override
@@ -72,8 +73,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String findtripInfo(int member_product_num) {
-		return mdao.findDetailInfo(member_product_num);
+	public DetailBoardVO findtripInfo(int product_num) {
+		return mdao.findDetailInfo(product_num);
 	}
 
 	@Override
@@ -82,20 +83,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public ProductVO findProduct(int member_product_num) {
-		return mdao.findproduct(member_product_num);
+	public List<ProductVO> findProductList(List<ReservationVO> rev) {
+		List<ProductVO> list = new ArrayList<>();
+		
+		for(ReservationVO r : rev) {
+			list.add(mdao.findProductList(r.getProduct_num()));
+		}
+		
+		return list;
 	}
 
-	@Override
-	@Transactional
-	public void deleteP(int product_num) {
-		// 회원정보에서 상품번호 변경
-		mdao.cancelProduct(product_num);
-		// 상품번호로 예약테이블 내역 삭제
-		mdao.deletereserv(product_num);
-		// 해당상품 잔여좌석 +1
-		mdao.seatPlus(product_num);
-	}
 
 	@Override
 	public MemberVO findId(MemberVO vo) {
@@ -111,9 +108,9 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	public void deleteNP(ReservationVO noMember) {
 		// 예약테이블 내역 삭제
-		mdao.deletereserv(noMember.getProduct_num());
+		mdao.deletereserv(noMember);
 		// 잔여좌석+1
-		mdao.seatPlus(noMember.getProduct_num());
+		mdao.seatPlus(noMember);
 		
 	}
 
@@ -159,5 +156,110 @@ public class MemberServiceImpl implements MemberService {
 	public List<SalesVO> totalSales(String continent) {
 		return mdao.getTotalSales(continent);
 	}
-	
+
+	@Override
+	public List<ProductVO> productList(Criteria cri) {
+		return mdao.productList(cri);
+	}
+
+	@Override
+	public PageMaker pPageMaker(Criteria cri) {
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(mdao.pListCount());
+		return pageMaker;
+	}
+
+	@Override
+	public List<ProductVO> typeProductList(Criteria cri, String product_continent) {
+		return mdao.typeProductList(cri,product_continent);
+	}
+
+	@Override
+	public PageMaker typeProPageMaker(Criteria cri, String product_continent) {
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(mdao.typeProListCount(product_continent));
+		return pageMaker;
+	}
+
+	@Override
+	public List<ReservationVO> checkRev(MemberVO loginMember) {
+		return mdao.findRevList(loginMember);
+	}
+
+	@Override
+	public List<MemberVO> revCheck(String member_id) {
+		return mdao.revCheck(member_id);
+	}
+
+	@Override
+	public ProductVO findProduct(int product_num) {
+		return mdao.findProduct(product_num);
+	}
+
+	@Override
+	public ReservationVO findNum(MemberVO loginMember, int product_num) {
+		return mdao.findNum(loginMember,product_num);
+	}
+
+	@Override
+	public void deleteReserv(ReservationVO rev) {
+		mdao.deletereserv(rev);
+		
+	}
+
+	@Override
+	public void seatPlus(ReservationVO rev) {
+		mdao.seatPlus(rev);
+		
+	}
+
+	@Override
+	public List<ReservationVO> findRevList(MemberVO loginMember) {
+		return mdao.findRevList(loginMember);
+	}
+
+	@Override
+	public void deleteRevId(MemberVO loginMember) {
+		mdao.deleteRevId(loginMember);
+		
+	}
+
+	@Override
+	public List<ReservationVO> allRev() {
+		return mdao.allRev();
+	}
+
+	@Override
+	public ReservationVO revFind(ReservationVO r) {
+		return mdao.revFind(r);
+	}
+
+	@Override
+	public MemberVO findInfo(ReservationVO reserv) {
+		return mdao.findInfo(reserv);
+	}
+
+	@Override
+	public void deleteProduct(int[] product_nums) {
+		for(int i=0;i<product_nums.length;i++) {
+			int product_num = product_nums[i];
+			mdao.deleteProduct(product_num);
+		}
+		
+	}
+
+	@Override
+	public List<ProductVO> deadlineSet(int[] product_nums) {
+		List<ProductVO> list = new ArrayList<>();
+		for(int i=0;i<product_nums.length;i++) {
+			int product_num = product_nums[i];
+			mdao.deadlineSet(product_num);
+			ProductVO vo = mdao.findProduct(product_num);
+			list.add(vo);
+		}
+		return list;
+	}
+
 }
