@@ -68,8 +68,6 @@ public interface BoardDAO {
 	int getTripCount(SearchCriteria cri);
 
 
-	
-	
 	//글 쓰기
 	@Insert("INSERT INTO tbl_faq VALUES(null, #{faq_category}, #{faq_title}, #{faq_content})")
 	void writeFAQ(FAQBoardVO fvo) throws Exception;

@@ -9,11 +9,9 @@
 			<div class="card mb-3">
 				<div class="card-header">고객센터</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/board/faq" class="list-group-item active"
-						id="faqBoard">자주 묻는 질문</a> <a href="${contextPath}/board/qna"
-						class="list-group-item" id="qnaBoard">질문과 답변</a> <a
-						href="${contextPath}/board/notice" class="list-group-item"
-						id="noticeBoard">공지사항</a>
+					<a href="${contextPath}/board/faq" class="list-group-item active" id="faqBoard">자주 묻는 질문</a> 
+					<a href="${contextPath}/board/qna" class="list-group-item" id="qnaBoard">질문과 답변</a> 
+					<a href="${contextPath}/board/notice" class="list-group-item" id="noticeBoard">공지사항</a>
 				</div>
 			</div>
 		</div>
@@ -28,9 +26,9 @@
 									fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 									<path
 										d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-								</svg> </span> <input type="text" name="keyword" id="keyword"class="form-control" 
-								aria-label="Amount (to the nearest dollar)" placeholder="검색어를 입력하세요">
-							<button class="btn btn-dark" type="button" id="button-addon2">검색</button>
+								</svg> </span> <input type="text" name="keyword" id="keyword" class="form-control" 
+								aria-label="Amount (to the nearest dollar)" value="${param.keyword}" placeholder="검색어를 입력하세요">
+							<button class="btn btn-dark" type="button" id="btnSearch">검색</button>
 						</div>
 					</form>
 				</div>
@@ -38,18 +36,12 @@
 			<!-- 메뉴버튼 -->
 			<div class="row mb-4">
 				<div class="btn-group" role="group">
-					<button value="전체" type="button" class="btn btn-outline-dark"
-						id="all">전체보기</button>
-					<button value="해외여행" type="button" class="btn btn-outline-dark"
-						id="trip">해외여행</button>
-					<button value="항공" type="button" class="btn btn-outline-dark"
-						id="airline">항공</button>
-					<button value="예약/결제" type="button" class="btn btn-outline-dark"
-						id="reservation">예약/결제</button>
-					<button value="여권/비자/환전" type="button" class="btn btn-outline-dark"
-						id="passport">여권/비자/환전</button>
-					<button value="홈페이지/기타" type="button" class="btn btn-outline-dark"
-						id="other">홈페이지/기타</button>
+					<button value="전체" type="button" class="btn btn-outline-dark" id="all">전체보기</button>
+					<button value="해외여행" type="button" class="btn btn-outline-dark" id="trip">해외여행</button>
+					<button value="항공" type="button" class="btn btn-outline-dark" id="airline">항공</button>
+					<button value="예약/결제" type="button" class="btn btn-outline-dark" id="reservation">예약/결제</button>
+					<button value="여권/비자/환전" type="button" class="btn btn-outline-dark" id="passport">여권/비자/환전</button>
+					<button value="홈페이지/기타" type="button" class="btn btn-outline-dark" id="other">홈페이지/기타</button>
 				</div>
 			</div>
 			<!-- 페이징 -->
@@ -250,8 +242,19 @@
 				tag.submit();
 			}
 		}
-		
 	}
+	
+	$("#btnSearch").click(function(){
+		location.href="${contextPath}/board/faq?keyword="+$("#keyword").val();
+		
+	});
+	
+	$('input[type="text"]').keydown(function() {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			$("#btnSearch").click();
+		};
+	});
 	
 </script>
 <%@ include file="../common/footer.jsp"%>

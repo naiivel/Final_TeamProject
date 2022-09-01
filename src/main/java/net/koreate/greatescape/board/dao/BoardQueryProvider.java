@@ -29,7 +29,7 @@ public class BoardQueryProvider {
 		sql.SELECT("*");
 		sql.FROM("tbl_faq");
 		sql.WHERE("faq_category='해외여행'");
-		getSearchWhere(cri, sql);
+		//getSearchWhere(cri, sql);
 		sql.ORDER_BY("faq_num DESC");
 		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
 		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
@@ -183,7 +183,7 @@ public class BoardQueryProvider {
 	}
 	
 	
-
+	
 	// 검색조건
 	public void getSearchWhere(SearchCriteria cri, SQL sql) {
 		String titleQuery = "faq_title LIKE CONCAT('%',#{keyword},'%')";

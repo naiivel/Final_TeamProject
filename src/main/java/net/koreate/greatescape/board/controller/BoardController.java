@@ -55,7 +55,7 @@ public class BoardController {
 		return "redirect:faq";
 	}
 
-	//공지 리스트(아무나 가능)
+	//faq 리스트(아무나 가능)
 	@GetMapping("faq")
 	public ModelAndView faqList(ModelAndView mav, SearchCriteria cri) throws Exception {
 		
