@@ -25,14 +25,15 @@
 								</tr>
 								<tr>
 									<th>출발일정</th>
-
-									<td colspan="5"><fmt:formatDate
-											value="${product.product_departure}" pattern="yyyy-MM-dd" /></td>
+									<td colspan="5">
+										<fmt:formatDate value="${product.product_departure}" pattern="yyyy-MM-dd" />
+									</td>
 								</tr>
 								<tr>
 									<th>도착일정</th>
-									<td colspan="5"><fmt:formatDate
-											value="${product.product_arrive}" pattern="yyyy-MM-dd" /></td>
+									<td colspan="5">
+										<fmt:formatDate value="${product.product_arrive}" pattern="yyyy-MM-dd" />
+									</td>
 								</tr>
 							</table>
 						</div>
@@ -47,18 +48,17 @@
 						<div class="overflow-auto mb-2" style="max-height: 15rem;">
 							<p>
 							<p class="ls2 lh6 bs5 ts4">
-								<em class="emphasis"> < 대탈출>('대탈출'이하 '대탈출') </em>은(는) 「개인정보 보호법」
-								제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여
-								다음과 같이 개인정보 처리방침을 수립·공개합니다.
+								<em class="emphasis">
+									< 대탈출>('대탈출'이하 '대탈출')
+								</em>
+								은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.
 							</p>
-							<p class="ls2">
-								○ 이 개인정보처리방침은 <em class="emphasis">2022</em>년 <em
-									class="emphasis">1</em>월 <em class="emphasis">1</em>부터 적용됩니다.
-							</p>
+							<p class="ls2">이 개인정보처리방침은 <em class="emphasis">2022</em>년 <em class="emphasis">1</em>월 <em class="emphasis">1</em>부터 적용됩니다.</p>
 							</br>
 							<p class='lh6 bs4'>
-								<strong>제1조(개인정보의 처리 목적)<br /> <br /> <em
-									class="emphasis"> < 대탈출>('대탈출'이하 '대탈출') </em>은(는) 다음의 목적을 위하여
+								<strong>제1조(개인정보의 처리 목적)<br /> <br /> <em class="emphasis">
+										< 대탈출>('대탈출'이하 '대탈출')
+									</em>은(는) 다음의 목적을 위하여
 									개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며 이용 목적이 변경되는
 									경우에는 「개인정보 보호법」 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
 								</strong>
@@ -72,14 +72,18 @@
 							</br> </br>
 							<p class='lh6 bs4'>
 								<strong>제2조(개인정보의 처리 및 보유 기간)</strong></br> </br>① <em class="emphasis">
-									< 대탈출> </em>은(는) 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은
+									< 대탈출>
+								</em>은(는) 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은
 								개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.</br> </br>② 각각의 개인정보 처리 및 보유 기간은 다음과
 								같습니다.
 							</p>
 							<ul class='list_indent2 mgt10'>
-								<li class='tt'>1.<홈페이지 회원가입 및 관리></li>
-								<li class='tt'><홈페이지 회원가입 및 관리>와 관련한 개인정보는 수집.이용에 관한
-									동의일로부터<1년>까지 위 이용목적을 위하여 보유.이용됩니다. </li>
+								<li class='tt'>1.<홈페이지 회원가입 및 관리>
+								</li>
+								<li class='tt'>
+									<홈페이지 회원가입 및 관리>와 관련한 개인정보는 수집.이용에 관한
+										동의일로부터<1년>까지 위 이용목적을 위하여 보유.이용됩니다.
+								</li>
 								<li>보유근거 : 회원가입</li>
 								<li>관련법령 :</li>
 								<li>예외사유 :</li>
@@ -87,26 +91,32 @@
 							</br> </br>
 							<p class='lh6 bs4'>
 								<strong>제3조(처리하는 개인정보의 항목) </strong></br> </br> ① <em class="emphasis">
-									< 대탈출> </em>은(는) 다음의 개인정보 항목을 처리하고 있습니다.
+									< 대탈출>
+								</em>은(는) 다음의 개인정보 항목을 처리하고 있습니다.
 							</p>
 							<ul class='list_indent2 mgt10'>
-								<li class='tt'>1< 홈페이지 회원가입 및 관리></li>
+								<li class='tt'>1< 홈페이지 회원가입 및 관리>
+								</li>
 								<li>필수항목 : 이메일, 휴대전화번호, 비밀번호, 로그인ID, 성별, 생년월일, 이름</li>
 								<li>선택항목 :</li>
 							</ul>
 							</br> </br>
 							<p class='lh6 bs4'>
-								<strong>제4조(개인정보의 제3자 제공에 관한 사항)</strong></br> </br> ① <em
-									class="emphasis"> < 대탈출> </em>은(는) 개인정보를 제1조(개인정보의 처리 목적)에서 명시한
+								<strong>제4조(개인정보의 제3자 제공에 관한 사항)</strong></br> </br> ① <em class="emphasis">
+									< 대탈출>
+								</em>은(는) 개인정보를 제1조(개인정보의 처리 목적)에서 명시한
 								범위 내에서만 처리하며, 정보주체의 동의, 법률의 특별한 규정 등 「개인정보 보호법」 제17조 및 제18조에
 								해당하는 경우에만 개인정보를 제3자에게 제공합니다.
 							</p>
 							<p class="sub_p mgt10">
-								② <span class="colorLightBlue"> < 대탈출> </span>은(는) 다음과 같이 개인정보를
+								② <span class="colorLightBlue">
+									< 대탈출>
+								</span>은(는) 다음과 같이 개인정보를
 								제3자에게 제공하고 있습니다.
 							</p>
 							<ul class="list_indent2 mgt10">
-								<li class="tt">1. <></li>
+								<li class="tt">1. <>
+								</li>
 								<li>개인정보를 제공받는 자 :</li>
 								<li>제공받는 자의 개인정보 이용목적 :</li>
 								<li>제공받는 자의 보유.이용기간:</li>
@@ -114,16 +124,20 @@
 							</br> </br>
 							<p class='lh6 bs4'>
 								<strong>제5조(개인정보처리의 위탁에 관한 사항)</strong></br> </br> ① <em class="emphasis">
-									< 대탈출> </em>은(는) 원활한 개인정보 업무처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.
+									< 대탈출>
+								</em>은(는) 원활한 개인정보 업무처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.
 							</p>
 							<ul class='list_indent2 mgt10'>
-								<li class='tt'>1. <></li>
+								<li class='tt'>1. <>
+								</li>
 								<li>위탁받는 자 (수탁자) :</li>
 								<li>위탁하는 업무의 내용 :</li>
 								<li>위탁기간 :</li>
 							</ul>
 							<p class='sub_p mgt10'>
-								② <span class='colorLightBlue'> < 대탈출> </span>은(는) 위탁계약 체결시
+								② <span class='colorLightBlue'>
+									< 대탈출>
+								</span>은(는) 위탁계약 체결시
 								「개인정보 보호법」 제26조에 따라 위탁업무 수행목적 외 개인정보 처리금지, 기술적․관리적 보호조치, 재위탁 제한,
 								수탁자에 대한 관리․감독, 손해배상 등 책임에 관한 사항을 계약서 등 문서에 명시하고, 수탁자가 개인정보를 안전하게
 								처리하는지를 감독하고 있습니다.
@@ -136,11 +150,12 @@
 							</p>
 							<p class='ls2'>
 								</br>① < 대탈출> 은(는) 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이
-								해당 개인정보를 파기합니다.</br> </br>② 정보주체로부터 동의받은 개인정보 보유기간이 경과하거나 처리목적이 달성되었음에도
-								불구하고 다른 법령에 따라 개인정보를 계속 보존하여야 하는 경우에는, 해당 개인정보를 별도의 데이터베이스(DB)로
-								옮기거나 보관장소를 달리하여 보존합니다.</br>1. 법령 근거 :</br>2. 보존하는 개인정보 항목 : 계좌정보, 거래날짜</br> </br>③
-								개인정보 파기의 절차 및 방법은 다음과 같습니다.</br>1. 파기절차</br> < 대탈출> 은(는) 파기 사유가 발생한 개인정보를
-								선정하고, < 대탈출> 의 개인정보 보호책임자의 승인을 받아 개인정보를 파기합니다.</br>
+									해당 개인정보를 파기합니다.</br> </br>② 정보주체로부터 동의받은 개인정보 보유기간이 경과하거나 처리목적이 달성되었음에도
+									불구하고 다른 법령에 따라 개인정보를 계속 보존하여야 하는 경우에는, 해당 개인정보를 별도의 데이터베이스(DB)로
+									옮기거나 보관장소를 달리하여 보존합니다.</br>1. 법령 근거 :</br>2. 보존하는 개인정보 항목 : 계좌정보, 거래날짜</br> </br>③
+									개인정보 파기의 절차 및 방법은 다음과 같습니다.</br>1. 파기절차</br>
+									< 대탈출> 은(는) 파기 사유가 발생한 개인정보를
+										선정하고, < 대탈출> 의 개인정보 보호책임자의 승인을 받아 개인정보를 파기합니다.</br>
 							</p>
 							<p class='sub_p mgt10'></p>
 							<br /> <br />
@@ -166,7 +181,9 @@
 							</br> </br>
 							<p class='lh6 bs4'>
 								<strong>제8조(개인정보의 안전성 확보조치에 관한 사항)<em class="emphasis"></br>
-										</br> < 대탈출> </em>은(는) 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.
+										</br>
+										< 대탈출>
+									</em>은(는) 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.
 								</strong>
 							</p>
 							<p class='sub_p mgt10'>
@@ -193,15 +210,16 @@
 							</p>
 							<p class='sub_p'>
 								<개인정보처리자명>은(는) 온라인 맞춤형 광고 등을 위한 행태정보를 수집·이용·제공하지
-								않습니다. 
+									않습니다.
 							</p>
 							</br> </br>
 							<p class='lh6 bs4'>
-								<strong>제11조(추가적인 이용·제공 판단기준)</strong></br> </br> < 대탈출> 은(는) ｢개인정보 보호법｣
-								제15조제3항 및 제17조제4항에 따라 ｢개인정보 보호법 시행령｣ 제14조의2에 따른 사항을 고려하여 정보주체의
-								동의 없이 개인정보를 추가적으로 이용·제공할 수 있습니다.<br> 이에 따라 < 대탈출> 가(이)
-								정보주체의 동의 없이 추가적인 이용·제공을 하기 위해서 다음과 같은 사항을 고려하였습니다.</br>▶ 개인정보를 추가적으로
-								이용·제공하려는 목적이 당초 수집 목적과 관련성이 있는지 여부
+								<strong>제11조(추가적인 이용·제공 판단기준)</strong></br> </br>
+								< 대탈출> 은(는) ｢개인정보 보호법｣
+									제15조제3항 및 제17조제4항에 따라 ｢개인정보 보호법 시행령｣ 제14조의2에 따른 사항을 고려하여 정보주체의
+									동의 없이 개인정보를 추가적으로 이용·제공할 수 있습니다.<br> 이에 따라 < 대탈출> 가(이)
+										정보주체의 동의 없이 추가적인 이용·제공을 하기 위해서 다음과 같은 사항을 고려하였습니다.</br>▶ 개인정보를 추가적으로
+										이용·제공하려는 목적이 당초 수집 목적과 관련성이 있는지 여부
 							</p>
 							<p class='sub_p'></p>
 							<p class='sub_p'></p>
@@ -222,8 +240,9 @@
 								자율적으로 판단하여 작성·공개함</p>
 							</br> </br>
 							<p class='lh6 bs4'>
-								<strong>제12조(가명정보를 처리하는 경우 가명정보 처리에 관한 사항)</strong></br> </br> < 대탈출> 은(는)
-								다음과 같은 목적으로 가명정보를 처리하고 있습니다.
+								<strong>제12조(가명정보를 처리하는 경우 가명정보 처리에 관한 사항)</strong></br> </br>
+								< 대탈출> 은(는)
+									다음과 같은 목적으로 가명정보를 처리하고 있습니다.
 							</p>
 							<p class='sub_p'></p>
 							<p class='sub_p'>▶ 가명정보의 처리 목적</p>
@@ -262,7 +281,7 @@
 								<li>연락처 :01000000000, gmail@gmail.com,</li>
 							</ul>
 							<p class='sub_p'>※ 개인정보 보호 담당부서로 연결됩니다.
-							<p />
+								<p />
 							<ul class='list_indent2 mgt10'>
 								<li class='tt'>▶ 개인정보 보호 담당부서</li>
 								<li>부서명 :</li>
@@ -275,10 +294,9 @@
 							</br> </br>
 							<p class='lh6 bs4'>
 								<strong>제14조(국내대리인의 지정</strong>)</br> </br>정보주체는 ｢개인정보 보호법｣ 제39조의11에 따라
-								지정된 < 대탈출>의 국내대리인에게 개인정보 관련 고충처리 등의 업무를 위하여 연락을 취할 수 있습니다. <
-								대탈출>은(는) 정보주체의 개인정보 관련 고충처리 등 개인정보 보호책임자의 업무 등을 신속하게 처리할 수 있도록
-								노력하겠습니다. <br /> <br />▶ < 대탈출> 은(는) ｢개인정보 보호법｣ 제39조의11에 따라
-								국내대리인을 지정하였습니다.
+								지정된 < 대탈출>의 국내대리인에게 개인정보 관련 고충처리 등의 업무를 위하여 연락을 취할 수 있습니다. < 대탈출>은(는) 정보주체의 개인정보 관련 고충처리 등 개인정보 보호책임자의 업무 등을 신속하게 처리할 수 있도록
+										노력하겠습니다. <br /> <br />▶ < 대탈출> 은(는) ｢개인정보 보호법｣ 제39조의11에 따라
+											국내대리인을 지정하였습니다.
 							</p>
 							<p class='sub_p'></p>
 							<p class='sub_p'></p>
@@ -295,8 +313,9 @@
 							<p class='sub_p'>- 국내대리인의 전자우편 주소 : [대리인 전자우편_직접입력]</p>
 							<p class='sub_p mgt30'>
 								<strong>제15조(개인정보의 열람청구를 접수·처리하는 부서)</br> 정보주체는 ｢개인정보 보호법｣
-									제35조에 따른 개인정보의 열람 청구를 아래의 부서에 할 수 있습니다.<br /> < 대탈출></span>은(는) 정보주체의
-									개인정보 열람청구가 신속하게 처리되도록 노력하겠습니다.
+									제35조에 따른 개인정보의 열람 청구를 아래의 부서에 할 수 있습니다.<br />
+									< 대탈출></span>은(는) 정보주체의
+										개인정보 열람청구가 신속하게 처리되도록 노력하겠습니다.
 								</strong>
 							</p>
 							<ul class='list_indent2 mgt10'>
@@ -320,13 +339,15 @@
 							행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.<br /> <br /> ※ 행정심판에 대해 자세한
 							사항은 중앙행정심판위원회(www.simpan.go.kr) 홈페이지를 참고하시기 바랍니다.</br> </br>
 							<p class='lh6 bs4'>
-								<strong>제17조(영상정보처리기기 운영·관리에 관한 사항)</br>① <em
-									class='emphasis'> < 대탈출> </em>은(는) 아래와 같이 영상정보처리기기를 설치·운영하고
+								<strong>제17조(영상정보처리기기 운영·관리에 관한 사항)</br>① <em class='emphasis'>
+										< 대탈출>
+									</em>은(는) 아래와 같이 영상정보처리기기를 설치·운영하고
 									있습니다.
 								</strong>
 							</p>
 							<p class='sub_p mgt30'>
-								1.영상정보처리기기 설치근거·목적 : <span class='colorLightBlue'> < 대탈출>
+								1.영상정보처리기기 설치근거·목적 : <span class='colorLightBlue'>
+									< 대탈출>
 								</span>의
 							</p>
 							<ul class='list_indent2 mgt10'>
@@ -370,9 +391,7 @@
 							</p>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value=""
-								id="flexCheckDefault"> <label class="form-check-label"
-								for="flexCheckDefault"> 이용약관 동의 </label>
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> <label class="form-check-label" for="flexCheckDefault"> 이용약관 동의 </label>
 						</div>
 					</div>
 				</div>
@@ -398,24 +417,25 @@
 								</div>
 							</div>
 						</div>
-						<div class="row mb-3">
-							<label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-							<div class="col-sm-10"></div>
+						<div class="mb-3">
+							<label class="form-label" for="inputName">이름</label>
+							<input required="required" type="String" class="form-control" id="inputName" value="${userInfo.member_name}" name="rev_name">
 						</div>
-						<input required="required" type="String" class="form-control" id="inputPhone"
-							value="${userInfo.member_phone}" name="rev_phone"> 
-							<input required="required"
-							type="String" class="form-control" id="inputName"
-							value="${userInfo.member_name}" name="rev_name"> 
-							<input required="required"
-							type="String" class="form-control" id="inputBirth"
-							value="${userInfo.member_birth}" name="rev_birth"> 
-							<input required="required"
-							type="String" class="form-control" id="inputEmail"
-							value="${userInfo.member_email}" name="rev_email"> 
-							<input type="hidden" id="inputMemberId" name="member_id" value="${userInfo.member_id}">
+						<div class="mb-3">
+							<label class="form-label" for="inputBirth">생년월일</label>
+							<input required="required" type="String" class="form-control" id="inputBirth" value="${userInfo.member_birth}" name="rev_birth">
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="inputPhone">핸드폰</label>
+							<input required="required" type="String" class="form-control" id="inputPhone" value="${userInfo.member_phone}" name="rev_phone">
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="inputEmail">이메일</label>
+							<input required="required" type="String" class="form-control" id="inputEmail" value="${userInfo.member_email}" name="rev_email">
+						</div>
+						<input type="hidden" id="inputMemberId" name="member_id" value="${userInfo.member_id}">
 						<div class="text-center">
-									<button id="reserveBtn" class="btn btn-primary">예약확정</button>
+							<button id="reserveBtn" class="btn btn-primary">예약확정</button>
 							<button class="btn btn-warning">취소</button>
 						</div>
 					</div>
@@ -425,21 +445,21 @@
 	</div>
 </section>
 <script>
-$("#reserveBtn").click(function(e) {
-	e.preventDefault();
-	if (!$("#flexCheckDefault").is(":checked")) {
-		alert("이용약관에 동의해주세요.");
-		return;
-	}
-	if ($("#inputAdult").val() + $("#inputMinor").val() < 1) {
-		alert("인원수를 선택해주세요.");
-		return;
-	}
-	let adult = $("#inputAdult").val();
-	let minor = $("#inputMinor").val();
-	if (!adult) $("#inputAdult").val("0");
-	if (!minor) $("#inputMinor").val("0");
-	$("#reserveForm").submit();	
-});
+	$("#reserveBtn").click(function (e) {
+		e.preventDefault();
+		if (!$("#flexCheckDefault").is(":checked")) {
+			alert("이용약관에 동의해주세요.");
+			return;
+		}
+		if ($("#inputAdult").val() + $("#inputMinor").val() < 1) {
+			alert("인원수를 선택해주세요.");
+			return;
+		}
+		let adult = $("#inputAdult").val();
+		let minor = $("#inputMinor").val();
+		if (!adult) $("#inputAdult").val("0");
+		if (!minor) $("#inputMinor").val("0");
+		$("#reserveForm").submit();
+	});
 </script>
 <%@ include file="../common/footer.jsp"%>

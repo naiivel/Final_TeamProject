@@ -30,7 +30,7 @@ public interface MemberService {
 	ReservationVO findpeople(MemberVO vo,int product_num);
 
 	// 비밀번호 확인
-	MemberVO pwCheck(MemberVO vo);
+	boolean pwCheck(MemberVO vo, String member_pw);
 
 	// 회원정보 수정
 	int modify(MemberVO vo);
@@ -130,5 +130,7 @@ public interface MemberService {
 
 	// 선택한 상품들 잔여좌석 마감시키기
 	List<ProductVO> deadlineSet(int[] product_nums);
+
+	MemberVO pwCheck(MemberVO vo);
 
 }

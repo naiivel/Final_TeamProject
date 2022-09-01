@@ -21,6 +21,7 @@
 					<c:choose>
 						<c:when test="${!empty withdraw}">
 							<form action="delete" method="post" class="mb-4 text-center">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<p>탈퇴를 위해 비밀번호를 입력해 주세요.</p>
 								<input class="form-control mb-3" type="password"
 									name="member_pw" />
@@ -29,6 +30,7 @@
 						</c:when>
 						<c:otherwise>
 							<form action="insertPass" method="post" class="mb-4 text-center">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<p>개인정보 확인을 위해 비밀번호를 입력해 주세요.</p>
 								<input class="form-control mb-3" type="password"
 									name="member_pw" />

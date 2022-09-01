@@ -5,8 +5,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.7.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="gsMemberDetail" class="net.koreate.greatescape.security.GSMemberDetailsService" />
-	<bean id="no" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
+	<bean id="gsMemberDetail" class="net.koreate.greatescape.security.GEMemberDetailsService" />
+	<!-- <bean id="no" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" /> -->
 	<bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<bean id="loginSuccessHandler" class="net.koreate.greatescape.security.LoginSuccessHandler" />
 
@@ -22,10 +22,14 @@
 		permitAll
 		denyAll
 	 -->
+	 <security:http pattern="/resources/**" security="none" />
+	 <security:http pattern="/attach/**" security="none" />
+	 <security:http pattern="/products/htmlImage" security="none" />
+	 
 	<security:http auto-config="true">
 		<security:form-login 
 			login-page="/member/login"
-			login-processing-url="/member/loginPost"
+			login-processing-url="/member/login"
 			username-parameter="member_id"
 			password-parameter="member_pw"
 			authentication-success-handler-ref="loginSuccessHandler"
@@ -35,23 +39,18 @@
 			logout-success-url="/"
 			delete-cookies="userCookie"
 		/>
-		
-		<security:access-denied-handler error-page="/" />
-		
-		<!-- 
+		<security:access-denied-handler error-page="/error/403" />
 		<security:remember-me 
 			remember-me-cookie="userCookie"
-			remember-me-parameter="remember_id"
 			token-validity-seconds="604800" 
 		/>
 		<security:session-management>
 			<security:concurrency-control 
 				max-sessions="1" 
 				error-if-maximum-exceeded="false"
-				expired-url="/" 
+				expired-url="/logoff" 
 			/>
 		</security:session-management>
-		-->
 		<security:intercept-url
 			pattern="/member/myPage"
 			access="authenticated"
@@ -88,8 +87,44 @@
 			pattern="/member/adminPage"
 			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
 		/>
+		<security:intercept-url
+			pattern="/member/detailInfo"
+			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
+		/>
+		<security:intercept-url
+			pattern="/member/memberReserv"
+			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
+		/>
+		<security:intercept-url
+			pattern="/member/createAdmin"
+			access="hasRole('ROLE_MASTER')"
+		/>
+		<security:intercept-url
+			pattern="/member/newAdmin"
+			access="hasRole('ROLE_MASTER')"
+		/>
+		<security:intercept-url
+			pattern="/member/sales"
+			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
+		/>
+		<security:intercept-url
+			pattern="/member/control"
+			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
+		/>
+		<security:intercept-url
+			pattern="/member/deleteP"
+			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
+		/>
+		<security:intercept-url
+			pattern="/member/deadline"
+			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
+		/>
 
 		
+		<security:intercept-url
+			pattern="/products/{id}/delete"
+			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
+		/>
 		<security:intercept-url
 			pattern="/products/{id}/update"
 			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
@@ -97,11 +132,6 @@
 		<security:intercept-url
 			pattern="/products/new"
 			access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')"
-		/>
-		<security:intercept-url
-			pattern="/products/{id}"
-			method="POST"
-			access="permitAll"
 		/>
 		<security:intercept-url
 			pattern="/products"
@@ -116,7 +146,7 @@
 	
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="gsMemberDetail">
-			<security:password-encoder ref="no"/>
+			<security:password-encoder ref="bCryptPasswordEncoder"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
 </beans>

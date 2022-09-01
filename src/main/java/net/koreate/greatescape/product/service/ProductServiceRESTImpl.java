@@ -115,8 +115,13 @@ public class ProductServiceRESTImpl implements ProductServiceREST {
 	}
 
 	@Override
-	public ReservationVO getReservationOfMember(String member_id) {
-		return dao.getReservationOfMember(member_id);
+	public ReservationVO getReservationOfMember(String member_id, String product_num) {
+		return dao.getReservationOfMember(member_id, product_num);
+	}
+
+	@Override
+	public int deleteProduct(int id) {
+		return dao.deleteProduct(id);
 	}
 
 }

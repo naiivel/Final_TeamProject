@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.koreate.greatescape.member.vo.MemberVO;
 import net.koreate.greatescape.product.service.ProductFileService;
 import net.koreate.greatescape.product.service.ProductServiceREST;
@@ -48,7 +50,7 @@ public class ProductControllerREST {
 	@PostMapping({"/", ""})
 	public String createProduct(FullProductDTO dto, String departure, String arrive, MultipartFile titleImage, RedirectAttributes rttr) throws Exception {
 		String redirectUrl = "redirect:/products/";
-		if (titleImage != null) {
+		if (titleImage != null && !titleImage.isEmpty()) {
 			String uploadedName = pfs.uploadFile(titleImage);
 			if (uploadedName == null || uploadedName.equals("")) {
 				rttr.addFlashAttribute("flashMessage", "타이틀 이미지 등록 중 오류가 발생하였습니다.");
@@ -103,9 +105,12 @@ public class ProductControllerREST {
 		if (result > 0) {
 			rttr.addFlashAttribute("flashMessage", "예약이 완료되었습니다.");
 			if (loginMember != null) {
-				return "redirect:/member/reservDetail";
+				return "redirect:/member/myPage";
 			} else {
-				return "redirect:/nomember/show";
+				rttr.addFlashAttribute("rev_name", rvo.getRev_name());
+				rttr.addFlashAttribute("rev_email", rvo.getRev_email());
+				rttr.addFlashAttribute("rev_phone", rvo.getRev_phone());
+				return "redirect:/member/rev_check";
 			}
 		} else {
 			rttr.addFlashAttribute("flashMessage", "예약 중 오류가 발생하였습니다.");
@@ -132,7 +137,7 @@ public class ProductControllerREST {
 	public String renderReservationForm(@PathVariable String id, Model model, HttpSession session, RedirectAttributes rttr) {
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
 		if (loginMember != null) {
-			if (ps.getReservationOfMember(loginMember.getMember_id()) != null) {
+			if (ps.getReservationOfMember(loginMember.getMember_id(), id) != null) {
 				rttr.addFlashAttribute("flashMessage", "이미 예약하신 상품입니다.");
 				return "redirect:/products/" + id;
 			}
@@ -150,13 +155,15 @@ public class ProductControllerREST {
 	@PostMapping("/{id}/update")
 	public String updateProduct(@PathVariable int id, String originalTitleImage, MultipartFile titleImage, FullProductDTO dto, String departure, String arrive, RedirectAttributes rttr) throws Exception {
 		String redirectUrl = "redirect:/products/" + id; 
-		if (titleImage != null) {
+		if (titleImage != null && !titleImage.isEmpty()) {
 			String uploadedName = pfs.updateFile(originalTitleImage, titleImage);
 			if (uploadedName == null || uploadedName.equals("")) {
 				rttr.addFlashAttribute("flashMessage", "타이틀 이미지 수정 중 오류가 발생하였습니다.");
 				return redirectUrl;
 			}
 			dto.setDetail_title_image(uploadedName);
+		} else {
+			dto.setDetail_title_image(originalTitleImage);
 		}
 		int result = ps.updateProduct(id, dto, departure, arrive);
 		if (result == 0) {
@@ -167,6 +174,35 @@ public class ProductControllerREST {
 		}
 		return redirectUrl;
 	}
+	
+	
+	@PostMapping("/{id}/delete")
+	public String deleteProduct(@PathVariable int id, RedirectAttributes rttr) {
+		String redirectUrl = "redirect:/products/";
+		int result = ps.deleteProduct(id);
+		if (result > 0) {
+			rttr.addFlashAttribute("flashMessage", "정상적으로 삭제가 완료되었습니다.");
+			return redirectUrl;
+		} else {
+			rttr.addFlashAttribute("flashMessage", "삭제 중 오류가 발생하였습니다.");
+			return redirectUrl + id;
+		}
+	}
+	
+	@PostMapping("/htmlImage")
+	@ResponseBody
+	public Location uploadHtmlImage(MultipartFile file) throws Exception {
+		String uploadedName = pfs.uploadHtmlImage(file);
+		return new Location(uploadedName);
+	}
+	
+	@Getter
+	@Setter
+	@RequiredArgsConstructor
+	class Location {
+		private final String location;
+	}
+	 
 	
 
 	@ExceptionHandler

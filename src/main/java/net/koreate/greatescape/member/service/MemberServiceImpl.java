@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ import net.koreate.greatescape.utils.SearchCriteria;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberDAO mdao;
+	private final PasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	public MemberVO loginCheck(MemberVO vo) {
@@ -34,8 +36,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	@Transactional
 	public void join(MemberVO vo) {
+		vo.setMember_pw(bCryptPasswordEncoder.encode(vo.getMember_pw()));
 		mdao.join(vo);
+		mdao.addMemberAuth(vo);
 	}
 
 	@Override
@@ -56,7 +61,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int modify(MemberVO vo) {
-
+		vo.setMember_pw(bCryptPasswordEncoder.encode(vo.getMember_pw()));
 		return mdao.modify(vo);
 	}
 
@@ -142,9 +147,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	@Transactional
 	public void createAdmin(MemberVO vo) {
 		mdao.createAdmin(vo);
-		
+		mdao.addAdminAuth(vo);
 	}
 
 	@Override
@@ -261,5 +267,11 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return list;
 	}
+
+	@Override
+	public boolean pwCheck(MemberVO vo, String member_pw) {
+		return bCryptPasswordEncoder.matches(member_pw, vo.getMember_pw());
+	}
+
 
 }

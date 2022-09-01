@@ -42,4 +42,11 @@ public class ProductFileServiceImpl implements ProductFileService {
 		return uploadFile(titleImage);
 	}
 
+	@Override
+	public String uploadHtmlImage(MultipartFile file) throws Exception {
+		String uploadedName = uploadFile(file);
+		uploadedName = context.getContextPath() + "/" + uploadFolder + uploadedName;
+		return uploadedName;
+	}
+
 }

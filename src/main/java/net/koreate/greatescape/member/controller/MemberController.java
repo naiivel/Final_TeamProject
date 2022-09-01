@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.member.service.MemberService;
@@ -48,7 +49,6 @@ public class MemberController {
 	@GetMapping("/login")
 	public String login(HttpServletRequest request,HttpSession session) {
 		if(request.getHeader("Referer") != null) {
-			System.out.println(request.getHeader("Referer"));
 			session.setAttribute("url",request.getHeader("Referer"));
 		}
 		return "member/login";
@@ -60,11 +60,13 @@ public class MemberController {
 		return "member/join";
 	}
 	
+	/*
 	// 로그인 시도
 	@PostMapping("/loginPost")
 	public String loginPost(MemberVO vo,HttpSession session,HttpServletRequest request,
 			HttpServletResponse response,Model model) throws Exception{
 		MemberVO login = ms.loginCheck(vo);
+		
 		if(request.getParameter("remember_id") != null) {
 			String remember = request.getParameter("remember_id");
 			if(remember.equals("checked")) {
@@ -93,6 +95,7 @@ public class MemberController {
 		model.addAttribute("message",message);
 		return "member/login";
 	}
+	*/
 	
 	// 로그아웃 시도
 	@PostMapping("/logOut")
@@ -104,6 +107,10 @@ public class MemberController {
 			}
 		}
 		return "redirect:/";
+	}
+	@GetMapping("/logOut")
+	public String logOut(){
+		return "member/logOut";
 	}
 	
 	// 아이디 찾기 페이지이동
@@ -157,7 +164,7 @@ public class MemberController {
 	// 회원가입 시도
 	@PostMapping("/joinPost")
 	public String joinPost(MemberVO vo, Model model) throws Exception {
-
+		
 		ms.join(vo);
 		String message = "대 탈출에 오신 것을 환영합니다.";
 		model.addAttribute("message",message);
@@ -197,8 +204,6 @@ public class MemberController {
 	
 	// (회원)예약내역 상세보기
 	@GetMapping("/reservDetail")
-
-
 	@Transactional
 	public String reservDetail(ProductVO vo,HttpSession session,Model model,EmbassyVO url)throws Exception{
 		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
@@ -245,24 +250,27 @@ public class MemberController {
 	public String insertPass(MemberVO vo,Model model,HttpServletRequest request,HttpSession session)throws Exception{
 		String member_pw = request.getParameter("member_pw");
 		vo = (MemberVO) session.getAttribute("userInfo");
+		boolean result = ms.pwCheck(vo, member_pw);
+		if (result) {
+			return "member/edit";
+		}
+		/*
 		vo.setMember_pw(member_pw);
-		
 		MemberVO loginMember = ms.pwCheck(vo);
-		
 		if(loginMember != null) {
 			return "member/edit";
 		}
+		*/
 		
 		String message = "비밀번호를 틀리셨습니다. 다시입력해주세요.";
 		model.addAttribute("message",message);
-		
 		return "member/edit_check";
 	}
 
 	
 	// (회원) 정보수정 적용
 	@PostMapping("/modify")
-	public String modify(MemberVO vo,HttpSession session,Model model) throws Exception{
+	public String modify(MemberVO vo,HttpSession session,RedirectAttributes rttr) throws Exception{
 		int result = ms.modify(vo);
 		
 		if(result != 0) {
@@ -273,15 +281,15 @@ public class MemberController {
 			session.setAttribute("userInfo",changeMember);
 			
 			String message = "성공적으로 정보가 수정되었습니다";
-			model.addAttribute("message",message);
+			rttr.addFlashAttribute("flashMessage",message);
 			
-			return "member/info";
+			return "redirect:/member/myPage";
 		}
 		
 		String message = "정보 수정에 실패하셨습니다. 다시 시도해주세요.";
-		model.addAttribute("message",message);
+		rttr.addFlashAttribute("flashMessage",message);
 		
-		return "member/edit";
+		return "redirect:/member/edit_check";
 	}
 	
 	// (회원) 탈퇴 페이지 이동
@@ -294,29 +302,24 @@ public class MemberController {
 	// (회원) 탈퇴시 필요한 비밀번호 확인 후 탈퇴 진행
 	@PostMapping("/delete")
 	@Transactional
-	public String delete(MemberVO vo,HttpSession session,Model model,HttpServletRequest request) {
-		String member_pw = request.getParameter("member_pw");
+	public String delete(RedirectAttributes rttr, MemberVO vo,String member_pw, HttpSession session, HttpServletRequest request) {
+		List<ReservationVO> list = ms.findRevList(vo);
+		System.out.println(list);
+		if (list != null && !list.isEmpty()) { 
+			rttr.addFlashAttribute("flashMessage", "현재 예약 상품이 존재하여 탈퇴할 수 없습니다. 예약 내역을 먼저 확인해주세요.");
+			return "redirect:/member/myPage";
+		}
 		vo = (MemberVO) session.getAttribute("userInfo");
-		vo.setMember_pw(member_pw);
+		boolean bool = ms.pwCheck(vo, member_pw);
 		 // 비밀번호 확인
-		 MemberVO loginMember = ms.pwCheck(vo); 
-		 if(loginMember != null) {
-			 List<ReservationVO> list = ms.findRevList(loginMember);
+		 if(bool) {
 			 // 회원 가입여부 'N'변경
-			 ms.changeLeave(loginMember);
-			 // 관련데이터 삭제 및 변경
-			 ms.deleteRevId(loginMember);
-			 
-			 
-			 session.removeAttribute("userInfo");
-			 	 
-			 return "redirect:/";
+			 ms.changeLeave(vo);
+			 return "redirect:/member/logOut";
 		 }
 		String message = "비밀번호를 틀리셨습니다. 다시입력해주세요.";
-		
-		model.addAttribute("message",message);
-		
-		return "member/edit_check";
+		rttr.addFlashAttribute("flashMessage", message);
+		return "redirect:/member/edit_check";
 	}
 	
 	
@@ -356,16 +359,15 @@ public class MemberController {
 	
 	// 비회원 예약취소
 	@GetMapping("/deleteNoProduct")
-	public String deleteNoProduct(Model model,HttpSession session) throws Exception{
+	public String deleteNoProduct(RedirectAttributes rttr, HttpSession session) throws Exception{
 		ReservationVO noMember = (ReservationVO) session.getAttribute("noMember");
 		ms.deleteNP(noMember);
 		
 		String message = "예약이 취소되었습니다.";
-		model.addAttribute("message",message);
+		rttr.addFlashAttribute("flashMessage", message);
 		session.removeAttribute("noMember");
 		
-		
-		return "member/login";
+		return "redirect:/";
 	}
 	
 

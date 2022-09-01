@@ -271,5 +271,8 @@
 			alert("인증코드를 다시 확인해주세요");
 		}
 	});
+	$(document).ajaxSend(function (e, xhr, options) {
+		xhr.setRequestHeader('${_csrf.headerName}', '${_csrf.token}');
+	});
 </script>
 <%@ include file="../common/footer.jsp" %>

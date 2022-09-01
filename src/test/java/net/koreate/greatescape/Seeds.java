@@ -44,13 +44,30 @@ public class Seeds {
 			randomSet(vo);
 			dao.productSeed(vo);
 			ProductDetailVO productDetailVO = new ProductDetailVO();
-			productDetailVO.setDetail_info("Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa ad sapiente nisi dicta enim veritatis provident architecto dolorum quis, inventore temporibus velit, veniam obcaecati alias molestiae ducimus quidem unde. Ducimus.\r\n" + 
-					"Natus iste, quasi quibusdam perspiciatis sed, consequatur libero repellendus placeat sunt distinctio quia dolore, ad quaerat officia ipsum sit blanditiis hic. Itaque assumenda magni aliquid impedit eligendi inventore minima nulla.\r\n" + 
-					"Earum mollitia eveniet nulla quia, qui rerum enim cupiditate quaerat, iure excepturi dolor quas id magnam deserunt odio at ea. Iusto quo dolorem, provident possimus eaque maxime soluta suscipit id.");
-			productDetailVO.setDetail_schedule("Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa ad sapiente nisi dicta enim veritatis provident architecto dolorum quis, inventore temporibus velit, veniam obcaecati alias molestiae ducimus quidem unde. Ducimus.\r\n" + 
-					"Natus iste, quasi quibusdam perspiciatis sed, consequatur libero repellendus placeat sunt distinctio quia dolore, ad quaerat officia ipsum sit blanditiis hic. Itaque assumenda magni aliquid impedit eligendi inventore minima nulla.\r\n" + 
-					"Earum mollitia eveniet nulla quia, qui rerum enim cupiditate quaerat, iure excepturi dolor quas id magnam deserunt odio at ea. Iusto quo dolorem, provident possimus eaque maxime soluta suscipit id.");
-			//productDetailVO.setDetail_title_image("https://source.unsplash.com/random");
+			productDetailVO.setDetail_info("인천 국제공항 미팅 관련 안내\r\n" + 
+					"​미팅장소 : 인천공항 제1터미널 3층 14번 출입구 여행박사 테이블\r\n" + 
+					"미팅시간 : 오후 8시 예정 (공항 비상연락처: 010-8962-1773 / 출발 당일만 통화가능)\r\n" + 
+					"\r\n" + 
+					"[비엣젯항공] VJ875편 22:45 인천 국제공항 출발 (비행 소요시간 - 약 4시간 40분)\r\n" + 
+					"[비엣젯항공] VJ875편 01:25 다낭 국제공항 도착\r\n" + 
+					"\r\n" + 
+					"가이드 미팅\r\n" + 
+					"\r\n" + 
+					"다낭 \r\n" + 
+					"\r\n" + 
+					"다낭은 베트남 중부 최대의 상업 도시입니다. 베트남에서는 호치민, 하노이, 하이퐁 다음으로 큰 4번째 도시이기도 합니다.\r\n" + 
+					"다낭이 최근 한국인 여행자들에게 인기를 얻게 된 것은 관광객을 수용할만한 충분한 인프라와 문화유적, 천혜의 자연환경을\r\n" + 
+					"갖추었기 때문입니다. 베트남 중부의 교통 중심지이기 때문에 인근 후에와 호이안, 바나산맥까지 한꺼번에 돌아볼 수 있습니\r\n" + 
+					"다. 최근 몇 년 사이 가장 빠르게 관광지로 성장한 다낭은 휴양 도시로서의 발돋움을 위해 많은 호텔도 들어서고 있습니다.");
+			productDetailVO.setDetail_schedule("호텔 조식 후 가이드 미팅\r\n" + 
+					"\r\n" + 
+					"\r\n" + 
+					"마블 마운틴 (오행산)\r\n" + 
+					"다낭과 호이안 중간(다낭에서 9km)에 위치해 있습니다. 5개의 산(투이썬 Thuy Son-물, 목썬 Moc son-나무, 호아썬 Hoa\r\n" + 
+					"Son-불, 낌썬 Kim Son-철, 터썬 Tho Son-흙,지구)을 총칭하여 부르는 이름으로, 동양 철학의 세상을 구성하는 다섯 요소에\r\n" + 
+					"해당됩니다. 대리석이 많이 나기 때문에 영어로 블루 마운틴이라 불립니다. 해발 108m인 투이썬이 가장 높은 산으로, 엘리\r\n" + 
+					"베이터를 이용해 올라가 주변의 경관을 한눈에 내려다 볼 수 있습니다.");
+			productDetailVO.setDetail_title_image("/2022/08/31/s_6a974ab8f9ad4158900f80b5b9ab2c83_mike-erskine-S VbdMTsdiA-unsplash (1).jpg");
 			dao.detailSeed(productDetailVO);
 		}
 	}
