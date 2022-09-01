@@ -28,7 +28,7 @@
 			<div class="table-responsive" id="listAll">
 				<table class="table table-striped">
 					<thead>
-					<tr>
+					<tr class="table-warning">
 						<th>번호</th>
 						<th>구분</th>
 						<th>제목</th>
@@ -128,6 +128,10 @@
 		$.ajax({
 			url : "${contextPath}/board/categoryList/notice", type : "POST", dataType : "json",
 			data : { "notice_category" : notice_category },
+			beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			success : function(data) {
 				console.log(data);
 				console.log(data.noticeCategoryList);
@@ -183,6 +187,10 @@
 		$.ajax({
 			url : "${contextPath}/board/categoryList/mofa", type : "POST", dataType : "json",
 			data : { "notice_category" : notice_category },
+			beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			success : function(data) {
 				console.log(data);
 				console.log(data.mofaList);

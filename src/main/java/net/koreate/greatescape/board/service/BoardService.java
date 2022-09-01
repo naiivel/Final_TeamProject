@@ -2,6 +2,7 @@ package net.koreate.greatescape.board.service;
 
 import java.util.List;
 
+import net.koreate.greatescape.board.vo.CommentVO;
 import net.koreate.greatescape.board.vo.FAQBoardVO;
 import net.koreate.greatescape.board.vo.NoticeBoardVO;
 import net.koreate.greatescape.board.vo.QNABoardVO;
@@ -30,6 +31,7 @@ public interface BoardService {
 	//글삭제
 	void deleteFAQ(int faq_num) throws Exception;
 	
+	
 	/****************************** QNA ************************************/
 	
 	//질문리스트-페이징처리
@@ -53,8 +55,22 @@ public interface BoardService {
 	//문답게시판 들어갈 공지
 	List<NoticeBoardVO> qnaNoticeList();
 	
+	//댓글쓰기
+	void addComment(CommentVO vo) throws Exception;
 	
+	//댓글리스트
+	List<CommentVO> getCommentList(int qna_num) throws Exception;
 	
+	//댓글 쓰면 qna테이블 업데이트
+	void updateQNAanswer(CommentVO vo) throws Exception;
+	
+	//내가 쓴 qna
+	List<QNABoardVO> myQnaList(SearchCriteria cri, int member_num);
+	
+	//확인중인 qna
+	List<QNABoardVO> getCheckingList(SearchCriteria cri) throws Exception;
+	//답변 완료된 qna
+	List<QNABoardVO> getCheckedList(SearchCriteria cri) throws Exception;
 	
 	/******************************Notice************************************/
 	
@@ -81,6 +97,9 @@ public interface BoardService {
 	
 	//구분별 공지리스트
 	List<NoticeBoardVO> noticeCategoryList(SearchCriteria cri, String notice_category);
+	
+	
+	
 	
 
 	

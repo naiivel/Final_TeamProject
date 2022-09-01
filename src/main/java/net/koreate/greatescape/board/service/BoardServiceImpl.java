@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.board.dao.BoardDAO;
+import net.koreate.greatescape.board.vo.CommentVO;
 import net.koreate.greatescape.board.vo.FAQBoardVO;
 import net.koreate.greatescape.board.vo.NoticeBoardVO;
 import net.koreate.greatescape.board.vo.QNABoardVO;
@@ -67,6 +68,7 @@ public class BoardServiceImpl implements BoardService {
 		return bdao.getCategoryList(cri, faq_category);
 	}
 	
+	
 	/****************************** QNA ************************************/
 	
 	//qna게시글
@@ -95,17 +97,52 @@ public class BoardServiceImpl implements BoardService {
 		pm.setTotalCount(totalCount);
 		return pm;
 	}
-	
+	//게시글 작성
 	@Override
 	public void writeQNA(QNABoardVO qvo) throws Exception {
 		bdao.writeQNA(qvo);
 	}
-	
+	//상세보기
 	@Override
 	public QNABoardVO readQNA(int qna_num) throws Exception {
 		QNABoardVO vo= bdao.readQNA(qna_num);
+		
 		return vo;
 	}
+	//댓글작성
+	@Override
+	public void addComment(CommentVO vo) throws Exception{
+		bdao.addComment(vo);
+	}
+	//댓글리스트
+	public List<CommentVO> getCommentList(int qna_num) throws Exception{
+		return bdao.getCommentList(qna_num);
+	}
+	//댓글 달리면 업데이트
+	@Override
+	public void updateQNAanswer(CommentVO vo) throws Exception {
+		bdao.updateQNAanswer(vo);
+	}
+	
+	//내가쓴글
+	@Override
+	public List<QNABoardVO> myQnaList(SearchCriteria cri, int member_num) {
+		
+		return bdao.myQNAList(cri, member_num);
+	}
+
+	
+	@Override
+	public List<QNABoardVO> getCheckingList(SearchCriteria cri) throws Exception {
+		return bdao.getCheckingList(cri);
+	}
+
+	@Override
+	public List<QNABoardVO> getCheckedList(SearchCriteria cri) throws Exception {
+		return bdao.getChekedList(cri);
+	}
+	
+	
 	
 	@Override
 	public String modifyQNA(QNABoardVO qvo) throws Exception {
@@ -176,6 +213,10 @@ public class BoardServiceImpl implements BoardService {
 		return bdao.getNoticeCategoryList(cri, notice_category);
 	}
 
+	
+
+	
+	
 
 	
 }
