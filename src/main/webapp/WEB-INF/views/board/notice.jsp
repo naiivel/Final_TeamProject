@@ -61,37 +61,31 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="table-responsive" id="listNotice"></div>
-			<div class="table-responsive" id="listMofa"></div>
-			
 
 			<div id="pagingAll">
 			<nav id="allPaging" aria-label="Page navigation mb-3">
 				<ul class="pagination justify-content-center">
 					<c:if test="${pm.first}">
-						<li class="page-item"><a class="page-link"
-							href="${contextPath}/board/notice/${pm.makeQuery(1)}"
+						<li class="page-item"><a class="page-link" href="${pm.makeQuery(1)}"
 							aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
 						</li>
 					</c:if>
 					<c:if test="${pm.prev}">
 						<li class="page-item"><a class="page-link"
-							href="${contextPath}/board/notice/${pm.makeQuery(pm.startPage-1)}">&lt;</a>
+							href="${pm.makeQuery(pm.startPage-1)}">&lt;</a>
 						</li>
 					</c:if>
 					<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
-						<li class="page-item" ${pm.cri.page ==i? 'class="active"':''}>
-							<a class="page-link" href="${contextPath}/board/notice/${pm.makeQuery(i)}">${i}</a>
+						<li class="page-item " ${pm.cri.page ==i? 'class="active"':''}>
+							<a class="page-link" href="${pm.makeQuery(i)}">${i}</a>
 						</li>
 					</c:forEach>
 					<c:if test="${pm.next}">
-						<li class="page-item"><a class="page-link"
-							href="${contextPath}/board/notice/${pm.makeQuery(pm.endPage+1)}">&gt;</a>
+						<li class="page-item"><a class="page-link" href="${pm.makeQuery(pm.endPage+1)}">&gt;</a>
 						</li>
 					</c:if>
 					<c:if test="${pm.last}">
-						<li class="page-item"><a class="page-link"
-							href="${contextPath}/board/notice/${pm.makeQuery(pm.maxPage)}"
+						<li class="page-item"><a class="page-link" href="${pm.makeQuery(pm.maxPage)}"
 							aria-label="Previous"> <span aria-hidden="true">&raquo;</span></a>
 						</li>
 					</c:if>

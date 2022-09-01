@@ -2,12 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../common/header.jsp"%>
-<style>
-txt-hlight {
-	background: yellow;
-}
-</style>
-
 
 <section class="container">
 	<div class="row">
@@ -34,14 +28,14 @@ txt-hlight {
 									fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 									<path
 										d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-								</svg> </span> <input type="text" name="keyword" id="keyword"
-								class="form-control" aria-label="Amount (to the nearest dollar)"
-								placeholder="검색어를 입력하세요">
+								</svg> </span> <input type="text" name="keyword" id="keyword"class="form-control" 
+								aria-label="Amount (to the nearest dollar)" placeholder="검색어를 입력하세요">
 							<button class="btn btn-dark" type="button" id="button-addon2">검색</button>
 						</div>
 					</form>
 				</div>
 			</div>
+			<!-- 메뉴버튼 -->
 			<div class="row mb-4">
 				<div class="btn-group" role="group">
 					<button value="전체" type="button" class="btn btn-outline-dark"
@@ -58,7 +52,7 @@ txt-hlight {
 						id="other">홈페이지/기타</button>
 				</div>
 			</div>
-
+			<!-- 페이징 -->
 			<div id="listAll" class="accordion mb-3">
 				<c:set var="number" value="0" />
 				<c:choose>
@@ -102,10 +96,8 @@ txt-hlight {
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="staticBackdropLabel">해당 글을
-								삭제하시겠습니까?</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal"
-								aria-label="Close"></button>
+							<h5 class="modal-title" id="staticBackdropLabel">해당 글을 삭제하시겠습니까?</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
 							삭제된 게시글 정보는 다시 불러올수 없습니다. <br />주의사항을 확인 후 삭제하시겠습니까?
@@ -137,7 +129,7 @@ txt-hlight {
 							</li>
 						</c:if>
 						<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
-							<li class="page-item" aria-current="page" ${pm.cri.page ==i? 'class="active"':''}>
+							<li class="page-item" aria-current="page" ${( pm.cri.page ==i)? 'class="active"' :''}>
 								<a id="pageNum" class="page-link" href="${pm.makeQuery(i)}">${i}</a>
 							</li>
 						</c:forEach>
@@ -180,13 +172,10 @@ txt-hlight {
 	console.log("userInfo: "+userInfo);
 	var userMaster= '${userInfo.member_master}';
 	
-
-
 	$("#addBtn").click(function() {
 		location.href = "${contextPath}/board/faqWrite";
 	});
 
-	
 	$("#qnaBoard").click(function() {
 		location.href = "board/qna";
 	});
@@ -203,9 +192,7 @@ txt-hlight {
 		location.href="${contextPath}/board/faq";
 	});
 
-	
 	$("#trip").on("click", function() {
-		
 		$(this).toggleClass("active");
 		$("#airline").removeClass("active");
 		$("#passport").removeClass("active");
@@ -213,10 +200,7 @@ txt-hlight {
 		$("#other").removeClass("active");
 		
 		location.href="${contextPath}/board/faq/trip";
-		
 	});
-
-
 	
 	$("#airline").on("click", function() {
 		$(this).toggleClass("active");
@@ -236,7 +220,6 @@ txt-hlight {
 		$("#other").removeClass("active");
 		
 		location.href="${contextPath}/board/faq/reserv";
-		
 	});
 
 	$("#passport").on("click", function() {
@@ -255,12 +238,10 @@ txt-hlight {
 		$("#passport").removeClass("active");
 		$("#reservation").removeClass("active");
 		$("#trip").removeClass("active");
-		location.href="${contextPath}/board/faq/other";
 		
+		location.href="${contextPath}/board/faq/other";
 	});
 	
-
-
 	function clickDel(formName) {
 		for (var tag of formName) {
 			if (tag.faq_num.value == faqnum) {
@@ -269,6 +250,7 @@ txt-hlight {
 				tag.submit();
 			}
 		}
+		
 	}
 	
 </script>

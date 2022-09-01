@@ -136,9 +136,9 @@ public class BoardController {
 	
 	//faq삭제 (관리자)
 	@PostMapping("faqDelete")
-	public String faqDelete(@RequestParam("faq_num")int faq_num) throws Exception {
+	public String faqDelete(@RequestParam("faq_num")int faq_num, HttpServletRequest request) throws Exception {
 		bs.deleteFAQ(faq_num);
-		return "redirect:faq";
+		return "redirect:"+request.getHeader("Referer");
 	}
 	
 	/******************** notice 공지사항  ***************/
