@@ -21,14 +21,14 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		HttpSession session = req.getSession();
 		if (loginMember != null && loginMember.getMember_leave().equals("Y")) {
 			session.setAttribute("userInfo", loginMember);
-			
 			if (session.getAttribute("url") != null) {
 				String url = (String) session.getAttribute("url");
-				String prevPage = url.replace("http://localhost:8080/greatescape/", "/");
-				res.sendRedirect(req.getContextPath() + prevPage);
-				return;
+				if (url.indexOf("login") < 0) {
+					String prevPage = url.replace("http://localhost:8080/greatescape/", "/");
+					res.sendRedirect(req.getContextPath() + prevPage);
+					return;
+				}
 			}
-			
 		}
 		res.sendRedirect(req.getContextPath());
 	}

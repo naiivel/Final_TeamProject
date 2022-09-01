@@ -52,7 +52,7 @@
 						<div class="form-group">
 							<input type="hidden" name="qna_num" value="${qna.qna_num}">
 							<input type="hidden" name="comment_writer" value="${userInfo.member_name }">
-							<textarea name="qna_answer" class="form-control" rows="3"></textarea>
+							<textarea name="qna_answer" class="form-control mytextarea" rows="3"></textarea>
 						</div>
 						<button type="submit" class="btn btn-primary">등록</button>
 					</form>
@@ -62,7 +62,45 @@
 		</div>
 	</div>
 </section>
-
+<script src="https://cdn.tiny.cloud/1/mreuxwvmvo99s2c3asxl4t6ujhyqgni44dt6mle4qlfz9pq6/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '.mytextarea',
+        height: 500,
+        language: 'ko_KR',
+        plugins: [
+            'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+            'table emoticons template paste help'
+        ],
+        toolbar: 'undo redo | styleselect | bold italic image | alignleft aligncenter alignright alignjustify | outdent indent',
+        menubar: false,
+        image_title: true,
+        images_upload_url: '${contextPath}/products/htmlImage',
+        images_reuse_filename: true,
+        relative_urls: false,
+        file_picker_types: 'image',
+        file_picker_callback: function (cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+            input.onchange = function () {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+                    cb(blobInfo.blobUri(), { title: file.name });
+                };
+                reader.readAsDataURL(file);
+            }
+            input.click();
+        }
+    });
+</script>
 <script>
 	window.onload= function(){
 		getCommentList();
@@ -126,4 +164,5 @@
 	
 	
 </script>
+
 <%@ include file="../common/footer.jsp" %>

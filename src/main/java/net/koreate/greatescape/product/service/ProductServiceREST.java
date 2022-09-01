@@ -35,4 +35,6 @@ public interface ProductServiceREST {
 	ReservationVO getReservationOfMember(String member_id, String product_num);
 
 	int deleteProduct(int id);
+
+	int createHtmlList(int id, List<String> imageNameList);
 }

@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/header.jsp" %>
-<fmt:formatDate value="${product.product_departure}" var="departure" pattern="yyyy-MM-dd"/>
-<fmt:formatDate value="${product.product_arrive}" var="arrive" pattern="yyyy-MM-dd"/>
+<link rel="stylesheet" href="${contextPath}/resources/css/tiny.css">
+<fmt:formatDate value="${product.product_departure}" var="departure" pattern="yyyy-MM-dd" />
+<fmt:formatDate value="${product.product_arrive}" var="arrive" pattern="yyyy-MM-dd" />
 <fmt:formatNumber value="${reservation.rev_adult*product.product_adult}" var="totalAdult" maxFractionDigits="3" />
 <fmt:formatNumber value="${reservation.rev_minor*product.product_minor}" var="totalMinor" maxFractionDigits="3" />
 <section class="container">
@@ -32,7 +33,7 @@
 						<li class="list-group-item"> 이메일 : ${userInfo.member_email}</li>
 					</ul>
 				</div>
-				<div class="card-body">
+				<div class="card-body mb-3">
 					<p class="card-text">항공편 - ${product.product_airplane}</p>
 					<p class="card-text">성인 : ${reservation.rev_adult}명 / ${totalAdult}원</p>
 					<p class="card-text">소인 : ${reservation.rev_minor}명 / ${totalMinor}원</p>
@@ -41,20 +42,29 @@
 					<p class="card-text">
 						<small class="text-muted">문제가 있으신 부분은 고객센터로 문의해주시길 바랍니다.</small>
 					</p>
-					<p class="card-text">${tripInfo}</p>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">상품 설명</h3>
+				</div>
+				<div class="card-body">
+					<div class="tiny-p">
+						${tripInfo.detail_info}
+					</div>
 				</div>
 				<div class="card-footer">
 					<button id="deleteBtn" class="btn btn-outline-secondary">예약 취소</button>
-					<input type="hidden" id="product_num" value="${product.product_num}"/>
+					<input type="hidden" id="product_num" value="${product.product_num}" />
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
 <script>
-	$("#deleteBtn").click(function(){
+	$("#deleteBtn").click(function () {
 		var product_num = $("#product_num").val();
-		location.href='deleteProduct?product_num='+product_num;
+		location.href = 'deleteProduct?product_num=' + product_num;
 	});
 </script>
 <c:if test="${!empty msg}">

@@ -31,7 +31,6 @@ public class FileUtils {
 		} else {
 			uploadFileName = makeFileName(realPath, datePath, savedName);
 		}
-		System.out.println("uploadFileName : " + uploadFileName);
 		return uploadFileName;
 	}
 
@@ -52,7 +51,6 @@ public class FileUtils {
 		String ext = savedName.substring(savedName.lastIndexOf(".") + 1);
 		ImageIO.write(sourceImage, ext, new File(thumbnailImage));
 		name = thumbnailImage.substring(realPath.length()).replace(File.separatorChar, '/');
-		System.out.println(name);
 		return name;
 	}
 
@@ -63,7 +61,6 @@ public class FileUtils {
 		String monthPath = String.valueOf(yearPath) + File.separator
 				+ (new DecimalFormat("00")).format((cal.get(2) + 1));
 		datePath = String.valueOf(monthPath) + File.separator + (new DecimalFormat("00")).format(cal.get(5));
-		System.out.println(datePath);
 		mkDir(realPath, new String[] { yearPath, monthPath, datePath });
 		return datePath;
 	}
@@ -77,7 +74,6 @@ public class FileUtils {
 		for (i = (arrayOfString = path).length, b = 0; b < i;) {
 			String p = arrayOfString[b];
 			String mkDir = String.valueOf(realPath) + p;
-			System.out.println("mkDir : " + mkDir);
 			File file = new File(mkDir);
 			if (!file.exists())
 				file.mkdir();

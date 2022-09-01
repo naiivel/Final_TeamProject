@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="common/header.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/index.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/tiny.css">
 <section class="container text-center">
 	<div id="carouselExampleDark" class="carousel carousel-dark slide mb-5" data-bs-ride="carousel">
 		<div class="carousel-indicators">
@@ -12,24 +13,12 @@
 		<div class="carousel-inner">
 			<div class="carousel-item active" data-bs-interval="10000">
 				<img src="https://images.unsplash.com/photo-1660937472479-f0d9608e8370?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80" class="d-block w-100" style="height: 500px;" alt="...">
-				<!-- <div class="carousel-caption d-none d-md-block">
-					<h5>First slide label</h5>
-					<p>Some representative placeholder content for the first slide.</p>
-				</div> -->
 			</div>
 			<div class="carousel-item" data-bs-interval="2000">
 				<img src="https://images.unsplash.com/photo-1434828927397-62ea053f7a35?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" class="d-block w-100" alt="...">
-				<!-- <div class="carousel-caption d-none d-md-block">
-					<h5>Second slide label</h5>
-					<p>Some representative placeholder content for the second slide.</p>
-				</div> -->
 			</div>
 			<div class="carousel-item">
 				<img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2073&q=80" class="d-block w-100" alt="...">
-				<!-- <div class="carousel-caption d-none d-md-block">
-					<h5>Third slide label</h5>
-					<p>Some representative placeholder content for the third slide.</p>
-				</div> -->
 			</div>
 		</div>
 		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
@@ -110,11 +99,19 @@
 				<c:forEach var="product" items="${list}">
 					<div class="col-md-6 col-xl-3">
 						<div class="card border-0 mx-auto" style="width: 18rem;">
-						
-							<img src="${contextPath}/attach${product.detail_title_image}" class="card-img-top" alt="...">
-							<div class="card-body">
+							<c:choose>
+								<c:when test="${!empty product.detail_title_image}">
+									<img src="${contextPath}/attach${product.detail_title_image}" class="card-img-top" alt="...">
+								</c:when>
+								<c:otherwise>
+									<img src="https://source.unsplash.com/random" class="card-img-top" alt="...">
+								</c:otherwise>
+							</c:choose>
+							<div class="card-body tiny-index">
 								<h5 class="card-title">${product.product_name}</h5>
-								<p class="card-text">${product.detail_info.length() > 200 ? product.detail_info.substring(0, 200) : product.detail_info}...</p>
+								${product.detail_info}
+							</div>
+							<div class="card-body">
 								<a href="${contextPath}/products/${product.product_num}" class="btn btn-outline-secondary">바로가기</a>
 							</div>
 						</div>
