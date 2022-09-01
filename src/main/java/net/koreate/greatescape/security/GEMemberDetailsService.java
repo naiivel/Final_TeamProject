@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import net.koreate.greatescape.common.dao.TempDAO;
 import net.koreate.greatescape.member.vo.MemberVO;
 
-public class GSMemberDetailsService implements UserDetailsService {
+public class GEMemberDetailsService implements UserDetailsService {
 
 	@Inject
 	TempDAO dao;
@@ -25,7 +25,10 @@ public class GSMemberDetailsService implements UserDetailsService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return vo == null ? null : new GSMember(vo);
+		return vo == null ? null : new GEMember(vo);
 	}
 
+	
+	
+	
 }

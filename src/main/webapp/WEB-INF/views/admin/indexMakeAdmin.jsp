@@ -18,6 +18,7 @@
 			<h2 class="mb-5">관리자 계정 생성 </h2>
 			<div class="table-responsive col-11">
 				<form id="new" action="newAdmin" method="post">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<table class="table table-borderless">
 						<tbody>
 							<tr>
@@ -141,6 +142,9 @@
 			if (valEmail == null || valEmail == undefined || valEmail == "") { alert('이메일을 입력해주세요.'); $('#member_email').focus(); return; }
 			$('#new').submit();
 		});
+	});
+	$(document).ajaxSend(function (e, xhr, options) {
+		xhr.setRequestHeader('${_csrf.headerName}', '${_csrf.token}');
 	});
 	
 </script>

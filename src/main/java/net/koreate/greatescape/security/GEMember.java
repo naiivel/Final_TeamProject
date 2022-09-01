@@ -11,19 +11,19 @@ import org.springframework.security.core.userdetails.User;
 import lombok.Getter;
 import net.koreate.greatescape.member.vo.MemberVO;
 
-public class GSMember extends User {
+public class GEMember extends User {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Getter
 	private MemberVO member;
 	
-	public GSMember(MemberVO member) {
+	public GEMember(MemberVO member) {
 		super(member.getMember_id(), member.getMember_pw(), authorities(member.getAuthList()));
 		this.member = member;
 	}
 	
-	public GSMember(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+	public GEMember(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
 	}
 	
@@ -38,4 +38,5 @@ public class GSMember extends User {
 	
 	
 
+	
 }

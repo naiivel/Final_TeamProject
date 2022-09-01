@@ -3,8 +3,8 @@
 <%@ include file="../common/header.jsp" %>
 <section class="container mb-3">
     <h3 class="mb-3">여행상품 등록</h3>
-    <form action="${contextPath}/products" method="post" enctype="multipart/form-data">
-    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <form id="newForm" action="${contextPath}/products" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <div class="row">
             <div class="col-lg-6 ">
                 <div class="card p-3 border-0 h-100 d-flex flex-column justify-content-between ">
@@ -74,40 +74,95 @@
                     </div>
                     <div class="mb-3">
                         <label for="inputInfo" class="form-label">상품 설명</label>
-                        <textarea name="detail_info" class="form-control" id="inputInfo" rows="10"></textarea>
+                        <textarea name="detail_info" class="form-control mytextarea"></textarea>
                     </div>
                     <div class="">
                         <label for="inputSchedule" class="form-label">상세 일정</label>
-                        <textarea name="detail_schedule" class="form-control" id="inputSchedule" rows="10"></textarea>
+                        <textarea name="detail_schedule" class="form-control mytextarea"></textarea>
                     </div>
                 </div>
             </div>
         </div>
-    <div class="mb-3 text-center p-3">
-        <label for="inputFile" class="form-label">이미지를 첨부하세요.</label>
-        <input class="form-control form-control-sm mb-3" id="inputFile" type="file" name="titleImage" accept="image/*">
-        <img id="displayImage" class="img-fluid mb-3" alt="" src="">
-        <button class="btn btn-success regist">등록</button>
-    </div>
+        <div class="mb-3 text-center p-3">
+            <label for="inputFile" class="form-label">이미지를 첨부하세요.</label>
+            <input class="form-control form-control-sm mb-3" id="inputFile" type="file" name="titleImage" accept="image/*">
+            <img id="displayImage" class="img-fluid mb-3" alt="" src="">
+            <sec:authorize access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')">
+                <button id="newBtn" class="btn btn-success regist">등록</button>
+            </sec:authorize>
+        </div>
     </form>
+    <input type="button" id="btn" value="확인" />
 </section>
 <script>
-	document.querySelector("#inputFile").addEventListener("change", function() {
-		if (this.files && this.files[0]) {
-			if (this.files[0].size > 10485760) {
-				alert("10MB를 초과하는 사진은 업로드할 수 없습니다.");
-				this.files = null;
-				this.value = "";
-				return
-			}
-			let reader = new FileReader();
-			reader.onload = function(e) {
-				document.querySelector("#displayImage").src = e.target.result;
-			}
-			reader.readAsDataURL(this.files[0]);
-		} else {
-			document.querySelector("#displayImage").src = "";
-		}
-	});
+    document.querySelector("#inputFile").addEventListener("change", function () {
+        if (this.files && this.files[0]) {
+            if (this.files[0].size > 10485760) {
+                alert("10MB를 초과하는 사진은 업로드할 수 없습니다.");
+                this.files = null;
+                this.value = "";
+                return
+            }
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                document.querySelector("#displayImage").src = e.target.result;
+            }
+            reader.readAsDataURL(this.files[0]);
+        } else {
+            document.querySelector("#displayImage").src = "";
+        }
+    });
+
+    $("#newBtn").click(function (e) {
+        e.preventDefault();
+        const form = document.querySelector("#newForm");
+        const departure = form.departure.value;
+        const arrive = form.arrive.value;
+        if (departure >= arrive) {
+            alert("도착일은 출발일보다 이후여야 합니다.");
+            return;
+        }
+        form.submit();
+    });
+</script>
+<script src="https://cdn.tiny.cloud/1/mreuxwvmvo99s2c3asxl4t6ujhyqgni44dt6mle4qlfz9pq6/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '.mytextarea',
+        height: 500,
+        language: 'ko_KR',
+        plugins: [
+            'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+            'table emoticons template paste help'
+        ],
+        toolbar: 'undo redo | styleselect | bold italic image | alignleft aligncenter alignright alignjustify | outdent indent',
+        menubar: false,
+        image_title: true,
+        images_upload_url: '${contextPath}/products/htmlImage',
+        images_reuse_filename: true,
+        file_picker_types: 'image',
+        file_picker_callback: function (cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+            input.onchange = function () {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+                    cb(blobInfo.blobUri(), { title: file.name });
+                };
+                reader.readAsDataURL(file);
+            }
+            input.click();
+        }
+    });
+
+
 </script>
 <%@ include file="../common/footer.jsp" %>

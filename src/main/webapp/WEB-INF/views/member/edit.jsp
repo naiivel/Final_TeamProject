@@ -19,6 +19,7 @@
 			<div class="row">
 				<div class="col-10 offset-1">
 					<form id="changeForm" action="modify" method="post">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<input type="hidden" name="member_num" value="${userInfo.member_num}"/>
 						<div class="mb-3">
 							<label for="id" class="form-label">아이디</label>
@@ -84,14 +85,14 @@
 							<label for="addr" class="form-label">주소</label>
 							<div class="input-group mb-2">
 								<input type="text" class="form-control" id="sample6_address" name="member_address"
-									placeholder="주소" >
+									placeholder="주소" value="${userInfo.member_address}" >
 								<input type="button" class="btn btn-outline-secondary"
 									onclick="sample6_execDaumPostcode()" value="주소 찾기">
 							</div>
 							<div class="row g-3">
 								<div class="col-md-8">
 									<input type="text" class="form-control" name="member_address_detail"
-										id="sample6_detailAddress" placeholder="상세주소">
+										id="sample6_detailAddress" value="${userInfo.member_address_detail}" placeholder="상세주소">
 								</div>
 							</div>
 						</div>

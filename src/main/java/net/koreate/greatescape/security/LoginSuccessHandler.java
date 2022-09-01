@@ -16,8 +16,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth) throws IOException, ServletException {
-		GSMember gsm = (GSMember) auth.getPrincipal();
-		MemberVO loginMember = gsm.getMember();
+		GEMember gem = (GEMember) auth.getPrincipal();
+		MemberVO loginMember = gem.getMember();
 		HttpSession session = req.getSession();
 		if (loginMember != null && loginMember.getMember_leave().equals("Y")) {
 			session.setAttribute("userInfo", loginMember);

@@ -33,6 +33,7 @@
 				</div>
 			</div>
 			<form id="checkForm" method="post" action="deleteP">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="table-responsive">
 				<table class="table table-bordered text-center">
 					<thead>
@@ -100,7 +101,7 @@
 		if($(seat).attr('id') == checked){
 			if($(seat).text() != '15/15'){
 				alert('선택하신 상품들중 예약이 있는 상품이 있기에 삭제하실수 없습니다.');
-				$("#flexCheckDefault").prop("checked", false);
+				$(".flexCheckDefault").prop("checked", false);
 				return;
 			}
 		}
@@ -119,10 +120,12 @@
 			dateType : 'json',
 			data : {list : list},
 			success : function(data){
+				alert('상품이 정상적으로 처리되었습니다.');
+				
 				$(data).each(function(){
 					var selector = "#" + this.product_num;
 					$(selector).text("0/15");
-					$("#flexCheckDefault").prop("checked", false);
+					$(".form-check-input").prop("checked", false);
 				});
 			}
 		});
@@ -138,6 +141,9 @@
 		jobForm.find("[name='page']").val(targetPage);
 		jobForm.attr("action", "control").attr("method", "GET");
 		jobForm.submit();
+	});
+	$(document).ajaxSend(function (e, xhr, options) {
+		xhr.setRequestHeader('${_csrf.headerName}', '${_csrf.token}');
 	});
 </script>
 <%@ include file="../common/footer.jsp" %>
