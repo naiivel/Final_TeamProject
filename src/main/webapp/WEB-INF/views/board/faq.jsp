@@ -119,26 +119,8 @@ txt-hlight {
 					</div>
 				</div>
 			</div>
-
-			<div class="accordion mb-3" id="accordionTrip"></div>
-			<div id="pagingTrip">
-				<a>트립</a>	
-			</div>
 			
-			
-
-			<div class="accordion mb-3" id="accordionAirline"></div>
-			<div id="pagingAirline"><a>항공</a>	</div>
-
-			<div class="accordion mb-3" id="accordionReserv"></div>
-			<div id="pagingReserv"></div>
-
-			<div class="accordion mb-3" id="accordionPass"></div>
-			<div id="pagingPass"></div>
-
-			<div class="accordion mb-3" id="accordionOther"></div>
-			<div id="pagingOther"></div>
-
+			<!-- 페이징처리 -->
 			<div id="pagingAll">
 				<nav id="allPaging" aria-label="Page navigation mb-3">
 					<ul class="pagination justify-content-center">
@@ -230,112 +212,8 @@ txt-hlight {
 		$("#reservation").removeClass("active");
 		$("#other").removeClass("active");
 		
-		$("#listAll").hide();
-		$("#accordionReserv").hide();
-		$("#accordionPass").hide();
-		$("#accordionAirline").hide();
-		$("#accordionOther").hide();
+		location.href="${contextPath}/board/faq/trip";
 		
-		
-		$("#pagingTrip").show();
-		let faq_category = $(this).val();
-		let curPage= $("#pageNum").val();
-		console.log("faq_category: ", faq_category);
-		console.log("curPage: "+curPage);
-		$.ajax({
-			url : "${contextPath}/board/categoryList/trip", type : "POST", dataType : "json",
-			beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            }, data : { "faq_category" : faq_category},
-			success : function(data) {
-				console.log(data);
-				console.log(data.tripList);
-				console.log(data.tripPm);
-				let str="";
-				let i = 0;
-				let j = 0;
-				
-				$(data.tripList).each(function(){
-					let faq_category= this.faq_category;
-					let faq_title= this.faq_title;
-					let faq_content= this.faq_content;
-					console.log(faq_category, faq_title, faq_content);
-					str += '<div class="accordion mb-2" id="listTrip">';
-					str += '<div class="accordion-item mb-2">';
-					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-					str += '<button class="accordion-button collapsed" type="button"';
-					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
-					str += '</button></h2>';
-					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionTrip">';
-					str += '<div class="accordion-body">';
-					str += faq_content;
-					if(userMaster=='Y'){
-						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
-						str +=	'data-bs-target="#staticBackdrop"></button></div>';
-					}
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
-					i++;
-				});
-				$("#accordionTrip").html(str);
-				
-				/* let strPaging = '';
-				$(data.tripPm).each(function(){
-					let pmTrip= data.tripPm; 
-					let keyword=pmTrip.cri.keyword;
-					let searchType=pmTrip.cri.searchType;
-					let ppm= pmTrip.cri.perPageNum;
-					let page= pmTrip.cri.page;
-					
-					console.log("pmTrip: "+data.tripPm);
-					console.log("keyword: "+keyword);
-					console.log("sType: "+searchType);
-					console.log("perPageNum: "+ppm);
-					console.log("page: "+page);
-					
-				
-					strPaging += '<nav aria-label="Page navigation example">';
-					strPaging += '<ul class="pagination justify-content-center">';
-					if(pmTrip.first){
-						strPaging += '<li class="page-item">';
-						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
-						strPaging += '<span aria-hidden="true">&laquo;</span></a></li>';
-					}
-					if(pmTrip.prev){
-						strPaging += '<li class="page-item">';
-						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
-						strPaging += '<span aria-hidden="true">&lt;</span></a></li>';
-					}
-					for (var i=pmTrip.startPage; i<=pmTrip.endPage; i++){
-						strPaging += '<li class="page-item">';
-						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'">';
-						strPaging += '<span aria-hidden="true">'+i+'</span></a></li>';
-					}
-					if(pmTrip.next){
-						strPaging += '<li class="page-item">';
-						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
-						strPaging += '<span aria-hidden="true">&lt;</span></a></li>';
-					}
-					if(pmTrip.last){
-						strPaging += '<li class="page-item">';
-						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
-						strPaging += '<span aria-hidden="true">&gaquo;</span></a></li>';
-					}	
-					strPaging += '</ul>';
-					
-				});
-				$("#pagingTrip").html(strPaging); */
-			},// success
-			error : function(err) {
-				console.log("응 안돼 돌아가");
-			}
-		});
-		$("#accordionTrip").show();
-		$("pagingTrip").show();
 	});
 
 
@@ -347,63 +225,7 @@ txt-hlight {
 		$("#reservation").removeClass("active");
 		$("#other").removeClass("active");
 		
-		$("#listAll").hide();
-		$("#accordionReserv").hide();
-		$("#accordionPass").hide();
-		$("#accordionTrip").hide();
-		$("#accordionOther").hide();
-		
-		$("#allPaging").hide();
-		$("pagingTrip").addClass("visible");
-		var faq_category = $(this).val();
-		
-		console.log("faq_category: ", faq_category);
-		$.ajax({
-			url : "${contextPath}/board/categoryList/airline", type : "POST", dataType : "json",
-			beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
-			data : {  "faq_category" : faq_category  },
-			success : function(data) {
-				console.log(data);
-				console.log(data.airlineList);
-				console.log(data.airlinePm);
-				let str="";
-				let i = 0;
-				$(data.airlineList).each(function(){
-					let faq_category= this.faq_category;
-					let faq_title= this.faq_title;
-					let faq_content= this.faq_content;
-					console.log(faq_category, faq_title, faq_content);
-					str += '<div class="accordion mb-2" id="listAirline">';
-					str += '<div class="accordion-item mb-2">';
-					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-					str += '<button class="accordion-button collapsed" type="button"';
-					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
-					str += '</button></h2>';
-					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionAirline">';
-					str += '<div class="accordion-body">';
-					str += faq_content;
-					if(userMaster=='Y'){
-						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
-						str +=	'data-bs-target="#staticBackdrop"></button></div>';
-					}
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
-					i++;
-				});
-				$("#accordionAirline").html(str);
-			},
-			error : function(err) {
-				console.log("응 안돼 돌아가");
-			}
-		});
-		$("#accordionAirline").show();
+		location.href="${contextPath}/board/faq/airline";
 	});
 
 	$("#reservation").on("click", function() {
@@ -413,62 +235,8 @@ txt-hlight {
 		$("#trip").removeClass("active");
 		$("#other").removeClass("active");
 		
-		$("#listAll").hide();
-		$("#accordionAirline").hide();
-		$("#accordionPass").hide();
-		$("#accordionTrip").hide();
-		$("#accordionOther").hide();
+		location.href="${contextPath}/board/faq/reserv";
 		
-		$("#allPaging").hide();
-		
-		let faq_category = $(this).val();
-		console.log("faq_category: ", faq_category);
-		$.ajax({
-			url : "${contextPath}/board/categoryList/reservation", type : "POST", dataType : "json",
-			data : {  "faq_category" : faq_category  },
-			beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
-			success : function(data) {
-				console.log(data);
-				console.log(data.reserveList);
-				console.log(data.reservePm);
-				let str="";
-				let i = 0;
-				$(data.reserveList).each(function(){
-					let faq_category= this.faq_category;
-					let faq_title= this.faq_title;
-					let faq_content= this.faq_content;
-					console.log(faq_category, faq_title, faq_content);
-					str += '<div class="accordion mb-2" id="listReserv">';
-					str += '<div class="accordion-item mb-2">';
-					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-					str += '<button class="accordion-button collapsed" type="button"';
-					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
-					str += '</button></h2>';
-					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionReserv">';
-					str += '<div class="accordion-body">';
-					str += faq_content;
-					if(userMaster=='Y'){
-						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
-						str +=	'data-bs-target="#staticBackdrop"></button></div>';
-					}
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
-					i++;
-				});
-				$("#accordionReserv").html(str);
-			},
-			error : function(err) {
-				console.log("응 안돼 돌아가");
-			}
-		});
-		$("#accordionReserv").show();
 	});
 
 	$("#passport").on("click", function() {
@@ -478,62 +246,7 @@ txt-hlight {
 		$("#reservation").removeClass("active");
 		$("#other").removeClass("active");
 		
-		$("#listAll").hide();
-		$("#accordionReserv").hide();
-		$("#accordionTrip").hide();
-		$("#accordionAirline").hide();
-		$("#accordionOther").hide();
-		
-		$("#allPaging").hide();
-		
-		let faq_category = $(this).val();
-		console.log("faq_category: ", faq_category);
-		$.ajax({
-			url : "${contextPath}/board/categoryList/passport", type : "POST", dataType : "json",
-			data : {  "faq_category" : faq_category  },
-			beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
-			success : function(data) {
-				console.log(data);
-				console.log(data.passList);
-				console.log(data.passPm);
-				let str="";
-				let i = 0;
-				$(data.passList).each(function(){
-					let faq_category= this.faq_category;
-					let faq_title= this.faq_title;
-					let faq_content= this.faq_content;
-					console.log(faq_category, faq_title, faq_content);
-					str += '<div class="accordion mb-2" id="listPass">';
-					str += '<div class="accordion-item mb-2">';
-					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-					str += '<button class="accordion-button collapsed" type="button"';
-					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
-					str += '</button></h2>';
-					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionPass">';
-					str += '<div class="accordion-body">';
-					str += faq_content;
-					if(userMaster=='Y'){
-						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
-						str +=	'data-bs-target="#staticBackdrop"></button></div>';
-					}
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
-					i++;
-				});
-				$("#accordionPass").html(str);
-			},
-			error : function(err) {
-				console.log("응 안돼 돌아가");
-			}
-		});
-		$("#accordionPass").show();
+		location.href="${contextPath}/board/faq/pass";
 	});
 
 	$("#other").on("click", function() {
@@ -542,67 +255,8 @@ txt-hlight {
 		$("#passport").removeClass("active");
 		$("#reservation").removeClass("active");
 		$("#trip").removeClass("active");
+		location.href="${contextPath}/board/faq/other";
 		
-		$("#listAll").hide();
-		$("#accordionReserv").hide();
-		$("#accordionPass").hide();
-		$("#accordionTrip").hide();
-		$("#accordionOther").hide();
-		
-		$("#allPaging").hide();
-		
-		let faq_category = $(this).val();
-		console.log("faq_category: ", faq_category);
-		$.ajax({
-			url : "${contextPath}/board/categoryList/other", type : "POST", dataType : "json",
-			data : {  "faq_category" : faq_category  },
-			beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
-			success : function(data) {
-				console.log(data);
-				console.log(data.otherList);
-				console.log(data.otherPm);
-				let str="";
-				let i = 0;
-				$(data.otherList).each(function(){
-					let faq_num= this.faq_num;
-					let faq_category= this.faq_category;
-					let faq_title= this.faq_title;
-					let faq_content= this.faq_content;
-					console.log(faq_category, faq_title, faq_content);
-					str += '<div class="accordion mb-2" id="listOther">';
-					str += '<div class="accordion-item mb-2">';
-					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-					str += '<button class="accordion-button collapsed" type="button"';
-					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
-					str += '</button></h2>';
-					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionOther">';
-					str += '<div class="accordion-body">';
-					str += faq_content;
-					if(userMaster=='Y'){
-						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
-						str +=	'data-bs-target="#staticBackdrop" onclick="setNum('+faqnum+')"></button></div>';
-					}
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
-					str += '<form name="faqInfo">';
-					str += '<input type="hidden" name="faq_num" value="'+faqnum+'">';
-					str += '</form>';
-					i++;
-				});
-				$("#accordionOther").html(str);
-			},
-			error : function(err) {
-				console.log("응 안돼 돌아가");
-			}
-		});
-		$("#accordionOther").show();
 	});
 	
 

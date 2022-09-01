@@ -23,6 +23,82 @@ public class BoardQueryProvider {
 	
 	
 	
+	public String getSearchTripList(SearchCriteria cri) {
+		SQL sql = new SQL();
+
+		sql.SELECT("*");
+		sql.FROM("tbl_faq");
+		sql.WHERE("faq_category='해외여행'");
+		getSearchWhere(cri, sql);
+		sql.ORDER_BY("faq_num DESC");
+		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
+		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+	
+	public String getSearchAirlineList(SearchCriteria cri) {
+		SQL sql = new SQL();
+
+		sql.SELECT("*");
+		sql.FROM("tbl_faq");
+		sql.WHERE("faq_category='항공'");
+		getSearchWhere(cri, sql);
+		sql.ORDER_BY("faq_num DESC");
+		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
+		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+
+	public String getSearchPassList(SearchCriteria cri) {
+		SQL sql = new SQL();
+
+		sql.SELECT("*");
+		sql.FROM("tbl_faq");
+		sql.WHERE("faq_category='여권/비자/환전'");
+		getSearchWhere(cri, sql);
+		sql.ORDER_BY("faq_num DESC");
+		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
+		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+
+	public String getSearchReservList(SearchCriteria cri) {
+		SQL sql = new SQL();
+
+		sql.SELECT("*");
+		sql.FROM("tbl_faq");
+		sql.WHERE("faq_category='예약/결제'");
+		getSearchWhere(cri, sql);
+		sql.ORDER_BY("faq_num DESC");
+		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
+		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+
+	public String getSearchOtherList(SearchCriteria cri) {
+		SQL sql = new SQL();
+
+		sql.SELECT("*");
+		sql.FROM("tbl_faq");
+		sql.WHERE("faq_category='홈페이지/기타'");
+		getSearchWhere(cri, sql);
+		sql.ORDER_BY("faq_num DESC");
+		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
+		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+
+	//전체
 	public String getSearchFAQList(SearchCriteria cri) {
 		SQL sql = new SQL();
 
@@ -38,6 +114,8 @@ public class BoardQueryProvider {
 		return query;
 	}
 
+	
+
 	// 검색조건별 개수
 	public String searchSelectCount(SearchCriteria cri) {
 		SQL sql = new SQL();
@@ -48,6 +126,63 @@ public class BoardQueryProvider {
 		System.out.println(query);
 		return query;
 	}
+	
+	public String searchTripCount(SearchCriteria cri) {
+		SQL sql = new SQL();
+		sql.SELECT("count(*)");
+		sql.FROM("tbl_faq");
+		sql.WHERE("faq_category='해외여행'");
+		getSearchWhere(cri, sql);
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+
+	public String searchAirlineCount(SearchCriteria cri) {
+		SQL sql = new SQL();
+		sql.SELECT("count(*)");
+		sql.FROM("tbl_faq");
+		sql.WHERE("faq_category='항공'");
+		getSearchWhere(cri, sql);
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+	
+	public String searchPassCount(SearchCriteria cri) {
+		SQL sql = new SQL();
+		sql.SELECT("count(*)");
+		sql.FROM("tbl_faq");
+		sql.WHERE("faq_category='여권/비자/환전'");
+		getSearchWhere(cri, sql);
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+	
+	public String searchReservCount(SearchCriteria cri) {
+		SQL sql = new SQL();
+		sql.SELECT("count(*)");
+		sql.FROM("tbl_faq");
+		sql.WHERE("faq_category='예약/결제'");
+		getSearchWhere(cri, sql);
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+	
+	public String searchOtherCount(SearchCriteria cri) {
+		SQL sql = new SQL();
+		sql.SELECT("count(*)");
+		sql.FROM("tbl_faq");
+		sql.WHERE("faq_category='홈페이지/기타'");
+		getSearchWhere(cri, sql);
+		String query = sql.toString();
+		System.out.println(query);
+		return query;
+	}
+	
+	
 
 	// 검색조건
 	public void getSearchWhere(SearchCriteria cri, SQL sql) {

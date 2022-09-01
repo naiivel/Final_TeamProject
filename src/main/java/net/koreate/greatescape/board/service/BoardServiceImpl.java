@@ -64,6 +64,81 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public List<FAQBoardVO> getTripList(SearchCriteria cri) throws Exception {
+		return bdao.getTripList(cri);
+	}
+
+	@Override
+	public PageMaker getTripPageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getTripCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
+	}
+
+	@Override
+	public List<FAQBoardVO> getAirlineList(SearchCriteria cri) throws Exception {
+		return bdao.getAirlineList(cri);
+	}
+
+	@Override
+	public PageMaker getAirlinePageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getAirlineCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
+	}
+
+	@Override
+	public List<FAQBoardVO> getPassList(SearchCriteria cri) throws Exception {
+		return bdao.getPassList(cri);
+	}
+
+	@Override
+	public PageMaker getPassPageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getPassCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
+	}
+
+	@Override
+	public List<FAQBoardVO> getReservList(SearchCriteria cri) throws Exception {
+		return bdao.getReservList(cri);
+	}
+
+	@Override
+	public PageMaker getReservPageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getReservCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
+	}
+
+	@Override
+	public List<FAQBoardVO> getOtherList(SearchCriteria cri) throws Exception {
+		return bdao.getOtherList(cri);
+	}
+
+	@Override
+	public PageMaker getOtherPageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getOtherCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
+	}
+	
+	@Override
 	public List<FAQBoardVO> categoryList(SearchCriteria cri, String faq_category) throws Exception {
 		return bdao.getCategoryList(cri, faq_category);
 	}
@@ -212,6 +287,38 @@ public class BoardServiceImpl implements BoardService {
 	public List<NoticeBoardVO> noticeCategoryList(SearchCriteria cri, String notice_category) {
 		return bdao.getNoticeCategoryList(cri, notice_category);
 	}
+
+	@Override
+	public List<NoticeBoardVO> informList(SearchCriteria cri) throws Exception {
+		return bdao.getInformList(cri);
+	}
+
+	@Override
+	public PageMaker getInformPageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getInformCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
+	}
+
+	@Override
+	public List<NoticeBoardVO> mofaList(SearchCriteria cri) throws Exception {
+		return bdao.getMofaList(cri);
+	}
+
+	@Override
+	public PageMaker mofaPageMaker(SearchCriteria cri) throws Exception {
+		int totalCount= bdao.getMofaCount(cri);
+		PageMaker pm= new SearchPageMaker();
+		pm.setDisplayPageNum(5);
+		pm.setCri(cri);
+		pm.setTotalCount(totalCount);
+		return pm;
+	}
+
+	
 
 	
 
