@@ -26,12 +26,9 @@
 	</div>
 	<div>
 		<button id="joinBtn" type="button" class="btn btn-primary">회원가입</button>
-		<button id="idFinder" type="button" class="btn btn-primary">아이디
-			찾기</button>
-		<button id="pwFinder" type="button" class="btn btn-primary">비밀번호
-			찾기</button>
-		<button id="rev_check" type="button" class="btn btn-primary">비회원
-			예약확인</button>
+		<button id="idFinder" type="button" class="btn btn-primary">아이디찾기</button>
+		<button id="pwFinder" type="button" class="btn btn-primary">비밀번호찾기</button>
+		<button id="rev_check" type="button" class="btn btn-primary">비회원예약확인</button>
 	</div>
 </section>
 <script>

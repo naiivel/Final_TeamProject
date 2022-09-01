@@ -85,6 +85,7 @@ txt-hlight {
 								</div>
 							</div>
 							<form name="faqInfo">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<input type="hidden" name="faq_num" value="${faq.faq_num}">
 							</form>
 						</c:forEach>
@@ -121,13 +122,13 @@ txt-hlight {
 
 			<div class="accordion mb-3" id="accordionTrip"></div>
 			<div id="pagingTrip">
-				
+				<a>트립</a>	
 			</div>
 			
 			
 
 			<div class="accordion mb-3" id="accordionAirline"></div>
-			<div id="pagingAirline"></div>
+			<div id="pagingAirline"><a>항공</a>	</div>
 
 			<div class="accordion mb-3" id="accordionReserv"></div>
 			<div id="pagingReserv"></div>
@@ -138,34 +139,34 @@ txt-hlight {
 			<div class="accordion mb-3" id="accordionOther"></div>
 			<div id="pagingOther"></div>
 
-			<div id="allPaging">
-				<nav id="pagingAll" aria-label="Page navigation mb-3">
+			<div id="pagingAll">
+				<nav id="allPaging" aria-label="Page navigation mb-3">
 					<ul class="pagination justify-content-center">
 						<c:if test="${pm.first}">
 							<li class="page-item">
-								<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(1)}"> 
+								<a class="page-link" href="${pm.makeQuery(1)}"> 
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
 						</c:if>
 						<c:if test="${pm.prev}">
 							<li class="page-item">
-								<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(pm.startPage-1)}">&lt;</a>
+								<a class="page-link" href="${pm.makeQuery(pm.startPage-1)}">&lt;</a>
 							</li>
 						</c:if>
 						<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
 							<li class="page-item" aria-current="page" ${pm.cri.page ==i? 'class="active"':''}>
-								<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(i)}">${i}</a>
+								<a id="pageNum" class="page-link" href="${pm.makeQuery(i)}">${i}</a>
 							</li>
 						</c:forEach>
 						<c:if test="${pm.next}">
 							<li class="page-item">
-								<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(pm.endPage+1)}">&gt;</a>
+								<a class="page-link" href="${pm.makeQuery(pm.endPage+1)}">&gt;</a>
 							</li>
 						</c:if>
 						<c:if test="${pm.last}">
 							<li class="page-item">
-								<a class="page-link" href="${contextPath}/board/faq/${pm.makeQuery(pm.maxPage)}"> 
+								<a class="page-link" href="${pm.makeQuery(pm.maxPage)}"> 
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>
@@ -183,7 +184,7 @@ txt-hlight {
 
 			</div>
 		</div>
-	
+	</div>
 </section>
 
 
@@ -197,13 +198,7 @@ txt-hlight {
 	console.log("userInfo: "+userInfo);
 	var userMaster= '${userInfo.member_master}';
 	
-	var pm= "${pm}";
-	var pmTrip= "${pmTrip}";
-	var cri= '${pm.cri}';
-	
-	console.log("pm: "+pm);
-	console.log("pmTrip: "+pmTrip);
-	console.log("pm.cri: "+cri);
+
 
 	$("#addBtn").click(function() {
 		location.href = "${contextPath}/board/faqWrite";
@@ -223,17 +218,10 @@ txt-hlight {
 	});
 
 	$("#all").on("click", function() {
-		
-		$(this).removeClass("active");
-		$("#trip").removeClass("active");
-		$("#airline").removeClass("active");
-		$("#passport").removeClass("active");
-		$("#reservation").removeClass("active");
-		$("#other").removeClass("active");
-		
-		
+		location.href="${contextPath}/board/faq";
 	});
 
+	
 	$("#trip").on("click", function() {
 		
 		$(this).toggleClass("active");
@@ -248,21 +236,25 @@ txt-hlight {
 		$("#accordionAirline").hide();
 		$("#accordionOther").hide();
 		
-		$("#allPaging").hide();
 		
+		$("#pagingTrip").show();
 		let faq_category = $(this).val();
+		let curPage= $("#pageNum").val();
 		console.log("faq_category: ", faq_category);
-		
+		console.log("curPage: "+curPage);
 		$.ajax({
 			url : "${contextPath}/board/categoryList/trip", type : "POST", dataType : "json",
-			data : { "faq_category" : faq_category },
+			beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            }, data : { "faq_category" : faq_category},
 			success : function(data) {
 				console.log(data);
 				console.log(data.tripList);
 				console.log(data.tripPm);
 				let str="";
 				let i = 0;
-			
+				let j = 0;
+				
 				$(data.tripList).each(function(){
 					let faq_category= this.faq_category;
 					let faq_title= this.faq_title;
@@ -291,15 +283,59 @@ txt-hlight {
 				});
 				$("#accordionTrip").html(str);
 				
-		
-				//$("#pagingTrip").html(strPaging);
+				/* let strPaging = '';
+				$(data.tripPm).each(function(){
+					let pmTrip= data.tripPm; 
+					let keyword=pmTrip.cri.keyword;
+					let searchType=pmTrip.cri.searchType;
+					let ppm= pmTrip.cri.perPageNum;
+					let page= pmTrip.cri.page;
+					
+					console.log("pmTrip: "+data.tripPm);
+					console.log("keyword: "+keyword);
+					console.log("sType: "+searchType);
+					console.log("perPageNum: "+ppm);
+					console.log("page: "+page);
+					
+				
+					strPaging += '<nav aria-label="Page navigation example">';
+					strPaging += '<ul class="pagination justify-content-center">';
+					if(pmTrip.first){
+						strPaging += '<li class="page-item">';
+						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
+						strPaging += '<span aria-hidden="true">&laquo;</span></a></li>';
+					}
+					if(pmTrip.prev){
+						strPaging += '<li class="page-item">';
+						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
+						strPaging += '<span aria-hidden="true">&lt;</span></a></li>';
+					}
+					for (var i=pmTrip.startPage; i<=pmTrip.endPage; i++){
+						strPaging += '<li class="page-item">';
+						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'">';
+						strPaging += '<span aria-hidden="true">'+i+'</span></a></li>';
+					}
+					if(pmTrip.next){
+						strPaging += '<li class="page-item">';
+						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
+						strPaging += '<span aria-hidden="true">&lt;</span></a></li>';
+					}
+					if(pmTrip.last){
+						strPaging += '<li class="page-item">';
+						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
+						strPaging += '<span aria-hidden="true">&gaquo;</span></a></li>';
+					}	
+					strPaging += '</ul>';
+					
+				});
+				$("#pagingTrip").html(strPaging); */
 			},// success
 			error : function(err) {
 				console.log("응 안돼 돌아가");
 			}
 		});
 		$("#accordionTrip").show();
-		
+		$("pagingTrip").show();
 	});
 
 
@@ -318,12 +354,16 @@ txt-hlight {
 		$("#accordionOther").hide();
 		
 		$("#allPaging").hide();
-		
+		$("pagingTrip").addClass("visible");
 		var faq_category = $(this).val();
 		
 		console.log("faq_category: ", faq_category);
 		$.ajax({
 			url : "${contextPath}/board/categoryList/airline", type : "POST", dataType : "json",
+			beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			data : {  "faq_category" : faq_category  },
 			success : function(data) {
 				console.log(data);
@@ -386,6 +426,10 @@ txt-hlight {
 		$.ajax({
 			url : "${contextPath}/board/categoryList/reservation", type : "POST", dataType : "json",
 			data : {  "faq_category" : faq_category  },
+			beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			success : function(data) {
 				console.log(data);
 				console.log(data.reserveList);
@@ -447,6 +491,10 @@ txt-hlight {
 		$.ajax({
 			url : "${contextPath}/board/categoryList/passport", type : "POST", dataType : "json",
 			data : {  "faq_category" : faq_category  },
+			beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			success : function(data) {
 				console.log(data);
 				console.log(data.passList);
@@ -508,6 +556,10 @@ txt-hlight {
 		$.ajax({
 			url : "${contextPath}/board/categoryList/other", type : "POST", dataType : "json",
 			data : {  "faq_category" : faq_category  },
+			beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			success : function(data) {
 				console.log(data);
 				console.log(data.otherList);

@@ -19,6 +19,7 @@
 		<div class="col-md-10 mb-5">
 			<h2 class="mb-4">질문과 답변</h2>
 			<form action="qnaWrite" method="POST" class="h-100">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<input type="hidden" name="member_num" value="${userInfo.member_num }">
 				<input type="hidden" name="qna_writer" value="${userInfo.member_name}">
 				<div class="text-end mb-3">

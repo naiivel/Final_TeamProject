@@ -64,6 +64,14 @@ public interface BoardService {
 	//댓글 쓰면 qna테이블 업데이트
 	void updateQNAanswer(CommentVO vo) throws Exception;
 	
+	//내가 쓴 qna
+	List<QNABoardVO> myQnaList(SearchCriteria cri, int member_num);
+	
+	//확인중인 qna
+	List<QNABoardVO> getCheckingList(SearchCriteria cri) throws Exception;
+	//답변 완료된 qna
+	List<QNABoardVO> getCheckedList(SearchCriteria cri) throws Exception;
+	
 	/******************************Notice************************************/
 	
 	//질문리스트-페이징처리

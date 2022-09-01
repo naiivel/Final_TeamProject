@@ -18,6 +18,7 @@
 		<div class="col-md-10 mb-5">
 			<h2 class="mb-4">공지사항</h2>
 			<form action="noticeWrite" method="POST" class="h-100" id="writeNoticeForm">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<div class="form-floating mb-3">
 					<select name="notice_category" class="form-select" id="floatingSelectCategory" aria-label="category">
 						<option value="공지사항">공지사항</option>

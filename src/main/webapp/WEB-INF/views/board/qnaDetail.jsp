@@ -48,6 +48,7 @@
 				<h5 class="card-header">답변을 작성하세요</h5>
 				<div class="card-body">
 					<form name="comment-form" action="comment" method="post" autocomplete="off">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<div class="form-group">
 							<input type="hidden" name="qna_num" value="${qna.qna_num}">
 							<input type="hidden" name="comment_writer" value="${userInfo.member_name }">
@@ -95,6 +96,10 @@
 		var qna_num= $('input[name=qna_num]').val();
 		$.ajax({
 			type: 'GET', url:"getCommentList", data:{"qna_num":qna_num},
+			beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			success: function(result) {
 				for(var i=0; i<result.length; i++){
 					var str='<div class="comment">';

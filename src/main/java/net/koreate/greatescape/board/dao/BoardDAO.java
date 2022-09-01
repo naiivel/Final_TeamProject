@@ -111,6 +111,18 @@ public interface BoardDAO {
 	@Select("SELECT count(*) FROM tbl_notice WHERE notice_category=#{category} limit #{cri.startRow}, #{cri.perPageNum}")
 	int getNoticeCategoryCount(@Param("cri")SearchCriteria cri, @Param("category")String category) throws Exception;
 
+	//내가쓴 qna리스트
+	@Select("SELECT qna.* FROM tbl_qna AS qna NATURAL JOIN tbl_member AS mem WHERE mem.member_num=#{member_num} ORDER BY qna_num DESC limit #{cri.startRow}, #{cri.perPageNum}")
+	List<QNABoardVO> myQNAList(@Param("cri")SearchCriteria cri, @Param("member_num")int member_num);
+
+	//확인중
+	@Select("SELECT * FROM tbl_qna WHERE qna_answer IS NULL ORDER BY qna_num DESC limit #{cri.startRow}, #{cri.perPageNum}")
+	List<QNABoardVO> getCheckingList(@Param("cri")SearchCriteria cri);
+
+	//답변끝
+	@Select("SELECT * FROM tbl_qna WHERE qna_answer IS NOT NULL ORDER BY qna_num DESC  limit #{cri.startRow}, #{cri.perPageNum}")
+	List<QNABoardVO> getChekedList(@Param("cri")SearchCriteria cri);
+
 
 	
 

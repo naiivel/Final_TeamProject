@@ -118,11 +118,30 @@ public class BoardServiceImpl implements BoardService {
 	public List<CommentVO> getCommentList(int qna_num) throws Exception{
 		return bdao.getCommentList(qna_num);
 	}
-	
+	//댓글 달리면 업데이트
 	@Override
 	public void updateQNAanswer(CommentVO vo) throws Exception {
 		bdao.updateQNAanswer(vo);
 	}
+	
+	//내가쓴글
+	@Override
+	public List<QNABoardVO> myQnaList(SearchCriteria cri, int member_num) {
+		
+		return bdao.myQNAList(cri, member_num);
+	}
+
+	
+	@Override
+	public List<QNABoardVO> getCheckingList(SearchCriteria cri) throws Exception {
+		return bdao.getCheckingList(cri);
+	}
+
+	@Override
+	public List<QNABoardVO> getCheckedList(SearchCriteria cri) throws Exception {
+		return bdao.getChekedList(cri);
+	}
+	
 	
 	
 	@Override
@@ -196,6 +215,7 @@ public class BoardServiceImpl implements BoardService {
 
 	
 
+	
 	
 
 	
