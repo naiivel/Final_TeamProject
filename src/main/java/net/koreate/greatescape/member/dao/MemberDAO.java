@@ -180,6 +180,12 @@ public interface MemberDAO {
 	@Update("update tbl_product set product_seat = 0 where product_num = #{product_num}")
 	void deadlineSet(int product_num);
 
+	@Insert("INSERT INTO tbl_auth VALUES (#{member_id}, 'ROLE_MEMBER')")
+	void addMemberAuth(MemberVO vo);
+
+	@Insert("INSERT INTO tbl_auth VALUES (#{member_id}, 'ROLE_ADMIN')")
+	void addAdminAuth(MemberVO vo);
+
 
 	
 }

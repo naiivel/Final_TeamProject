@@ -3,7 +3,9 @@ package net.koreate.greatescape.product.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
@@ -54,6 +56,9 @@ public interface ProductDAO {
 	@Update("UPDATE tbl_detail SET detail_viewcnt = detail_viewcnt + 1 WHERE product_num = #{id}")
 	int updateViewcntById(String id);
 	
-	@Select("SELECT * FROM tbl_reservation WHERE member_id = #{member_id}")
-	ReservationVO getReservationOfMember(String member_id);
+	@Select("SELECT * FROM tbl_reservation WHERE member_id = #{member_id} AND product_num = #{product_num}")
+	ReservationVO getReservationOfMember(@Param("member_id") String member_id, @Param("product_num") String product_num);
+
+	@Delete("DELETE FROM tbl_product WHERE product_num = #{id}")
+	int deleteProduct(int id);
 }

@@ -37,7 +37,7 @@
 					<p class="card-text">
 						<small class="text-muted">문제가 있으신 부분은 고객센터로 문의해주시길 바랍니다.</small>
 					</p>
-					<p class="card-text">${tripInfo}</p>
+					<p class="card-text">${tripInfo.detail_info}</p>
 				</div>
 				<div class="card-footer">
 					<button id="deleteBtn" class="btn btn-outline-secondary">예약 취소</button>
@@ -48,7 +48,9 @@
 </section>
 <script>
 	$("#deleteBtn").click(function(){
-		location.href='deleteNoProduct';
+		if (confirm('정말로 예약을 취소하시겠습니까?')) {
+			location.href='deleteNoProduct';
+		}
 	});
 </script>
 <c:if test="${!empty msg}">

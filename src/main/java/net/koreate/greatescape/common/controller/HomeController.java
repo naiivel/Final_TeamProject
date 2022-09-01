@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.common.dao.TempDAO;
@@ -23,10 +24,13 @@ public class HomeController {
 		return "index";
 	}
 	
-	@GetMapping("/nomember/index")
-	public void nomemberIndex() {}
+	@GetMapping("/logoff")
+	public String logoff(RedirectAttributes rttr) {
+		rttr.addFlashAttribute("flashMessage", "다른 페이지에서 로그인을 시도하여 로그아웃 되었습니다.");
+		return "redirect:/";
+	}
 	
-	@GetMapping("/nomember/show")
-	public void nomemberShow() {}
+	@GetMapping("/error/403")
+	public void accessDenied() {}
 	
 }

@@ -8,9 +8,9 @@
 			<div class="alert alert-danger" role="alert">
 				<h4 class="alert-heading m-0">일치하는 상품 정보가 존재하지 않습니다.</h4>
 			</div>
-			<c:if test="${userInfo.member_id eq 'master'}">
+			<sec:authorize access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')">
 				<a id="newBtn" href="${contextPath}/products/new" class="btn btn-primary">상품 등록</a>
-			</c:if>
+			</sec:authorize>
 		</section>
 	</c:when>
 	<c:otherwise>
@@ -72,12 +72,12 @@
 					<div class="accordion" id="accordion">
 						<div class="accordion-item">
 							<h4 class="accordion-header" id="heading${countryNum}">
-								<button class="accordion-button <c:if test=" ${countryNum ne 1}">collapsed</c:if>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${countryNum}" aria-expanded="true" aria-controls="collapse${countryNum}">
+								<button class="accordion-button <c:if test="${countryNum ne 1}">collapsed</c:if>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${countryNum}" aria-expanded="true" aria-controls="collapse${countryNum}">
 									${country}
 								</button>
 							</h4>
 
-							<div id="collapse${countryNum}" class="accordion-collapse collapse <c:if test=" ${countryNum eq 1}">show</c:if>" aria-labelledby="heading${countryNum}">
+							<div id="collapse${countryNum}" class="accordion-collapse collapse <c:if test="${countryNum eq 1}">show</c:if>" aria-labelledby="heading${countryNum}">
 								<c:forEach var="city" items="${cityMap.get(country)}">
 									<div class="accordion-body" data-city="${city}">
 										${city}

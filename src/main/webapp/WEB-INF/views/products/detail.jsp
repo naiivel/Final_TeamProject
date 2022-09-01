@@ -11,11 +11,11 @@
 				</svg>
 			</a>
 			<span>&nbsp;&gt;&nbsp;</span>
-			<a href="${contextPath}/product/${product.product_continent}">${product.product_continent}</a>
+			<a href="${contextPath}/products/continent/${product.product_continent}">${product.product_continent}</a>
 			<span>&nbsp;&gt;&nbsp;</span>
-			<a href="">${product.product_country}</a>
+			<a href="${contextPath}/products/search?country=${product.product_country}">${product.product_country}</a>
 			<span>&nbsp;&gt;&nbsp;</span>
-			${product.product_city}
+			<a href="${contextPath}/products/search?city=${product.product_city}">${product.product_city}</a>
 		</div>
 	</div>
 	<div class="row">
@@ -71,11 +71,21 @@
 			</div>
 			<div class="row">
 				<div class="col d-flex justify-content-around">
-					<a href="${contextPath}/products/${product.product_num}/reservation" class="btn btn-primary" id="reserveBtn">예약하기</a>
-					<a href="${contextPath}/board/service" class="btn btn-primary" id="qnaBtn">문의하기</a>
-					<c:if test="${userInfo.member_id eq 'master'}">
+					<sec:authorize access="anonymous">
+						<a href="${contextPath}/products/${product.product_num}/reservation" class="btn btn-primary" id="reserveBtn">예약하기</a>
+						<a href="${contextPath}/board/service" class="btn btn-primary" id="qnaBtn">문의하기</a>
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_MEMBER')">
+						<a href="${contextPath}/products/${product.product_num}/reservation" class="btn btn-primary" id="reserveBtn">예약하기</a>
+						<a href="${contextPath}/board/service" class="btn btn-primary" id="qnaBtn">문의하기</a>
+					</sec:authorize>
+					<sec:authorize access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')">
 						<a href="${contextPath}/products/${product.product_num}/update" class="btn btn-primary" id="reserveBtn">상품 수정</a>
-					</c:if>
+						<a id="deleteBtn" href="${contextPath}/products/${product.product_num}/delete" class="btn btn-primary" id="reserveBtn">상품 삭제</a>
+						<form id="deleteForm">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						</form>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>
@@ -93,4 +103,17 @@
 		</div>
 	</div>
 </section>
+<sec:authorize access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')">
+	<script>
+		$("#deleteBtn").click(function(e) {
+			e.preventDefault();
+			if (window.confirm("정말로 삭제하시겠습니까?")) {
+				const form = $("#deleteForm");
+				form.attr("action", this.href);
+				form.attr("method", "POST");
+				form.submit();
+			}
+		});
+	</script>
+</sec:authorize>
 <%@ include file="../common/footer.jsp" %>

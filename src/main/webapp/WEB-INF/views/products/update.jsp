@@ -88,7 +88,9 @@
             <input class="form-control form-control-sm mb-3" id="inputFile" type="file" name="titleImage" accept="image/*">
             <input type="hidden" id="originalTitleImage" name="originalTitleImage" value="${product.detail_title_image}" />
             <img id="displayImage" class="img-fluid mb-3" alt="" src="${contextPath}/attach${product.detail_title_image}">
-            <button id="updateBtn" class="btn btn-success regist">수정</button>
+            <sec:authorize access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')">
+            	<button id="updateBtn" class="btn btn-success regist">수정</button>
+            </sec:authorize>
         </div>
     </form>
 </section>

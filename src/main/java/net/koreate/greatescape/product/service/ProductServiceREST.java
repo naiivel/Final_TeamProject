@@ -32,5 +32,7 @@ public interface ProductServiceREST {
 
 	int updateViewcnt(HttpServletRequest req, HttpServletResponse res, String id);
 
-	ReservationVO getReservationOfMember(String member_id);
+	ReservationVO getReservationOfMember(String member_id, String product_num);
+
+	int deleteProduct(int id);
 }
