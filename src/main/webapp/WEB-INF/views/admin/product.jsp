@@ -88,6 +88,7 @@
 <form id="jobForm">
 	<input type="hidden" name="page" value="${pm.cri.page}" /> <input
 		type="hidden" name="perPageNum" value="${pm.cri.perPageNum}" />
+		<input id="inputCon" type="hidden" name="continent" >
 </form>
 <script src="${contextPath}/resources/js/popper.min.js"></script>
 <script>
@@ -134,9 +135,9 @@
 		var targetPage = $(this).attr("href");
 
 		var jobForm = $("#jobForm");
-
 		jobForm.find("[name='page']").val(targetPage);
 		jobForm.attr("action", "control").attr("method", "GET");
+		$("#inputCon").val("${param.continent}");
 		jobForm.submit();
 	});
 </script>
