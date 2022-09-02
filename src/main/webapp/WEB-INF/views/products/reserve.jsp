@@ -11,31 +11,50 @@
 						<h3 class="card-title text-center m-0">상품 정보</h3>
 					</div>
 					<div class="card-body">
-						<div class="table-responsive">
-							<table class="table table-borderless" style="font-size: 1rem;">
-								<tr>
-									<th>상품명</th>
-									<td colspan="5">상품명 : ${product.product_name}</td>
-								</tr>
-								<tr>
-									<th>교통편</th>
-									<td colspan="2">${product.product_airplane}</td>
-									<th>여행일정</th>
-									<td colspan="2">${product.product_plan}</td>
-								</tr>
-								<tr>
-									<th>출발일정</th>
-									<td colspan="5">
-										<fmt:formatDate value="${product.product_departure}" pattern="yyyy-MM-dd" />
-									</td>
-								</tr>
-								<tr>
-									<th>도착일정</th>
-									<td colspan="5">
-										<fmt:formatDate value="${product.product_arrive}" pattern="yyyy-MM-dd" />
-									</td>
-								</tr>
-							</table>
+						<div class="mb-3">
+							<span class="fs-6 badge text-bg-primary me-2 p-2">상품명</span>
+							<h4 class="card-title d-inline">${product.product_name}</h4>
+						</div>
+						<div class="row mb-3">
+							<div class="col">
+								<span class="fs-6 badge text-bg-danger me-2 p-2">항공편</span>
+								<span class="card-text d-inline-block">${product.product_airplane}</span>
+							</div>
+							<div class="col">
+								<span class="fs-6 badge text-bg-danger me-2 p-2">잔여좌석</span>
+								<span class="card-text d-inline-block">${product.product_seat}</span>
+								<c:if test="${product.product_seat <= 5}">
+									<span class="ms-2 badge text-bg-danger">마감 임박</span>
+								</c:if>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col">
+								<span class="fs-6 badge text-bg-danger me-2 p-2">성인요금</span>
+								<span class="card-text d-inline-block">
+									<fmt:formatNumber type="number" maxFractionDigits="3" value="${product.product_adult}" />원
+								</span>
+							</div>
+							<div class="col">
+								<span class="fs-6 badge text-bg-danger me-2 p-2">소인요금</span>
+								<span class="card-text d-inline-block">
+									<fmt:formatNumber type="number" maxFractionDigits="3" value="${product.product_minor}" />원
+								</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<span class="fs-6 badge text-bg-danger me-2 p-2">출발일정</span>
+								<span class="card-text d-inline-block">
+									<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${product.product_departure}" />
+								</span>
+							</div>
+							<div class="col">
+								<span class="fs-6 badge text-bg-danger me-2 p-2">도착일정</span>
+								<span class="card-text d-inline-block">
+									<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${product.product_arrive}" />
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -436,7 +455,7 @@
 						<input type="hidden" id="inputMemberId" name="member_id" value="${userInfo.member_id}">
 						<div class="text-center">
 							<button id="reserveBtn" class="btn btn-primary">예약확정</button>
-							<button class="btn btn-warning">취소</button>
+							<button class="btn btn-danger">취소</button>
 						</div>
 					</div>
 				</div>

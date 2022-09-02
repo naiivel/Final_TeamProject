@@ -2,7 +2,6 @@ package net.koreate.greatescape;
 
 
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import net.koreate.greatescape.member.dao.MemberDAO;
 import net.koreate.greatescape.member.vo.MemberVO;
+import net.koreate.greatescape.product.dao.ProductDAO;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,7 +18,10 @@ import net.koreate.greatescape.member.vo.MemberVO;
 public class InsertTest {
 	
 	@Autowired
-	MemberDAO dao;
+	MemberDAO mdao;
+	
+	@Autowired
+	ProductDAO pdao;
 	
 	@Autowired
 	PasswordEncoder encoder;
@@ -28,13 +31,13 @@ public class InsertTest {
 	public void test() throws Exception{
 		vo = new MemberVO("master","master","총관리자","남성","19930330","01064800945","ceo@greatescape.net","Y");
 		vo.setMember_pw(encoder.encode(vo.getMember_pw()));
-		dao.join(vo);
+		mdao.join(vo);
 	}
 	
-	@Test
-	public void ee() {
+//	@Test
+	public void encode() {
 		boolean matches = encoder.matches("pw006","$2a$10$gfe9z3vhFS2koWnFQQFVCu4CpCVIHT.skcCpWpIQ3fX3YrMve9JtK");
 		System.out.println(matches);
 	}
-
+	
 }

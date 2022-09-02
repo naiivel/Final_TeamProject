@@ -29,7 +29,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="net.koreate.greatescape.*.controller, net.koreate.greatescape.*.service" />
-	<context:component-scan base-package="net.koreate.greatescape.common.aop"/>
+	<context:component-scan base-package="net.koreate.greatescape.common.aop, net.koreate.greatescape.common.advice"/>
 	<aop:aspectj-autoproxy/>
 	
 	

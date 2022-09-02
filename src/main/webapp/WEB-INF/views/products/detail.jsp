@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../common/header.jsp" %>
 <link rel="stylesheet" href="${contextPath}/resources/css/detail.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/tiny.css">
 <section class="container mb-3">
 	<div class="row mb-3 pt-1">
 		<div class="aWrap ps-3">
@@ -22,6 +23,10 @@
 		<div class="col-lg-6">
 			<div class="card mb-3">
 				<img src="${contextPath}/attach${product.detail_title_image.replace('s_','')}" class="card-img-top" alt="...">
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="card mb-3">
 				<div class="card-header">
 					<h2 class="fs-5 card-title m-0 p-1">[${product.product_country}/${product.product_city}] ${product.product_name}</h2>
 				</div>
@@ -69,43 +74,45 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row mb-3">
 				<div class="col d-flex justify-content-around">
 					<sec:authorize access="anonymous">
 						<a href="${contextPath}/products/${product.product_num}/reservation" class="btn btn-primary" id="reserveBtn">예약하기</a>
-						<a href="${contextPath}/board/service" class="btn btn-primary" id="qnaBtn">문의하기</a>
+						<a href="${contextPath}/board/faq" class="btn btn-primary" id="qnaBtn">문의하기</a>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_MEMBER')">
 						<a href="${contextPath}/products/${product.product_num}/reservation" class="btn btn-primary" id="reserveBtn">예약하기</a>
-						<a href="${contextPath}/board/service" class="btn btn-primary" id="qnaBtn">문의하기</a>
+						<a href="${contextPath}/board/faq" class="btn btn-primary" id="qnaBtn">문의하기</a>
 					</sec:authorize>
 					<sec:authorize access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')">
 						<a href="${contextPath}/products/${product.product_num}/update" class="btn btn-primary" id="reserveBtn">상품 수정</a>
 						<a id="deleteBtn" href="${contextPath}/products/${product.product_num}/delete" class="btn btn-primary" id="reserveBtn">상품 삭제</a>
-						<form id="deleteForm">
+						<form id="deleteForm" class="d-none">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</form>
 					</sec:authorize>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-6">
-			<div class="card">
-				<div class="card-body border-bottom">
-					<h3 class="card-title m-0 fs-5 mb-3">상품 설명</h3>
-					<p class="card-text">${product.detail_info}</p>
-				</div>
-				<div class="card-body">
-					<h3 class="card-title m-0 fs-5 mb-3">상세 일정</h3>
-					<p class="card-text">${product.detail_schedule}</p>
-				</div>
+	</div>
+	<div class="row px-3">
+		<div class="card mb-3">
+			<div class="card-body border-bottom tiny-p">
+				<h3 class="card-title m-0 fs-5 mb-3">상품 설명</h3>
+				${product.detail_info}
+			</div>
+		</div>
+		<div class="card mb-3">
+			<div class="card-body tiny-p">
+				<h3 class="card-title m-0 fs-5 mb-3">상세 일정</h3>
+				${product.detail_schedule}
 			</div>
 		</div>
 	</div>
 </section>
 <sec:authorize access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')">
 	<script>
-		$("#deleteBtn").click(function(e) {
+		$("#deleteBtn").click(function (e) {
 			e.preventDefault();
 			if (window.confirm("정말로 삭제하시겠습니까?")) {
 				const form = $("#deleteForm");

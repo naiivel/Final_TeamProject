@@ -124,4 +124,14 @@ public class ProductServiceRESTImpl implements ProductServiceREST {
 		return dao.deleteProduct(id);
 	}
 
+	@Override
+	@Transactional
+	public int createHtmlList(int id, List<String> imageNameList) {
+		int result = 0;
+		for (String fileName : imageNameList) {
+			result += dao.createHtmlList(id, fileName);
+		}
+		return result;
+	}
+
 }

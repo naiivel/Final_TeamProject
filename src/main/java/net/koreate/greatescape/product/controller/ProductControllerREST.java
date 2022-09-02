@@ -1,5 +1,6 @@
 package net.koreate.greatescape.product.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -47,8 +48,9 @@ public class ProductControllerREST {
 		return "/products/index";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@PostMapping({"/", ""})
-	public String createProduct(FullProductDTO dto, String departure, String arrive, MultipartFile titleImage, RedirectAttributes rttr) throws Exception {
+	public String createProduct(FullProductDTO dto, String departure, String arrive, MultipartFile titleImage, RedirectAttributes rttr, HttpSession session) throws Exception {
 		String redirectUrl = "redirect:/products/";
 		if (titleImage != null && !titleImage.isEmpty()) {
 			String uploadedName = pfs.uploadFile(titleImage);
@@ -59,13 +61,23 @@ public class ProductControllerREST {
 			dto.setDetail_title_image(uploadedName);
 		}
 		int result = ps.createProduct(dto, departure, arrive);
+		List<String> imageNameList = (List<String>) session.getAttribute("imageNameList");
 		if (result == 2) {
 			rttr.addFlashAttribute("flashMessage", "성공적으로 상품 등록이 완료되었습니다.");
+			if (imageNameList != null) {
+				ps.createHtmlList(dto.getProduct_num(), imageNameList);
+			}
 		} else {
 			rttr.addFlashAttribute("flashMessage", "상품 등록 중 오류가 발생하였습니다.");
+			if (imageNameList != null) {
+				for (String fileName : imageNameList) {
+					pfs.deleteFile(fileName);
+				}
+			}
 		}
 		int id = dto.getProduct_num();
 		if (id != 0) return redirectUrl + id;
+		session.removeAttribute("imageNameList");
 		return redirectUrl + "new";
 	}
 	
@@ -152,8 +164,9 @@ public class ProductControllerREST {
 		return "/products/update";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@PostMapping("/{id}/update")
-	public String updateProduct(@PathVariable int id, String originalTitleImage, MultipartFile titleImage, FullProductDTO dto, String departure, String arrive, RedirectAttributes rttr) throws Exception {
+	public String updateProduct(@PathVariable int id, String originalTitleImage, MultipartFile titleImage, FullProductDTO dto, String departure, String arrive, RedirectAttributes rttr, HttpSession session) throws Exception {
 		String redirectUrl = "redirect:/products/" + id; 
 		if (titleImage != null && !titleImage.isEmpty()) {
 			String uploadedName = pfs.updateFile(originalTitleImage, titleImage);
@@ -166,19 +179,30 @@ public class ProductControllerREST {
 			dto.setDetail_title_image(originalTitleImage);
 		}
 		int result = ps.updateProduct(id, dto, departure, arrive);
+		List<String> imageNameList = (List<String>) session.getAttribute("imageNameList");
 		if (result == 0) {
 			redirectUrl += "/update";
 			rttr.addFlashAttribute("flashMessage", "수정 중 오류가 발생하였습니다.");
+			if (imageNameList != null) {
+				for (String fileName : imageNameList) {
+					pfs.deleteFile(fileName);
+				}
+			}
 		} else {
 			rttr.addFlashAttribute("flashMessage", "정상적으로 수정이 완료되었습니다.");
+			if (imageNameList != null) {
+				ps.createHtmlList(id, imageNameList);
+			}
 		}
+		session.removeAttribute("imageNameList");
 		return redirectUrl;
 	}
 	
 	
 	@PostMapping("/{id}/delete")
-	public String deleteProduct(@PathVariable int id, RedirectAttributes rttr) {
+	public String deleteProduct(@PathVariable int id, RedirectAttributes rttr) throws Exception {
 		String redirectUrl = "redirect:/products/";
+		pfs.deleteFileById(id);
 		int result = ps.deleteProduct(id);
 		if (result > 0) {
 			rttr.addFlashAttribute("flashMessage", "정상적으로 삭제가 완료되었습니다.");
@@ -189,10 +213,16 @@ public class ProductControllerREST {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@PostMapping("/htmlImage")
 	@ResponseBody
-	public Location uploadHtmlImage(MultipartFile file) throws Exception {
-		String uploadedName = pfs.uploadHtmlImage(file);
+	public Location uploadHtmlImage(MultipartFile file, HttpSession session) throws Exception {
+		List<String> imageNameList = (List<String>) session.getAttribute("imageNameList");
+		if (imageNameList == null) {
+			imageNameList = new ArrayList<String>();
+			session.setAttribute("imageNameList", imageNameList);
+		}
+		String uploadedName = pfs.uploadHtmlImage(file, imageNameList);
 		return new Location(uploadedName);
 	}
 	
@@ -203,15 +233,6 @@ public class ProductControllerREST {
 		private final String location;
 	}
 	 
-	
-
-	@ExceptionHandler
-	public String exceptionHandler(Exception e, RedirectAttributes rttr) {
-		e.printStackTrace();
-		rttr.addFlashAttribute("flashMessage", "예상치 못한 오류가 발생하였습니다! 관리자에게 문의하여 주세요!");
-		return "redirect:/";
-	}
-	
 	private void listSplitAndAdd(Model model, List<ProductVO> list) {
 		Set<String> countrySet = new HashSet<>();
 		list.stream().forEach(p -> countrySet.add(p.getProduct_country()));

@@ -7,6 +7,6 @@
 	font-weight: 400;
 }
 
-img {
+.card-img-top {
 	max-height: 500px !important;
 }
