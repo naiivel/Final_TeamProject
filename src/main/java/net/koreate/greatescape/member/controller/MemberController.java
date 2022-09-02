@@ -438,7 +438,7 @@ public class MemberController {
 		model.addAttribute("member",member);
 		model.addAttribute("product",product);
 		model.addAttribute("reservation",reserv);
-		model.addAttribute("tripInfo",tripInfo);
+		model.addAttribute("tripInfo",tripInfo.getDetail_info());
 		
 		
 		return "admin/indexProduct";

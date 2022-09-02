@@ -26,8 +26,8 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item" href="${contextPath}/member/adminPage">전체</a></li>
-						<li><a class="dropdown-item" href="${contextPath}/member/adminPage/?type=회원">회원</a></li>
-						<li><a class="dropdown-item" href="${contextPath}/member/adminPage/?type=관리자">관리자</a></li>
+						<li><a class="dropdown-item" href="${contextPath}/member/adminPage?type=회원">회원</a></li>
+						<li><a class="dropdown-item" href="${contextPath}/member/adminPage?type=관리자">관리자</a></li>
 					</ul>
 				</div>
 			</div>
@@ -98,6 +98,7 @@
 	<form id="jobForm">
 		<input type="hidden" name="page" value="${pm.cri.page}" /> 
 		<input type="hidden" name="perPageNum" value="${pm.cri.perPageNum}" />
+		<input id="inputCon" type="hidden" name="type" />
 	</form>
 
 <script src="${contextPath}/resources/js/popper.min.js"></script>
@@ -115,6 +116,7 @@
 		
 		jobForm.find("[name='page']").val(targetPage);
 		jobForm.attr("action","adminPage").attr("method","GET");
+		$("#inputCon").val("${param.type}");
 		jobForm.submit();
 	});
 	
