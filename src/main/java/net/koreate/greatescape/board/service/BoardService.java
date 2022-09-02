@@ -98,7 +98,9 @@ public interface BoardService {
 	PageMaker getInformPageMaker(SearchCriteria cri) throws Exception;
 	List<NoticeBoardVO> mofaList(SearchCriteria cri) throws Exception;
 	PageMaker mofaPageMaker(SearchCriteria cri) throws Exception;
-	
+
+	//삭제
+	void deleteNotice(int notice_num);
 	
 	
 	

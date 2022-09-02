@@ -18,7 +18,6 @@
 			<h2 class="mb-4">질문과 답변</h2>
 			<div class="card mb-5">
 				<div class="card-header">
-					<button class="btn-close float-end"></button>
 					<h3 class="card-title">${qna.qna_title}</h3>
 					작성자:<p id="writer" class="card-text text-muted d-inline">&nbsp;${qna.qna_writer}</p><br/>
 					작성일:<p class="card-text text-muted d-inline">&nbsp;<f:formatDate value="${qna.qna_regdate}" pattern="yyyy.MM.dd" /></p>

@@ -81,7 +81,6 @@ public class BoardQueryProvider {
 		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
 		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 

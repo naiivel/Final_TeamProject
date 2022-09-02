@@ -160,6 +160,16 @@
 		faqnum = num;
 		console.log(faqnum)
 	}
+	function clickDel(formName) {
+		for (var tag of formName) {
+			if (tag.faq_num.value == faqnum) {
+				tag.action = "${contextPath}/board/faqDelete";
+				tag.method = "post";
+				tag.submit();
+			}
+		}
+	}
+	
 	var userInfo= "<%=session.getAttribute("userInfo")%>";
 	var userMaster= '${userInfo.member_master}';
 	
@@ -207,16 +217,6 @@
 		$(this).toggleClass("active");
 		location.href="${contextPath}/board/faq/other";
 	});
-	
-	function clickDel(formName) {
-		for (var tag of formName) {
-			if (tag.faq_num.value == faqnum) {
-				tag.action = "${contextPath}/board/faqDelete";
-				tag.method = "post";
-				tag.submit();
-			}
-		}
-	}
 	
 	$("#btnSearch").click(function(){
 		location.href="${contextPath}/board/faq?keyword="+$("#keyword").val();

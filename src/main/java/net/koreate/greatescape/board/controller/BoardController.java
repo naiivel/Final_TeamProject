@@ -176,6 +176,14 @@ public class BoardController {
 		return "board/noticeDetail";
 	}
 	
+	//공지삭제 (관리자)
+	@PostMapping("noticeDelete")
+	public String noticeDelete(@RequestParam("notice_num")int notice_num, HttpServletRequest request) throws Exception {
+		int noticeNum= Integer.parseInt(request.getParameter("notice_num"));
+		bs.deleteNotice(noticeNum);
+		return "redirect:notice";
+	}
+
 	/********************** qna ************************/
 	//문답 리스트(아무나)
 	@GetMapping("/qna")

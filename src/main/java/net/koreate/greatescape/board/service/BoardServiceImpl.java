@@ -255,4 +255,9 @@ public class BoardServiceImpl implements BoardService {
 		return pm;
 	}
 
+	@Override
+	public void deleteNotice(int notice_num) {
+		bdao.deleteNotice(notice_num);
+	}
+
 }

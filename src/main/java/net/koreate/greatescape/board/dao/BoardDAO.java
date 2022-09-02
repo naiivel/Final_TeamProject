@@ -145,4 +145,7 @@ public interface BoardDAO {
 	@Select("SELECT count(*) FROM tbl_notice WHERE notice_category = '외교부소식'")
 	int getMofaCount(SearchCriteria cri);
 
+	@Delete("DELETE FROM tbl_notice WHERE notice_num=#{notice_num}")
+	void deleteNotice(int notice_num);
+
 }
