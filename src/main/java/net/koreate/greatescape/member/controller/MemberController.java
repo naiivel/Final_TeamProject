@@ -570,6 +570,8 @@ public class MemberController {
 		return "admin/product";
 	}
 	
+	
+	
 	//(관리자) 체크된 상품 삭제하기
 	@PostMapping("deleteP")
 	public String deleteP(HttpServletRequest request)throws Exception{
