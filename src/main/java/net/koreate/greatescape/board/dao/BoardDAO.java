@@ -164,6 +164,12 @@ public interface BoardDAO {
 	@Select("SELECT count(*) FROM tbl_notice WHERE notice_category = '외교부소식'")
 	int getMofaCount(SearchCriteria cri);
 
+	@Insert("INSERT INTO tbl_notice_file VALUES (LAST_INSERT_ID(), #{uploadFileName})")
+	int addFile(String uploadFileName);
+
+	@Select("SELECT notice_fileName FROM tbl_notice_file WHERE notice_num = #{notice_num}")
+	List<String> getFileNameList(int notice_num);
+
 
 
 		

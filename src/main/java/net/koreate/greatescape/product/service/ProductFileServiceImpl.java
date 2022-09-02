@@ -52,6 +52,7 @@ public class ProductFileServiceImpl implements ProductFileService {
 	public String uploadHtmlImage(MultipartFile file, List<String> imageNameList) throws Exception {
 		String uploadedName = uploadFile(file);
 		imageNameList.add(uploadedName);
+		dao.addHTMLImage(uploadedName);
 		uploadedName = context.getContextPath() + "/" + uploadFolder + uploadedName;
 		return uploadedName;
 	}

@@ -29,6 +29,14 @@
 				<div class="card-body">
 					<p class="catd-text">${notice.notice_content }</p>
 				</div>
+				<c:if test="${!empty files}">
+					<div class="card-footer">
+						<p class="card-text">첨부파일</p>					
+						<c:forEach var="file" items="${files}">
+							<a class="d-block" href="${contextPath}/attach${file}">${file.substring(file.lastIndexOf("_") + 1)}</a>
+						</c:forEach>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</div>

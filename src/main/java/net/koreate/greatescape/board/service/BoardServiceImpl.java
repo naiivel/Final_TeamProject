@@ -1,8 +1,13 @@
 package net.koreate.greatescape.board.service;
 
+import java.io.File;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import net.koreate.greatescape.board.dao.BoardDAO;
@@ -10,6 +15,8 @@ import net.koreate.greatescape.board.vo.CommentVO;
 import net.koreate.greatescape.board.vo.FAQBoardVO;
 import net.koreate.greatescape.board.vo.NoticeBoardVO;
 import net.koreate.greatescape.board.vo.QNABoardVO;
+import net.koreate.greatescape.product.dao.ProductDAO;
+import net.koreate.greatescape.utils.FileUtils;
 import net.koreate.greatescape.utils.PageMaker;
 import net.koreate.greatescape.utils.SearchCriteria;
 import net.koreate.greatescape.utils.SearchPageMaker;
@@ -19,7 +26,19 @@ import net.koreate.greatescape.utils.SearchPageMaker;
 public class BoardServiceImpl implements BoardService {
 
 	private final BoardDAO bdao;
+	private final String uploadFolder;
+	private final ServletContext context;
+	private String realPath;
 	
+
+	@PostConstruct
+	public void initPath() {
+		realPath = context.getRealPath(File.separator + uploadFolder);
+		File file = new File(realPath);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+	}
 	
 	
 	/****************************** FAQ ************************************/
@@ -316,6 +335,21 @@ public class BoardServiceImpl implements BoardService {
 		pm.setCri(cri);
 		pm.setTotalCount(totalCount);
 		return pm;
+	}
+
+	@Override
+	public boolean fileUpload(MultipartFile[] files) throws Exception {
+		int result = 0;
+		for (MultipartFile file : files) {
+			String uploadFileName = FileUtils.uploadFile(realPath, file);
+			result += bdao.addFile(uploadFileName);
+		}
+		return result > 0 ? true : false;
+	}
+
+	@Override
+	public List<String> getFileNameList(int notice_num) throws Exception {
+		return bdao.getFileNameList(notice_num);
 	}
 
 	
