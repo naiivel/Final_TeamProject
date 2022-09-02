@@ -29,7 +29,6 @@
 			</div>
 			
 			<c:if test="${!empty commentList }">
-
 				<div class="card" >
 					<div class="card-header">등록된 답변</div>
 					<ul class="list-group list-group-flush">
@@ -64,81 +63,56 @@
 </section>
 <script src="https://cdn.tiny.cloud/1/mreuxwvmvo99s2c3asxl4t6ujhyqgni44dt6mle4qlfz9pq6/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
-    tinymce.init({
-        selector: '.mytextarea',
-        height: 500,
-        language: 'ko_KR',
-        plugins: [
-            'advlist autolink link image lists charmap print preview hr anchor pagebreak',
-            'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-            'table emoticons template paste help'
-        ],
-        toolbar: 'undo redo | styleselect | bold italic image | alignleft aligncenter alignright alignjustify | outdent indent',
-        menubar: false,
-        image_title: true,
-        images_upload_url: '${contextPath}/products/htmlImage',
-        images_reuse_filename: true,
-        relative_urls: false,
-        file_picker_types: 'image',
-        file_picker_callback: function (cb, value, meta) {
-            var input = document.createElement('input');
-            input.setAttribute('type', 'file');
-            input.setAttribute('accept', 'image/*');
-            input.onchange = function () {
-                var file = this.files[0];
-                var reader = new FileReader();
-                reader.onload = function () {
-                    var id = 'blobid' + (new Date()).getTime();
-                    var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                    var base64 = reader.result.split(',')[1];
-                    var blobInfo = blobCache.create(id, file, base64);
-                    blobCache.add(blobInfo);
-                    cb(blobInfo.blobUri(), { title: file.name });
-                };
-                reader.readAsDataURL(file);
-            }
-            input.click();
-        }
-    });
+	tinymce.init({
+				selector : '.mytextarea',
+				height : 300,
+				language : 'ko_KR',
+				plugins : [
+						'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+						'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+						'table emoticons template paste help' ],
+				toolbar : 'undo redo | styleselect | bold italic image | alignleft aligncenter alignright alignjustify | outdent indent',
+				menubar : false,
+				image_title : true,
+				images_upload_url : '${contextPath}/products/htmlImage',
+				images_reuse_filename : true,
+				relative_urls : false,
+				file_picker_types : 'image',
+				file_picker_callback : function(cb, value, meta) {
+					var input = document.createElement('input');
+					input.setAttribute('type', 'file');
+					input.setAttribute('accept', 'image/*');
+					input.onchange = function() {
+						var file = this.files[0];
+						var reader = new FileReader();
+						reader.onload = function() {
+							var id = 'blobid' + (new Date()).getTime();
+							var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+							var base64 = reader.result.split(',')[1];
+							var blobInfo = blobCache.create(id, file, base64);
+							blobCache.add(blobInfo);
+							cb(blobInfo.blobUri(), {
+								title : file.name
+							});
+						};
+						reader.readAsDataURL(file);
+					}
+					input.click();
+				}
+			});
 </script>
 <script>
 	window.onload= function(){
 		getCommentList();
 	};
 	
-	
-	var qnaWriter='${qna.qna_writer}';
-	console.log(qnaWriter);
-	console.log(maskingName(qnaWriter));
-	
-	$("#writer").text(maskingName(qnaWriter));
-	
-	function maskingName(strName){
-	if (strName.length > 2) {
-		var originName = strName.split('');
-		originName.forEach(function(name, i) {
-			if (i === 0 || i === originName.length - 1) return;
-			originName[i] = '*';
-			});
-		var joinName = originName.join();
-			return joinName.replace(/,/g, '');
-	} else {
-		var pattern = /.$/; 
-		return strName.replace(pattern, '*');
-	  }
-	};
-	
-	
-	
 	function getCommentList(){
 		var qna_num= $('input[name=qna_num]').val();
 		$.ajax({
 			type: 'GET', url:"getCommentList", data:{"qna_num":qna_num},
-			beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
-			success: function(result) {
+			beforeSend : function(xhr) { 
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			}, success: function(result) {
 				for(var i=0; i<result.length; i++){
 					var str='<div class="comment">';
 					str += '관리자 답변';
@@ -150,19 +124,7 @@
 			},error: function(err){
 				console.log("안되누");
 			} 
-		});//ajax
-			
-			
+		});//ajax			
 	}
-		
-		
-	
-	
-	
-	
-	
-	
-	
 </script>
-
 <%@ include file="../common/footer.jsp" %>

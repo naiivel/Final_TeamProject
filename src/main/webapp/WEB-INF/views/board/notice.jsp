@@ -101,31 +101,20 @@
 	</div>
 </section>
 <script>
-
 	$("#addBtn").click(function() {
 		location.href = "${contextPath}/board/noticeWrite";
 	});
 	
 	$("#all").on("click", function() {
-		
-		let notice_category = $(this).val();
-		console.log("notice_category: ", notice_category);
 		location.href="${contextPath}/board/notice";
 	});
 
 	$("#notice").on("click", function(){
-		$(this).toggleClass("active");
-		$("#mofa").removeClass("active");
-		
 		location.href="${contextPath}/board/notice/inform";
 	});
 	
 	$("#mofa").on("click", function(){
-		$(this).toggleClass("active");
-		$("#notice").removeClass("active");
-		
 		location.href="${contextPath}/board/notice/mofa";
 	});
-	
 </script>
 <%@ include file="../common/footer.jsp"%>

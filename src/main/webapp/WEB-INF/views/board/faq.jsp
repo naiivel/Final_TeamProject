@@ -161,7 +161,6 @@
 		console.log(faqnum)
 	}
 	var userInfo= "<%=session.getAttribute("userInfo")%>";
-	console.log("userInfo: "+userInfo);
 	var userMaster= '${userInfo.member_master}';
 	
 	$("#addBtn").click(function() {
@@ -185,52 +184,27 @@
 	});
 
 	$("#trip").on("click", function() {
-		$(this).toggleClass("active");
-		$("#airline").removeClass("active");
-		$("#passport").removeClass("active");
-		$("#reservation").removeClass("active");
-		$("#other").removeClass("active");
-		
+		$(this).toggleClass("active ''");
 		location.href="${contextPath}/board/faq/trip";
 	});
 	
 	$("#airline").on("click", function() {
 		$(this).toggleClass("active");
-		$("#trip").removeClass("active");
-		$("#passport").removeClass("active");
-		$("#reservation").removeClass("active");
-		$("#other").removeClass("active");
-		
 		location.href="${contextPath}/board/faq/airline";
 	});
 
 	$("#reservation").on("click", function() {
 		$(this).toggleClass("active");
-		$("#airline").removeClass("active");
-		$("#passport").removeClass("active");
-		$("#trip").removeClass("active");
-		$("#other").removeClass("active");
-		
 		location.href="${contextPath}/board/faq/reserv";
 	});
 
 	$("#passport").on("click", function() {
 		$(this).toggleClass("active");
-		$("#airline").removeClass("active");
-		$("#trip").removeClass("active");
-		$("#reservation").removeClass("active");
-		$("#other").removeClass("active");
-		
 		location.href="${contextPath}/board/faq/pass";
 	});
 
 	$("#other").on("click", function() {
 		$(this).toggleClass("active");
-		$("#airline").removeClass("active");
-		$("#passport").removeClass("active");
-		$("#reservation").removeClass("active");
-		$("#trip").removeClass("active");
-		
 		location.href="${contextPath}/board/faq/other";
 	});
 	
@@ -246,10 +220,9 @@
 	
 	$("#btnSearch").click(function(){
 		location.href="${contextPath}/board/faq?keyword="+$("#keyword").val();
-		
 	});
 	
-	$('input[type="text"]').keydown(function() {
+	$('input[name="keyword"]').keydown(function() {
 		if (event.keyCode === 13) {
 			event.preventDefault();
 			$("#btnSearch").click();

@@ -36,9 +36,7 @@ import net.koreate.greatescape.utils.SearchCriteria;
 public class BoardController {
 
 	private final BoardService bs;
-	
 	/****************** faq 자주묻는질문******************/
-	
 	//글작성(관리자)
 	@GetMapping("faqWrite")
 	public String faqWrite() throws Exception{
@@ -48,45 +46,35 @@ public class BoardController {
 	@PostMapping("faqWrite")
 	public String writeFAQ( @RequestParam("faq_category")String faq_category, 
 			@RequestParam("faq_title")String faq_title, @RequestParam("faq_content")String faq_content) throws Exception {
-		
 		FAQBoardVO vo= new FAQBoardVO(faq_category,faq_title,faq_content);
 		bs.writeFAQ(vo);
-		System.out.println("controller-writeFAQ: "+vo);
 		return "redirect:faq";
 	}
 
 	//faq 리스트(아무나 가능)
 	@GetMapping("faq")
 	public ModelAndView faqList(ModelAndView mav, SearchCriteria cri) throws Exception {
-		
 		mav.setViewName("board/faq");
-		System.out.println("list: "+cri);
 		List<FAQBoardVO> list = bs.faqList(cri);
 		mav.addObject("list",list);
 		PageMaker pm= bs.getPageMaker(cri);
-		System.out.println("pm: "+pm);
 		mav.addObject("pm",pm);
 		return mav;
 	}
 	
 	@GetMapping("faq/trip")
 	public ModelAndView tripList(ModelAndView mav, SearchCriteria cri) throws Exception {
-		
 		mav.setViewName("board/faq");
-		System.out.println("list: "+cri);
 		List<FAQBoardVO> list = bs.getTripList(cri);
 		mav.addObject("list",list);
 		PageMaker pm= bs.getTripPageMaker(cri);
-		System.out.println("pm: "+pm);
 		mav.addObject("pm",pm);
 		return mav;
 	}
 	
 	@GetMapping("faq/reserv")
 	public ModelAndView reservList(ModelAndView mav, SearchCriteria cri) throws Exception {
-		
 		mav.setViewName("board/faq");
-		System.out.println("list: "+cri);
 		List<FAQBoardVO> list = bs.getReservList(cri);
 		mav.addObject("list",list);
 		PageMaker pm= bs.getReservPageMaker(cri);
@@ -97,39 +85,30 @@ public class BoardController {
 	
 	@GetMapping("faq/airline")
 	public ModelAndView airlineList(ModelAndView mav, SearchCriteria cri) throws Exception {
-		
 		mav.setViewName("board/faq");
-		System.out.println("list: "+cri);
 		List<FAQBoardVO> list = bs.getAirlineList(cri);
 		mav.addObject("list",list);
 		PageMaker pm= bs.getAirlinePageMaker(cri);
-		System.out.println("pm: "+pm);
 		mav.addObject("pm",pm);
 		return mav;
 	}
 	
 	@GetMapping("faq/pass")
 	public ModelAndView passList(ModelAndView mav, SearchCriteria cri) throws Exception {
-		
 		mav.setViewName("board/faq");
-		System.out.println("list: "+cri);
 		List<FAQBoardVO> list = bs.getPassList(cri);
 		mav.addObject("list",list);
 		PageMaker pm= bs.getPassPageMaker(cri);
-		System.out.println("pm: "+pm);
 		mav.addObject("pm",pm);
 		return mav;
 	}
 	
 	@GetMapping("faq/other")
 	public ModelAndView otherList(ModelAndView mav, SearchCriteria cri) throws Exception {
-		
 		mav.setViewName("board/faq");
-		System.out.println("list: "+cri);
 		List<FAQBoardVO> list = bs.getOtherList(cri);
 		mav.addObject("list",list);
 		PageMaker pm= bs.getOtherPageMaker(cri);
-		System.out.println("pm: "+pm);
 		mav.addObject("pm",pm);
 		return mav;
 	}
@@ -145,48 +124,33 @@ public class BoardController {
 	
 	//공지리스트(아무나)
 	@GetMapping("notice")
-	public ModelAndView noticeList(ModelAndView mav, SearchCriteria cri) throws Exception {
-		
+	public ModelAndView noticeList(ModelAndView mav, SearchCriteria cri) throws Exception {		
 		List<NoticeBoardVO> noticeList = bs.noticeList(cri);
 		PageMaker pm= bs.getNoticePageMaker(cri);
-		System.out.println("noticeList: "+noticeList);
-		System.out.println("pm: "+pm);
-		
 		mav.addObject("noticeList",noticeList);
 		mav.addObject("pm",pm);
 		mav.setViewName("board/notice");
-		
 		return mav;
 	}
 	//카테고리가 공지사항인 notice
 	@GetMapping("notice/inform")
 	public ModelAndView informList(ModelAndView mav, SearchCriteria cri) throws Exception {
-		
 		List<NoticeBoardVO> informList = bs.informList(cri);
 		PageMaker pm= bs.getInformPageMaker(cri);
-		System.out.println("noticeList: "+informList);
-		System.out.println("pm: "+pm);
-		
 		mav.addObject("noticeList",informList);
 		mav.addObject("pm",pm);
 		mav.setViewName("board/notice");
-		
 		return mav;
 	}
 	
 	//카테고리가 외교부인 notice
 	@GetMapping("notice/mofa")
 	public ModelAndView mofaList(ModelAndView mav, SearchCriteria cri) throws Exception {
-		
 		List<NoticeBoardVO> mofaList = bs.mofaList(cri);
 		PageMaker pm= bs.mofaPageMaker(cri);
-		System.out.println("noticeList: "+mofaList);
-		System.out.println("pm: "+pm);
-		
 		mav.addObject("noticeList",mofaList);
 		mav.addObject("pm",pm);
 		mav.setViewName("board/notice");
-		
 		return mav;
 	}
 	
@@ -199,10 +163,8 @@ public class BoardController {
 	@PostMapping("noticeWrite")
 	public String writeNotice( @RequestParam("notice_category")String notice_category, 
 			@RequestParam("notice_title")String notice_title, @RequestParam("notice_content")String notice_content) throws Exception {
-		
 		NoticeBoardVO vo= new NoticeBoardVO(notice_category,notice_title,notice_content);
 		bs.writeNotice(vo);
-		System.out.println("controller 에서 vo : "+vo);
 		return "redirect:notice";
 	}
 	
@@ -214,24 +176,17 @@ public class BoardController {
 		return "board/noticeDetail";
 	}
 	
-	
 	/********************** qna ************************/
 	//문답 리스트(아무나)
 	@GetMapping("/qna")
 	public ModelAndView qna(ModelAndView mav, SearchCriteria cri) throws Exception {
-		
 		List<NoticeBoardVO> qnaNoticeList = bs.qnaNoticeList();
 		mav.addObject("qnaNoticeList",qnaNoticeList);
-		System.out.println("qnaNoticeList: "+qnaNoticeList);
-		
 		List<QNABoardVO> qnaList = bs.getQnaList(cri);
-		
 		PageMaker pm= bs.getQnaPageMaker(cri);
-		System.out.println("qnaPM: "+pm);
 		mav.addObject("qnaList",qnaList);
 		mav.addObject("pm",pm);
 		mav.setViewName("board/qna");
-		
 		return mav;
 	}
 	
@@ -253,12 +208,10 @@ public class BoardController {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		if(loginMember == null) {
-			
 			out.print("<script>");
 			out.print("alert('로그인이 필요한 서비스입니다.');");
 			out.print("location.href='"+request.getContextPath()+"/member/login'");
 			out.print("</script>");
-			
 		} 
 		return "board/qnaWrite";
 	}
@@ -269,7 +222,6 @@ public class BoardController {
 		QNABoardVO vo= new QNABoardVO(qna_title, qna_question, qna_writer);
 		vo.setMember_num(member_num);
 		bs.writeQNA(vo);
-		System.out.println("controller 에서 vo : "+vo);
 		return "redirect:qna";
 	}
 	
@@ -278,15 +230,12 @@ public class BoardController {
 	public String addComment(@RequestParam("qna_num")int qna_num, @RequestParam("qna_answer")String qna_answer,
 			@RequestParam("comment_writer")String comment_writer) throws Exception{
 		CommentVO vo= new CommentVO();
-		
 		vo.setQna_num(qna_num);
 		vo.setQna_answer(qna_answer);
 		vo.setComment_writer(comment_writer);
-		System.out.println("CommentVO: "+vo);
 		bs.addComment(vo);
 		bs.updateQNAanswer(vo);
 		String redirectURL="redirect:qnaDetail?qna_num="+qna_num;
-		
 		return redirectURL;
 	}
 	//댓글리스트(회원, 관리자)
@@ -296,7 +245,6 @@ public class BoardController {
 		CommentVO vo= new CommentVO();
 		vo.setQna_num(qna_num);
 		return bs.getCommentList(qna_num);
-		
 	}
 	
 	//내가 쓴 qna(회원, 관리자)
@@ -316,7 +264,6 @@ public class BoardController {
 		mav.addObject("pm",pm);
 		return mav;
 	}
-	
 	//확인중인 qna(아무나)
 	@GetMapping("qna/checking")
 	public ModelAndView checkingQNAList(ModelAndView mav, SearchCriteria cri) throws Exception{
@@ -327,7 +274,6 @@ public class BoardController {
 		mav.setViewName("board/qna");
 		PageMaker pm= bs.getQnaPageMaker(cri);
 		mav.addObject("pm",pm);
-		
 		return mav;
 	}
 	
@@ -344,7 +290,4 @@ public class BoardController {
 		return mav;
 	}
 }
-
-
-
 
