@@ -56,8 +56,7 @@
 				<div class="modal-footer">
 					<button id="btnDelCancel" type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">취소</button>
-					<button id="btnDelAgree" type="button" class="btn btn-primary"
-						>삭제</button>
+					<button id="btnDelAgree" type="button" class="btn btn-primary">삭제</button>
 				</div>
 			</div>
 		</div>
