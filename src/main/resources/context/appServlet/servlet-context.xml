@@ -29,8 +29,11 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="net.koreate.greatescape.*.controller, net.koreate.greatescape.*.service" />
-	<context:component-scan base-package="net.koreate.greatescape.common.aop, net.koreate.greatescape.common.advice"/>
+	<context:component-scan base-package="net.koreate.greatescape.common.aop, net.koreate.greatescape.common.advice, net.koreate.greatescape.common.task"/>
 	<aop:aspectj-autoproxy/>
+	
+	<!-- @Scheduled 등록된 빈(@Component)의 작업 등록 -->
+	<task:annotation-driven />
 	
 	
 </beans:beans>

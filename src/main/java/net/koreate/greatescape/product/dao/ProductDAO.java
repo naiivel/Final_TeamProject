@@ -62,7 +62,7 @@ public interface ProductDAO {
 	@Delete("DELETE FROM tbl_product WHERE product_num = #{id}")
 	int deleteProduct(int id);
 
-	@Insert("INSERT INTO tbl_product_html VALUES (#{id}, #{fileName})")
+	@Update("UPDATE tbl_product_html SET product_num = #{id} WHERE file_name = #{fileName}")
 	int createHtmlList(@Param("id") int id, @Param("fileName") String fileName);
 
 	@Select("SELECT file_name FROM tbl_product_html WHERE product_num = #{id}")
@@ -70,4 +70,13 @@ public interface ProductDAO {
 
 	@Delete("DELETE FROM tbl_product_html WHERE product_num = #{id}")
 	void deleteFileNameList(int id);
+
+	@Insert("INSERT INTO tbl_product_html (file_name) VALUES (#{uploadedName})")
+	int addHTMLImage(String uploadedName);
+	
+	@Select("SELECT file_name FROM tbl_product_html WHERE product_num IS NULL")
+	List<String> getTrashList();
+
+	@Delete("DELETE FROM tbl_product_html WHERE product_num IS NULL")
+	void deleteTrashList();
 }
