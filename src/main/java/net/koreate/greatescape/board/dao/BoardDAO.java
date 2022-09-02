@@ -30,11 +30,44 @@ public interface BoardDAO {
 	@SelectProvider(type=BoardQueryProvider.class, method="getSearchFAQList")
 	List<FAQBoardVO> getFAQList(SearchCriteria cri) throws Exception;
 	
+	@SelectProvider(type=BoardQueryProvider.class, method="getSearchOtherList")
+	List<FAQBoardVO> getOtherList(SearchCriteria cri);
+
+	@SelectProvider(type=BoardQueryProvider.class, method="getSearchReservList")
+	List<FAQBoardVO> getReservList(SearchCriteria cri);
+
+	@SelectProvider(type=BoardQueryProvider.class, method="getSearchTripList")
+	List<FAQBoardVO> getTripList(SearchCriteria cri);
+
+	@SelectProvider(type=BoardQueryProvider.class, method="getSearchAirlineList")
+	List<FAQBoardVO> getAirlineList(SearchCriteria cri);
+
+	@SelectProvider(type=BoardQueryProvider.class, method="getSearchPassList")
+	List<FAQBoardVO> getPassList(SearchCriteria cri);
+
+	
+	
 	//@SelectProvider(type=BoardQueryProvider.class, method="getCategoryList")
 	
 	@Select("select * from tbl_faq where faq_category = #{category} order by faq_num desc limit #{cri.startRow}, #{cri.perPageNum}")
 	List<FAQBoardVO> getCategoryList(@Param("cri") SearchCriteria cri, @Param("category")String faq_category );
 	
+	@SelectProvider(type=BoardQueryProvider.class, method="searchOtherCount")
+	int getOtherCount(SearchCriteria cri);
+
+	@SelectProvider(type=BoardQueryProvider.class, method="searchReservCount")
+	int getReservCount(SearchCriteria cri);
+
+	@SelectProvider(type=BoardQueryProvider.class, method="searchPassCount")
+	int getPassCount(SearchCriteria cri);
+
+	@SelectProvider(type=BoardQueryProvider.class, method="searchAirlineCount")
+	int getAirlineCount(SearchCriteria cri);
+
+	@SelectProvider(type=BoardQueryProvider.class, method="searchTripCount")
+	int getTripCount(SearchCriteria cri);
+
+
 	//글 쓰기
 	@Insert("INSERT INTO tbl_faq VALUES(null, #{faq_category}, #{faq_title}, #{faq_content})")
 	void writeFAQ(FAQBoardVO fvo) throws Exception;
@@ -81,11 +114,18 @@ public interface BoardDAO {
 	
 	@Update("UPDATE tbl_qna SET qna_answer = #{qna_answer} WHERE qna_num=#{qna_num}")
 	void updateQNAanswer(CommentVO vo);
+	
+	//내가쓴 qna리스트
+	@Select("SELECT qna.* FROM tbl_qna AS qna NATURAL JOIN tbl_member AS mem WHERE mem.member_num=#{member_num} ORDER BY qna_num DESC limit #{cri.startRow}, #{cri.perPageNum}")
+	List<QNABoardVO> myQNAList(@Param("cri")SearchCriteria cri, @Param("member_num")int member_num);
 
-	
-	//글 수정
-	
-	//글 삭제
+	//확인중
+	@Select("SELECT * FROM tbl_qna WHERE qna_answer IS NULL ORDER BY qna_num DESC limit #{cri.startRow}, #{cri.perPageNum}")
+	List<QNABoardVO> getCheckingList(@Param("cri")SearchCriteria cri);
+
+	//답변끝
+	@Select("SELECT * FROM tbl_qna WHERE qna_answer IS NOT NULL ORDER BY qna_num DESC  limit #{cri.startRow}, #{cri.perPageNum}")
+	List<QNABoardVO> getChekedList(@Param("cri")SearchCriteria cri);
 	
 	/***************************** Notice **********************************/
 	@SelectProvider(type=BoardQueryProvider.class, method="getNoticeCount")
@@ -111,32 +151,20 @@ public interface BoardDAO {
 	@Select("SELECT count(*) FROM tbl_notice WHERE notice_category=#{category} limit #{cri.startRow}, #{cri.perPageNum}")
 	int getNoticeCategoryCount(@Param("cri")SearchCriteria cri, @Param("category")String category) throws Exception;
 
-	//내가쓴 qna리스트
-	@Select("SELECT qna.* FROM tbl_qna AS qna NATURAL JOIN tbl_member AS mem WHERE mem.member_num=#{member_num} ORDER BY qna_num DESC limit #{cri.startRow}, #{cri.perPageNum}")
-	List<QNABoardVO> myQNAList(@Param("cri")SearchCriteria cri, @Param("member_num")int member_num);
 
-	//확인중
-	@Select("SELECT * FROM tbl_qna WHERE qna_answer IS NULL ORDER BY qna_num DESC limit #{cri.startRow}, #{cri.perPageNum}")
-	List<QNABoardVO> getCheckingList(@Param("cri")SearchCriteria cri);
+	@Select("SELECT * FROM tbl_notice WHERE notice_category = '공지사항'")
+	List<NoticeBoardVO> getInformList(SearchCriteria cri);
 
-	//답변끝
-	@Select("SELECT * FROM tbl_qna WHERE qna_answer IS NOT NULL ORDER BY qna_num DESC  limit #{cri.startRow}, #{cri.perPageNum}")
-	List<QNABoardVO> getChekedList(@Param("cri")SearchCriteria cri);
+	@Select("SELECT count(*) FROM tbl_notice WHERE notice_category = '공지사항'")
+	int getInformCount(SearchCriteria cri);
 
+	@Select("SELECT * FROM tbl_notice WHERE notice_category = '외교부소식'")
+	List<NoticeBoardVO> getMofaList(SearchCriteria cri);
 
-	
+	@Select("SELECT count(*) FROM tbl_notice WHERE notice_category = '외교부소식'")
+	int getMofaCount(SearchCriteria cri);
 
 
 
-	
-
-
-	
-
-	
-	
-	//글 수정
-	
-	//글 삭제
 		
 }

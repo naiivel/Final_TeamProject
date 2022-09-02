@@ -55,7 +55,7 @@ public class BoardController {
 		return "redirect:faq";
 	}
 
-	//공지 리스트(아무나 가능)
+	//faq 리스트(아무나 가능)
 	@GetMapping("faq")
 	public ModelAndView faqList(ModelAndView mav, SearchCriteria cri) throws Exception {
 		
@@ -69,118 +69,76 @@ public class BoardController {
 		return mav;
 	}
 	
-	
-	
-	@ResponseBody
-	@PostMapping("categoryList/trip")
-	public ResponseEntity<Map<String, Object>> tripList(SearchCriteria cri, FAQBoardVO vo){
-		ResponseEntity<Map<String, Object>> entity= null;
-		try {
-			Map<String,Object> map= new HashMap<>();
-			System.out.println(vo);
-			List<FAQBoardVO> tripList = bs.categoryList(cri, vo.getFaq_category());
-			map.put("tripList", tripList);
-			PageMaker tripPm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
-			map.put("tripPm", tripPm);
-			
-			entity= new ResponseEntity<>(map, HttpStatus.OK);
-		} catch (Exception e) {
-			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		System.out.println(entity);
+	@GetMapping("faq/trip")
+	public ModelAndView tripList(ModelAndView mav, SearchCriteria cri) throws Exception {
 		
-		return entity;
+		mav.setViewName("board/faq");
+		System.out.println("list: "+cri);
+		List<FAQBoardVO> list = bs.getTripList(cri);
+		mav.addObject("list",list);
+		PageMaker pm= bs.getTripPageMaker(cri);
+		System.out.println("pm: "+pm);
+		mav.addObject("pm",pm);
+		return mav;
 	}
 	
-	@ResponseBody
-	@PostMapping("categoryList/airline")
-	public ResponseEntity<Map<String, Object>> airlineList(SearchCriteria cri, FAQBoardVO vo){
-		ResponseEntity<Map<String, Object>> entity= null;
-		try {
-			Map<String,Object> map= new HashMap<>();
-			System.out.println(vo);
-			List<FAQBoardVO> airlineList = bs.categoryList(cri, vo.getFaq_category());
-			map.put("airlineList", airlineList);
-			PageMaker airlinePm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
-			map.put("airlinePm", airlinePm);
-			
-			entity= new ResponseEntity<>(map, HttpStatus.OK);
-		} catch (Exception e) {
-			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		System.out.println(entity);
+	@GetMapping("faq/reserv")
+	public ModelAndView reservList(ModelAndView mav, SearchCriteria cri) throws Exception {
 		
-		return entity;
+		mav.setViewName("board/faq");
+		System.out.println("list: "+cri);
+		List<FAQBoardVO> list = bs.getReservList(cri);
+		mav.addObject("list",list);
+		PageMaker pm= bs.getReservPageMaker(cri);
+		System.out.println("pm: "+pm);
+		mav.addObject("pm",pm);
+		return mav;
 	}
 	
-	@ResponseBody
-	@PostMapping("categoryList/reservation")
-	public ResponseEntity<Map<String, Object>> reserveList(SearchCriteria cri, FAQBoardVO vo){
-		ResponseEntity<Map<String, Object>> entity= null;
-		try {
-			Map<String,Object> map= new HashMap<>();
-			System.out.println(vo);
-			List<FAQBoardVO> reserveList = bs.categoryList(cri, vo.getFaq_category());
-			map.put("reserveList", reserveList);
-			PageMaker reservePm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
-			map.put("reservePm", reservePm);
-			
-			entity= new ResponseEntity<>(map, HttpStatus.OK);
-		} catch (Exception e) {
-			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		System.out.println(entity);
+	@GetMapping("faq/airline")
+	public ModelAndView airlineList(ModelAndView mav, SearchCriteria cri) throws Exception {
 		
-		return entity;
+		mav.setViewName("board/faq");
+		System.out.println("list: "+cri);
+		List<FAQBoardVO> list = bs.getAirlineList(cri);
+		mav.addObject("list",list);
+		PageMaker pm= bs.getAirlinePageMaker(cri);
+		System.out.println("pm: "+pm);
+		mav.addObject("pm",pm);
+		return mav;
 	}
 	
-	@ResponseBody
-	@PostMapping("categoryList/passport")
-	public ResponseEntity<Map<String, Object>> passList(SearchCriteria cri, FAQBoardVO vo){
-		ResponseEntity<Map<String, Object>> entity= null;
-		try {
-			Map<String,Object> map= new HashMap<>();
-			System.out.println(vo);
-			List<FAQBoardVO> passList = bs.categoryList(cri, vo.getFaq_category());
-			map.put("passList", passList);
-			PageMaker passPm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
-			map.put("passPm", passPm);
-			
-			entity= new ResponseEntity<>(map, HttpStatus.OK);
-		} catch (Exception e) {
-			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		System.out.println(entity);
+	@GetMapping("faq/pass")
+	public ModelAndView passList(ModelAndView mav, SearchCriteria cri) throws Exception {
 		
-		return entity;
+		mav.setViewName("board/faq");
+		System.out.println("list: "+cri);
+		List<FAQBoardVO> list = bs.getPassList(cri);
+		mav.addObject("list",list);
+		PageMaker pm= bs.getPassPageMaker(cri);
+		System.out.println("pm: "+pm);
+		mav.addObject("pm",pm);
+		return mav;
 	}
 	
-	@ResponseBody
-	@PostMapping("categoryList/other")
-	public ResponseEntity<Map<String, Object>> otherList(SearchCriteria cri, FAQBoardVO vo){
-		ResponseEntity<Map<String, Object>> entity= null;
-		try {
-			Map<String,Object> map= new HashMap<>();
-			System.out.println(vo);
-			List<FAQBoardVO> otherList = bs.categoryList(cri, vo.getFaq_category());
-			map.put("otherList", otherList);
-			PageMaker otherPm = bs.getCategoryPageMaker(cri, vo.getFaq_category());
-			map.put("otherPm", otherPm);
-			
-			entity= new ResponseEntity<>(map, HttpStatus.OK);
-		} catch (Exception e) {
-			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		System.out.println(entity);
+	@GetMapping("faq/other")
+	public ModelAndView otherList(ModelAndView mav, SearchCriteria cri) throws Exception {
 		
-		return entity;
+		mav.setViewName("board/faq");
+		System.out.println("list: "+cri);
+		List<FAQBoardVO> list = bs.getOtherList(cri);
+		mav.addObject("list",list);
+		PageMaker pm= bs.getOtherPageMaker(cri);
+		System.out.println("pm: "+pm);
+		mav.addObject("pm",pm);
+		return mav;
 	}
-
+	
 	//faq삭제 (관리자)
 	@PostMapping("faqDelete")
-	public String faqDelete(@RequestParam("faq_num")int faq_num) throws Exception {
+	public String faqDelete(@RequestParam("faq_num")int faq_num, HttpServletRequest request) throws Exception {
 		bs.deleteFAQ(faq_num);
-		return "redirect:faq";
+		return "redirect:"+request.getHeader("Referer");
 	}
 	
 	/******************** notice 공지사항  ***************/
@@ -195,6 +153,37 @@ public class BoardController {
 		System.out.println("pm: "+pm);
 		
 		mav.addObject("noticeList",noticeList);
+		mav.addObject("pm",pm);
+		mav.setViewName("board/notice");
+		
+		return mav;
+	}
+	//카테고리가 공지사항인 notice
+	@GetMapping("notice/inform")
+	public ModelAndView informList(ModelAndView mav, SearchCriteria cri) throws Exception {
+		
+		List<NoticeBoardVO> informList = bs.informList(cri);
+		PageMaker pm= bs.getInformPageMaker(cri);
+		System.out.println("noticeList: "+informList);
+		System.out.println("pm: "+pm);
+		
+		mav.addObject("noticeList",informList);
+		mav.addObject("pm",pm);
+		mav.setViewName("board/notice");
+		
+		return mav;
+	}
+	
+	//카테고리가 외교부인 notice
+	@GetMapping("notice/mofa")
+	public ModelAndView mofaList(ModelAndView mav, SearchCriteria cri) throws Exception {
+		
+		List<NoticeBoardVO> mofaList = bs.mofaList(cri);
+		PageMaker pm= bs.mofaPageMaker(cri);
+		System.out.println("noticeList: "+mofaList);
+		System.out.println("pm: "+pm);
+		
+		mav.addObject("noticeList",mofaList);
 		mav.addObject("pm",pm);
 		mav.setViewName("board/notice");
 		
@@ -225,48 +214,7 @@ public class BoardController {
 		return "board/noticeDetail";
 	}
 	
-	@ResponseBody
-	@PostMapping("categoryList/notice")
-	public ResponseEntity<Map<String, Object>> noticeCategoryList(SearchCriteria cri, NoticeBoardVO vo){
-		ResponseEntity<Map<String, Object>> entity= null;
-		try {
-			Map<String,Object> map= new HashMap<>();
-			System.out.println(vo);
-			List<NoticeBoardVO> noticeList = bs.noticeCategoryList(cri, vo.getNotice_category());
-			map.put("noticeCategoryList", noticeList);
-			PageMaker noticePm = bs.getNoticeCategoryPageMaker(cri, vo.getNotice_category());
-			map.put("noticePm", noticePm);
-			
-			entity= new ResponseEntity<>(map, HttpStatus.OK);
-		} catch (Exception e) {
-			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		System.out.println(entity);
-		
-		return entity;
-	}
 	
-	@ResponseBody
-	@PostMapping("categoryList/mofa")
-	public ResponseEntity<Map<String, Object>> mofaList(SearchCriteria cri, NoticeBoardVO vo) throws Exception{
-		ResponseEntity<Map<String, Object>> entity= null;
-		try {
-			Map<String,Object> map= new HashMap<>();
-			System.out.println(vo);
-			List<NoticeBoardVO> mofaList = bs.noticeCategoryList(cri, vo.getNotice_category());
-			map.put("mofaList", mofaList);
-			PageMaker mofaPm = bs.getNoticeCategoryPageMaker(cri, vo.getNotice_category());
-			map.put("mofaPm", mofaPm);
-			
-			entity= new ResponseEntity<>(map, HttpStatus.OK);
-		} catch (Exception e) {
-			entity= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		System.out.println(entity);
-		
-		return entity;
-	}
-
 	/********************** qna ************************/
 	//문답 리스트(아무나)
 	@GetMapping("/qna")

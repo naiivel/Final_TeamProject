@@ -2,12 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../common/header.jsp"%>
-<style>
-txt-hlight {
-	background: yellow;
-}
-</style>
-
 
 <section class="container">
 	<div class="row">
@@ -15,11 +9,9 @@ txt-hlight {
 			<div class="card mb-3">
 				<div class="card-header">고객센터</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/board/faq" class="list-group-item active"
-						id="faqBoard">자주 묻는 질문</a> <a href="${contextPath}/board/qna"
-						class="list-group-item" id="qnaBoard">질문과 답변</a> <a
-						href="${contextPath}/board/notice" class="list-group-item"
-						id="noticeBoard">공지사항</a>
+					<a href="${contextPath}/board/faq" class="list-group-item active" id="faqBoard">자주 묻는 질문</a> 
+					<a href="${contextPath}/board/qna" class="list-group-item" id="qnaBoard">질문과 답변</a> 
+					<a href="${contextPath}/board/notice" class="list-group-item" id="noticeBoard">공지사항</a>
 				</div>
 			</div>
 		</div>
@@ -34,31 +26,25 @@ txt-hlight {
 									fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 									<path
 										d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-								</svg> </span> <input type="text" name="keyword" id="keyword"
-								class="form-control" aria-label="Amount (to the nearest dollar)"
-								placeholder="검색어를 입력하세요">
-							<button class="btn btn-dark" type="button" id="button-addon2">검색</button>
+								</svg> </span> <input type="text" name="keyword" id="keyword" class="form-control" 
+								aria-label="Amount (to the nearest dollar)" value="${param.keyword}" placeholder="검색어를 입력하세요">
+							<button class="btn btn-dark" type="button" id="btnSearch">검색</button>
 						</div>
 					</form>
 				</div>
 			</div>
+			<!-- 메뉴버튼 -->
 			<div class="row mb-4">
 				<div class="btn-group" role="group">
-					<button value="전체" type="button" class="btn btn-outline-dark"
-						id="all">전체보기</button>
-					<button value="해외여행" type="button" class="btn btn-outline-dark"
-						id="trip">해외여행</button>
-					<button value="항공" type="button" class="btn btn-outline-dark"
-						id="airline">항공</button>
-					<button value="예약/결제" type="button" class="btn btn-outline-dark"
-						id="reservation">예약/결제</button>
-					<button value="여권/비자/환전" type="button" class="btn btn-outline-dark"
-						id="passport">여권/비자/환전</button>
-					<button value="홈페이지/기타" type="button" class="btn btn-outline-dark"
-						id="other">홈페이지/기타</button>
+					<button value="전체" type="button" class="btn btn-outline-dark" id="all">전체보기</button>
+					<button value="해외여행" type="button" class="btn btn-outline-dark" id="trip">해외여행</button>
+					<button value="항공" type="button" class="btn btn-outline-dark" id="airline">항공</button>
+					<button value="예약/결제" type="button" class="btn btn-outline-dark" id="reservation">예약/결제</button>
+					<button value="여권/비자/환전" type="button" class="btn btn-outline-dark" id="passport">여권/비자/환전</button>
+					<button value="홈페이지/기타" type="button" class="btn btn-outline-dark" id="other">홈페이지/기타</button>
 				</div>
 			</div>
-
+			<!-- 페이징 -->
 			<div id="listAll" class="accordion mb-3">
 				<c:set var="number" value="0" />
 				<c:choose>
@@ -102,10 +88,8 @@ txt-hlight {
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="staticBackdropLabel">해당 글을
-								삭제하시겠습니까?</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal"
-								aria-label="Close"></button>
+							<h5 class="modal-title" id="staticBackdropLabel">해당 글을 삭제하시겠습니까?</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
 							삭제된 게시글 정보는 다시 불러올수 없습니다. <br />주의사항을 확인 후 삭제하시겠습니까?
@@ -119,26 +103,8 @@ txt-hlight {
 					</div>
 				</div>
 			</div>
-
-			<div class="accordion mb-3" id="accordionTrip"></div>
-			<div id="pagingTrip">
-				<a>트립</a>	
-			</div>
 			
-			
-
-			<div class="accordion mb-3" id="accordionAirline"></div>
-			<div id="pagingAirline"><a>항공</a>	</div>
-
-			<div class="accordion mb-3" id="accordionReserv"></div>
-			<div id="pagingReserv"></div>
-
-			<div class="accordion mb-3" id="accordionPass"></div>
-			<div id="pagingPass"></div>
-
-			<div class="accordion mb-3" id="accordionOther"></div>
-			<div id="pagingOther"></div>
-
+			<!-- 페이징처리 -->
 			<div id="pagingAll">
 				<nav id="allPaging" aria-label="Page navigation mb-3">
 					<ul class="pagination justify-content-center">
@@ -155,7 +121,7 @@ txt-hlight {
 							</li>
 						</c:if>
 						<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
-							<li class="page-item" aria-current="page" ${pm.cri.page ==i? 'class="active"':''}>
+							<li class="page-item" aria-current="page" ${( pm.cri.page ==i)? 'class="active"' :''}>
 								<a id="pageNum" class="page-link" href="${pm.makeQuery(i)}">${i}</a>
 							</li>
 						</c:forEach>
@@ -198,13 +164,10 @@ txt-hlight {
 	console.log("userInfo: "+userInfo);
 	var userMaster= '${userInfo.member_master}';
 	
-
-
 	$("#addBtn").click(function() {
 		location.href = "${contextPath}/board/faqWrite";
 	});
 
-	
 	$("#qnaBoard").click(function() {
 		location.href = "board/qna";
 	});
@@ -221,124 +184,15 @@ txt-hlight {
 		location.href="${contextPath}/board/faq";
 	});
 
-	
 	$("#trip").on("click", function() {
-		
 		$(this).toggleClass("active");
 		$("#airline").removeClass("active");
 		$("#passport").removeClass("active");
 		$("#reservation").removeClass("active");
 		$("#other").removeClass("active");
 		
-		$("#listAll").hide();
-		$("#accordionReserv").hide();
-		$("#accordionPass").hide();
-		$("#accordionAirline").hide();
-		$("#accordionOther").hide();
-		
-		
-		$("#pagingTrip").show();
-		let faq_category = $(this).val();
-		let curPage= $("#pageNum").val();
-		console.log("faq_category: ", faq_category);
-		console.log("curPage: "+curPage);
-		$.ajax({
-			url : "${contextPath}/board/categoryList/trip", type : "POST", dataType : "json",
-			beforeSend : function(xhr){   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            }, data : { "faq_category" : faq_category},
-			success : function(data) {
-				console.log(data);
-				console.log(data.tripList);
-				console.log(data.tripPm);
-				let str="";
-				let i = 0;
-				let j = 0;
-				
-				$(data.tripList).each(function(){
-					let faq_category= this.faq_category;
-					let faq_title= this.faq_title;
-					let faq_content= this.faq_content;
-					console.log(faq_category, faq_title, faq_content);
-					str += '<div class="accordion mb-2" id="listTrip">';
-					str += '<div class="accordion-item mb-2">';
-					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-					str += '<button class="accordion-button collapsed" type="button"';
-					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
-					str += '</button></h2>';
-					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionTrip">';
-					str += '<div class="accordion-body">';
-					str += faq_content;
-					if(userMaster=='Y'){
-						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
-						str +=	'data-bs-target="#staticBackdrop"></button></div>';
-					}
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
-					i++;
-				});
-				$("#accordionTrip").html(str);
-				
-				/* let strPaging = '';
-				$(data.tripPm).each(function(){
-					let pmTrip= data.tripPm; 
-					let keyword=pmTrip.cri.keyword;
-					let searchType=pmTrip.cri.searchType;
-					let ppm= pmTrip.cri.perPageNum;
-					let page= pmTrip.cri.page;
-					
-					console.log("pmTrip: "+data.tripPm);
-					console.log("keyword: "+keyword);
-					console.log("sType: "+searchType);
-					console.log("perPageNum: "+ppm);
-					console.log("page: "+page);
-					
-				
-					strPaging += '<nav aria-label="Page navigation example">';
-					strPaging += '<ul class="pagination justify-content-center">';
-					if(pmTrip.first){
-						strPaging += '<li class="page-item">';
-						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
-						strPaging += '<span aria-hidden="true">&laquo;</span></a></li>';
-					}
-					if(pmTrip.prev){
-						strPaging += '<li class="page-item">';
-						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
-						strPaging += '<span aria-hidden="true">&lt;</span></a></li>';
-					}
-					for (var i=pmTrip.startPage; i<=pmTrip.endPage; i++){
-						strPaging += '<li class="page-item">';
-						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'">';
-						strPaging += '<span aria-hidden="true">'+i+'</span></a></li>';
-					}
-					if(pmTrip.next){
-						strPaging += '<li class="page-item">';
-						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
-						strPaging += '<span aria-hidden="true">&lt;</span></a></li>';
-					}
-					if(pmTrip.last){
-						strPaging += '<li class="page-item">';
-						strPaging += '<a class="page-link" href="/greatescape/board/faq?page='+page+'&perPageNum='+ppm+'&searchType='+searchType+'&keyword='+keyword+'" >';
-						strPaging += '<span aria-hidden="true">&gaquo;</span></a></li>';
-					}	
-					strPaging += '</ul>';
-					
-				});
-				$("#pagingTrip").html(strPaging); */
-			},// success
-			error : function(err) {
-				console.log("응 안돼 돌아가");
-			}
-		});
-		$("#accordionTrip").show();
-		$("pagingTrip").show();
+		location.href="${contextPath}/board/faq/trip";
 	});
-
-
 	
 	$("#airline").on("click", function() {
 		$(this).toggleClass("active");
@@ -347,63 +201,7 @@ txt-hlight {
 		$("#reservation").removeClass("active");
 		$("#other").removeClass("active");
 		
-		$("#listAll").hide();
-		$("#accordionReserv").hide();
-		$("#accordionPass").hide();
-		$("#accordionTrip").hide();
-		$("#accordionOther").hide();
-		
-		$("#allPaging").hide();
-		$("pagingTrip").addClass("visible");
-		var faq_category = $(this).val();
-		
-		console.log("faq_category: ", faq_category);
-		$.ajax({
-			url : "${contextPath}/board/categoryList/airline", type : "POST", dataType : "json",
-			beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
-			data : {  "faq_category" : faq_category  },
-			success : function(data) {
-				console.log(data);
-				console.log(data.airlineList);
-				console.log(data.airlinePm);
-				let str="";
-				let i = 0;
-				$(data.airlineList).each(function(){
-					let faq_category= this.faq_category;
-					let faq_title= this.faq_title;
-					let faq_content= this.faq_content;
-					console.log(faq_category, faq_title, faq_content);
-					str += '<div class="accordion mb-2" id="listAirline">';
-					str += '<div class="accordion-item mb-2">';
-					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-					str += '<button class="accordion-button collapsed" type="button"';
-					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
-					str += '</button></h2>';
-					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionAirline">';
-					str += '<div class="accordion-body">';
-					str += faq_content;
-					if(userMaster=='Y'){
-						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
-						str +=	'data-bs-target="#staticBackdrop"></button></div>';
-					}
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
-					i++;
-				});
-				$("#accordionAirline").html(str);
-			},
-			error : function(err) {
-				console.log("응 안돼 돌아가");
-			}
-		});
-		$("#accordionAirline").show();
+		location.href="${contextPath}/board/faq/airline";
 	});
 
 	$("#reservation").on("click", function() {
@@ -413,62 +211,7 @@ txt-hlight {
 		$("#trip").removeClass("active");
 		$("#other").removeClass("active");
 		
-		$("#listAll").hide();
-		$("#accordionAirline").hide();
-		$("#accordionPass").hide();
-		$("#accordionTrip").hide();
-		$("#accordionOther").hide();
-		
-		$("#allPaging").hide();
-		
-		let faq_category = $(this).val();
-		console.log("faq_category: ", faq_category);
-		$.ajax({
-			url : "${contextPath}/board/categoryList/reservation", type : "POST", dataType : "json",
-			data : {  "faq_category" : faq_category  },
-			beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
-			success : function(data) {
-				console.log(data);
-				console.log(data.reserveList);
-				console.log(data.reservePm);
-				let str="";
-				let i = 0;
-				$(data.reserveList).each(function(){
-					let faq_category= this.faq_category;
-					let faq_title= this.faq_title;
-					let faq_content= this.faq_content;
-					console.log(faq_category, faq_title, faq_content);
-					str += '<div class="accordion mb-2" id="listReserv">';
-					str += '<div class="accordion-item mb-2">';
-					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-					str += '<button class="accordion-button collapsed" type="button"';
-					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
-					str += '</button></h2>';
-					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionReserv">';
-					str += '<div class="accordion-body">';
-					str += faq_content;
-					if(userMaster=='Y'){
-						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
-						str +=	'data-bs-target="#staticBackdrop"></button></div>';
-					}
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
-					i++;
-				});
-				$("#accordionReserv").html(str);
-			},
-			error : function(err) {
-				console.log("응 안돼 돌아가");
-			}
-		});
-		$("#accordionReserv").show();
+		location.href="${contextPath}/board/faq/reserv";
 	});
 
 	$("#passport").on("click", function() {
@@ -478,62 +221,7 @@ txt-hlight {
 		$("#reservation").removeClass("active");
 		$("#other").removeClass("active");
 		
-		$("#listAll").hide();
-		$("#accordionReserv").hide();
-		$("#accordionTrip").hide();
-		$("#accordionAirline").hide();
-		$("#accordionOther").hide();
-		
-		$("#allPaging").hide();
-		
-		let faq_category = $(this).val();
-		console.log("faq_category: ", faq_category);
-		$.ajax({
-			url : "${contextPath}/board/categoryList/passport", type : "POST", dataType : "json",
-			data : {  "faq_category" : faq_category  },
-			beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
-			success : function(data) {
-				console.log(data);
-				console.log(data.passList);
-				console.log(data.passPm);
-				let str="";
-				let i = 0;
-				$(data.passList).each(function(){
-					let faq_category= this.faq_category;
-					let faq_title= this.faq_title;
-					let faq_content= this.faq_content;
-					console.log(faq_category, faq_title, faq_content);
-					str += '<div class="accordion mb-2" id="listPass">';
-					str += '<div class="accordion-item mb-2">';
-					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-					str += '<button class="accordion-button collapsed" type="button"';
-					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
-					str += '</button></h2>';
-					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionPass">';
-					str += '<div class="accordion-body">';
-					str += faq_content;
-					if(userMaster=='Y'){
-						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
-						str +=	'data-bs-target="#staticBackdrop"></button></div>';
-					}
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
-					i++;
-				});
-				$("#accordionPass").html(str);
-			},
-			error : function(err) {
-				console.log("응 안돼 돌아가");
-			}
-		});
-		$("#accordionPass").show();
+		location.href="${contextPath}/board/faq/pass";
 	});
 
 	$("#other").on("click", function() {
@@ -543,70 +231,9 @@ txt-hlight {
 		$("#reservation").removeClass("active");
 		$("#trip").removeClass("active");
 		
-		$("#listAll").hide();
-		$("#accordionReserv").hide();
-		$("#accordionPass").hide();
-		$("#accordionTrip").hide();
-		$("#accordionOther").hide();
-		
-		$("#allPaging").hide();
-		
-		let faq_category = $(this).val();
-		console.log("faq_category: ", faq_category);
-		$.ajax({
-			url : "${contextPath}/board/categoryList/other", type : "POST", dataType : "json",
-			data : {  "faq_category" : faq_category  },
-			beforeSend : function(xhr)
-            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
-			success : function(data) {
-				console.log(data);
-				console.log(data.otherList);
-				console.log(data.otherPm);
-				let str="";
-				let i = 0;
-				$(data.otherList).each(function(){
-					let faq_num= this.faq_num;
-					let faq_category= this.faq_category;
-					let faq_title= this.faq_title;
-					let faq_content= this.faq_content;
-					console.log(faq_category, faq_title, faq_content);
-					str += '<div class="accordion mb-2" id="listOther">';
-					str += '<div class="accordion-item mb-2">';
-					str += '<h2 class="accordion-header" id="headingOne-'+i+'">';
-					str += '<button class="accordion-button collapsed" type="button"';
-					str += 'data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'"';
-					str += 'aria-expanded="true" aria-controls="collapseOne">'; 
-					str += faq_category+'&nbsp;&nbsp;|&nbsp;&nbsp;Q.&nbsp;'+faq_title;
-					str += '</button></h2>';
-					str += '<div id="collapseOne'+i+'" class="accordion-collapse collapse"';
-					str += 'aria-labelledby="headingOne-'+i+'" data-bs-parent="#accordionOther">';
-					str += '<div class="accordion-body">';
-					str += faq_content;
-					if(userMaster=='Y'){
-						str += '<button id="delBtn" type="button" class="btn btn-close" data-bs-toggle="modal"'; 
-						str +=	'data-bs-target="#staticBackdrop" onclick="setNum('+faqnum+')"></button></div>';
-					}
-					str += '</div>';
-					str += '</div>';
-					str += '</div>';
-					str += '<form name="faqInfo">';
-					str += '<input type="hidden" name="faq_num" value="'+faqnum+'">';
-					str += '</form>';
-					i++;
-				});
-				$("#accordionOther").html(str);
-			},
-			error : function(err) {
-				console.log("응 안돼 돌아가");
-			}
-		});
-		$("#accordionOther").show();
+		location.href="${contextPath}/board/faq/other";
 	});
 	
-
-
 	function clickDel(formName) {
 		for (var tag of formName) {
 			if (tag.faq_num.value == faqnum) {
@@ -616,6 +243,18 @@ txt-hlight {
 			}
 		}
 	}
+	
+	$("#btnSearch").click(function(){
+		location.href="${contextPath}/board/faq?keyword="+$("#keyword").val();
+		
+	});
+	
+	$('input[type="text"]').keydown(function() {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			$("#btnSearch").click();
+		};
+	});
 	
 </script>
 <%@ include file="../common/footer.jsp"%>

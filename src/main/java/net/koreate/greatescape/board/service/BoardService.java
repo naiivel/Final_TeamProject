@@ -24,12 +24,32 @@ public interface BoardService {
 	//카테고리별 리스트
 	List<FAQBoardVO> categoryList(SearchCriteria cri, String faq_category) throws Exception;
 	
+	//해외여행 faq, pm
+	List<FAQBoardVO> getTripList(SearchCriteria cri) throws Exception;
+	PageMaker getTripPageMaker(SearchCriteria cri) throws Exception;
+	//항공 faq,pm
+	List<FAQBoardVO> getAirlineList(SearchCriteria cri) throws Exception;
+	PageMaker getAirlinePageMaker(SearchCriteria cri) throws Exception;
+
+	//여권비자 faq,pm
+	List<FAQBoardVO> getPassList(SearchCriteria cri) throws Exception;
+	PageMaker getPassPageMaker(SearchCriteria cri) throws Exception;
+	
+	//예약결제faq,pm
+	List<FAQBoardVO> getReservList(SearchCriteria cri) throws Exception;
+	PageMaker getReservPageMaker(SearchCriteria cri) throws Exception;
+	
+	//홈페이지기타 faq, pm
+	List<FAQBoardVO> getOtherList(SearchCriteria cri) throws Exception;
+	PageMaker getOtherPageMaker(SearchCriteria cri) throws Exception;
+	
 	//새글작성
 	void writeFAQ(FAQBoardVO fvo) throws Exception;
 	
 	
 	//글삭제
 	void deleteFAQ(int faq_num) throws Exception;
+	
 	
 	
 	/****************************** QNA ************************************/
@@ -97,6 +117,12 @@ public interface BoardService {
 	
 	//구분별 공지리스트
 	List<NoticeBoardVO> noticeCategoryList(SearchCriteria cri, String notice_category);
+	
+	List<NoticeBoardVO> informList(SearchCriteria cri) throws Exception;
+	PageMaker getInformPageMaker(SearchCriteria cri) throws Exception;
+	List<NoticeBoardVO> mofaList(SearchCriteria cri) throws Exception;
+	PageMaker mofaPageMaker(SearchCriteria cri) throws Exception;
+	
 	
 	
 	
