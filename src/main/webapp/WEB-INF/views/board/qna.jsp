@@ -148,10 +148,18 @@
 <script src="${contextPath}/resources/js/popper.min.js"></script>
 <script>
 	$("#addBtn").click(function(){
+		if(${sessionScope.userInfo eq null}){
+			alert('로그인이 필요한 서비스입니다.로그인페이지로 이동합니다.');
+			location.href="${contextPath}/member/login";
+		}
 		location.href="qnaWrite";
 	});
 	
 	$("#myQNA").click(function(){
+		if(${sessionScope.userInfo eq null}){
+			alert('로그인이 필요한 서비스입니다.로그인페이지로 이동합니다.');
+			location.href="${contextPath}/member/login";
+		}
 		location.href="${contextPath}/board/myQNA";
 	});	
 </script>

@@ -186,52 +186,22 @@
 	});
 
 	$("#trip").on("click", function() {
-		$(this).toggleClass("active");
-		$("#airline").removeClass("active");
-		$("#passport").removeClass("active");
-		$("#reservation").removeClass("active");
-		$("#other").removeClass("active");
-		
 		location.href="${contextPath}/board/faq/trip";
 	});
 	
 	$("#airline").on("click", function() {
-		$(this).toggleClass("active");
-		$("#trip").removeClass("active");
-		$("#passport").removeClass("active");
-		$("#reservation").removeClass("active");
-		$("#other").removeClass("active");
-		
 		location.href="${contextPath}/board/faq/airline";
 	});
 
 	$("#reservation").on("click", function() {
-		$(this).toggleClass("active");
-		$("#airline").removeClass("active");
-		$("#passport").removeClass("active");
-		$("#trip").removeClass("active");
-		$("#other").removeClass("active");
-		
 		location.href="${contextPath}/board/faq/reserv";
 	});
 
 	$("#passport").on("click", function() {
-		$(this).toggleClass("active");
-		$("#airline").removeClass("active");
-		$("#trip").removeClass("active");
-		$("#reservation").removeClass("active");
-		$("#other").removeClass("active");
-		
 		location.href="${contextPath}/board/faq/pass";
 	});
 
 	$("#other").on("click", function() {
-		$(this).toggleClass("active");
-		$("#airline").removeClass("active");
-		$("#passport").removeClass("active");
-		$("#reservation").removeClass("active");
-		$("#trip").removeClass("active");
-		
 		location.href="${contextPath}/board/faq/other";
 	});
 	
@@ -274,7 +244,6 @@
 	    } else if (pageUrl.indexOf('airline') > -1) { 
 	    	 $(".btn-outline-dark").removeClass('active');
 	    }
-	    
 	});
 	
 </script>
