@@ -48,9 +48,16 @@
 														<button class="btn btn-primary" data-num="${product.product_num}">상세보기</button>
 													</c:when>
 													<c:otherwise>
-														<button type="button" class="btn btn-danger position-relative" data-num="${product.product_num}">상세보기
-															<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">마감 임박!</span>
+														<c:if test="${product.product_seat > 0}">
+															<button type="button" class="btn btn-warning position-relative" data-num="${product.product_num}">상세보기
+															<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-warning">마감 임박!</span>
 														</button>
+															</c:if>
+															<c:if test="${product.product_seat eq 0}">
+															<button type="button" class="btn btn-danger position-relative" data-num="${product.product_num}">상세보기
+															<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">마감!</span>
+														</button>
+														</c:if>
 													</c:otherwise>
 												</c:choose>
 											</div>

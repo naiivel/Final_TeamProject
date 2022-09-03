@@ -438,7 +438,7 @@ public class MemberController {
 		model.addAttribute("member",member);
 		model.addAttribute("product",product);
 		model.addAttribute("reservation",reserv);
-		model.addAttribute("tripInfo",tripInfo);
+		model.addAttribute("tripInfo",tripInfo.getDetail_info());
 		
 		
 		return "admin/indexProduct";
@@ -569,6 +569,8 @@ public class MemberController {
 		
 		return "admin/product";
 	}
+	
+	
 	
 	//(관리자) 체크된 상품 삭제하기
 	@PostMapping("deleteP")

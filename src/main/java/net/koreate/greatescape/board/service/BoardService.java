@@ -2,6 +2,8 @@ package net.koreate.greatescape.board.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import net.koreate.greatescape.board.vo.CommentVO;
 import net.koreate.greatescape.board.vo.FAQBoardVO;
 import net.koreate.greatescape.board.vo.NoticeBoardVO;
@@ -98,9 +100,9 @@ public interface BoardService {
 	PageMaker getInformPageMaker(SearchCriteria cri) throws Exception;
 	List<NoticeBoardVO> mofaList(SearchCriteria cri) throws Exception;
 	PageMaker mofaPageMaker(SearchCriteria cri) throws Exception;
-
-	//삭제
 	void deleteNotice(int notice_num);
+	boolean fileUpload(MultipartFile[] files) throws Exception;
+	List<String> getFileNameList(int notice_num) throws Exception;
 	
 	
 	

@@ -17,7 +17,7 @@
 		</div>
 		<div class="col-md-10 mb-5">
 			<h2 class="mb-4">공지사항</h2>
-			<form action="noticeWrite" method="POST" class="h-100" id="writeNoticeForm">
+			<form action="noticeWrite" method="POST" class="h-100" id="writeNoticeForm" enctype="multipart/form-data">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<div class="form-floating mb-3">
 					<select name="notice_category" class="form-select" id="floatingSelectCategory" aria-label="category">
@@ -33,6 +33,10 @@
 				<div class="form-floating mb-3">
 					<textarea class="form-control  mytextarea" id="floatingTextarea" name="notice_content"></textarea>
 					<label for="floatingTextarea">내용</label>
+				</div>
+				<div class="form-floating mb-3">
+					<input type="file" class="form-control" id="floatingInputFile" name="files" multiple>
+					<label for="floatingInputTitle">첨부파일</label>
 				</div>
 				<button class="btn btn-outline-secondary" id="btnAccept" >작성 완료</button>
 			</form>

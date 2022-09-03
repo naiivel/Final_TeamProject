@@ -58,6 +58,14 @@
 						data-bs-dismiss="modal">취소</button>
 					<button id="btnDelAgree" type="button" class="btn btn-primary">삭제</button>
 				</div>
+				<c:if test="${!empty files}">
+					<div class="card-footer">
+						<p class="card-text">첨부파일</p>					
+						<c:forEach var="file" items="${files}">
+							<a class="d-block" href="${contextPath}/attach${file}">${file.substring(file.lastIndexOf("_") + 1)}</a>
+						</c:forEach>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</div>

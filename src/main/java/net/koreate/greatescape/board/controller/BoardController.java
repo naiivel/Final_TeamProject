@@ -1,23 +1,21 @@
 package net.koreate.greatescape.board.controller;
 
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
@@ -161,10 +159,13 @@ public class BoardController {
 	}
 	
 	@PostMapping("noticeWrite")
-	public String writeNotice( @RequestParam("notice_category")String notice_category, 
+	@Transactional
+	public String writeNotice(MultipartFile[] files, @RequestParam("notice_category")String notice_category, 
 			@RequestParam("notice_title")String notice_title, @RequestParam("notice_content")String notice_content) throws Exception {
 		NoticeBoardVO vo= new NoticeBoardVO(notice_category,notice_title,notice_content);
 		bs.writeNotice(vo);
+		bs.fileUpload(files);
+		System.out.println("controller 에서 vo : "+vo);
 		return "redirect:notice";
 	}
 	
@@ -172,7 +173,9 @@ public class BoardController {
 	@GetMapping("noticeDetail")
 	public String readNotice(int notice_num, Model model) throws Exception {
 		NoticeBoardVO vo = bs.readNotice(notice_num);
+		List<String> fileNameList = bs.getFileNameList(notice_num);
 		model.addAttribute("notice", vo);
+		model.addAttribute("files", fileNameList);
 		return "board/noticeDetail";
 	}
 	

@@ -147,5 +147,11 @@ public interface BoardDAO {
 
 	@Delete("DELETE FROM tbl_notice WHERE notice_num=#{notice_num}")
 	void deleteNotice(int notice_num);
+  
+	@Insert("INSERT INTO tbl_notice_file VALUES (LAST_INSERT_ID(), #{uploadFileName})")
+	int addFile(String uploadFileName);
+
+	@Select("SELECT notice_fileName FROM tbl_notice_file WHERE notice_num = #{notice_num}")
+	List<String> getFileNameList(int notice_num);
 
 }
