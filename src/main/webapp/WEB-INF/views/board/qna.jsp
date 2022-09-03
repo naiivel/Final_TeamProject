@@ -5,7 +5,6 @@
 <%@ include file="../common/header.jsp"%>
 <style>
  	a{
- 		text
  		text-decoration: none;
  	}
 </style>
@@ -148,23 +147,12 @@
 </section>
 <script src="${contextPath}/resources/js/popper.min.js"></script>
 <script>
-var loginMember="<%=session.getAttribute("userInfo")%>";
-var qnaWriter='${q.qna_writer}';
-var writer= $("#qnaWriter").text();
-console.log("writer: "+writer)
-console.log("qnaWriter: "+qnaWriter);
-
-
 	$("#addBtn").click(function(){
 		location.href="qnaWrite";
 	});
 	
-	
-	
 	$("#myQNA").click(function(){
 		location.href="${contextPath}/board/myQNA";
-	});
-	
-	
+	});	
 </script>
 <%@ include file="../common/footer.jsp"%>

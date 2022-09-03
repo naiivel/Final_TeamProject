@@ -61,7 +61,29 @@
 					</tbody>
 				</table>
 			</div>
-
+			
+			<!-- Modal -->
+			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+				aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="staticBackdropLabel">해당 글을 삭제하시겠습니까?</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							삭제된 게시글 정보는 다시 불러올수 없습니다. <br />주의사항을 확인 후 삭제하시겠습니까?
+						</div>
+						<div class="modal-footer">
+							<button id="btnDelCancel" type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">취소</button>
+							<button id="btnDelAgree" type="button" class="btn btn-primary"
+								onclick="clickDel(faqInfo)">삭제</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			<div id="pagingAll">
 			<nav id="allPaging" aria-label="Page navigation mb-3">
 				<ul class="pagination justify-content-center">
@@ -101,31 +123,22 @@
 	</div>
 </section>
 <script>
-
 	$("#addBtn").click(function() {
 		location.href = "${contextPath}/board/noticeWrite";
 	});
 	
 	$("#all").on("click", function() {
-		
-		let notice_category = $(this).val();
-		console.log("notice_category: ", notice_category);
 		location.href="${contextPath}/board/notice";
 	});
 
 	$("#notice").on("click", function(){
-		$(this).toggleClass("active");
-		$("#mofa").removeClass("active");
-		
 		location.href="${contextPath}/board/notice/inform";
 	});
 	
 	$("#mofa").on("click", function(){
-		$(this).toggleClass("active");
-		$("#notice").removeClass("active");
-		
 		location.href="${contextPath}/board/notice/mofa";
 	});
+
 	
 </script>
 <%@ include file="../common/footer.jsp"%>

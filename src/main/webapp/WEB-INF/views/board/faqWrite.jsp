@@ -34,8 +34,8 @@
 					<input type="text" name="faq_title"class="form-control" id="floatingInputTitle">
 					<label for="floatingInputTitle">제목</label>
 				</div>
-				<div class="form-floating mb-3 h-100">
-					<textarea class="form-control h-100 mytextarea" id="floatingTextarea" name="faq_content"></textarea>
+				<div class="form-floating mb-3">
+					<textarea class="form-control mytextarea" id="floatingTextarea" name="faq_content"></textarea>
 					<label for="floatingTextarea">내용</label>
 				</div>
 				<button class="btn btn-outline-secondary" >작성 완료</button>

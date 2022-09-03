@@ -31,7 +31,7 @@
 					<label for="floatingInputTitle">제목</label>
 				</div>
 				<div class="form-floating mb-3">
-					<textarea class="form-control h-100 mytextarea" id="floatingTextarea" name="notice_content"></textarea>
+					<textarea class="form-control  mytextarea" id="floatingTextarea" name="notice_content"></textarea>
 					<label for="floatingTextarea">내용</label>
 				</div>
 				<div class="form-floating mb-3">

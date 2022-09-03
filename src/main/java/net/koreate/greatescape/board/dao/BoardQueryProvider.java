@@ -5,42 +5,22 @@ import org.apache.ibatis.jdbc.SQL;
 import net.koreate.greatescape.utils.SearchCriteria;
 
 public class BoardQueryProvider {
-
-	public String getCategoryList(SearchCriteria cri, String category) {
-		SQL sql = new SQL();
-
-		sql.SELECT("*");
-		sql.FROM("tbl_faq");
-		
-		sql.WHERE("faq_category=category");
-		sql.ORDER_BY("faq_num DESC");
-		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
-		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
-		String query = sql.toString();
-		System.out.println(query);
-		return query;
-	}
-	
-	
 	
 	public String getSearchTripList(SearchCriteria cri) {
 		SQL sql = new SQL();
-
 		sql.SELECT("*");
 		sql.FROM("tbl_faq");
 		sql.WHERE("faq_category='해외여행'");
-		//getSearchWhere(cri, sql);
+		getSearchWhere(cri, sql);
 		sql.ORDER_BY("faq_num DESC");
 		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
 		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 	
 	public String getSearchAirlineList(SearchCriteria cri) {
 		SQL sql = new SQL();
-
 		sql.SELECT("*");
 		sql.FROM("tbl_faq");
 		sql.WHERE("faq_category='항공'");
@@ -49,13 +29,11 @@ public class BoardQueryProvider {
 		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
 		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 
 	public String getSearchPassList(SearchCriteria cri) {
 		SQL sql = new SQL();
-
 		sql.SELECT("*");
 		sql.FROM("tbl_faq");
 		sql.WHERE("faq_category='여권/비자/환전'");
@@ -64,13 +42,11 @@ public class BoardQueryProvider {
 		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
 		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 
 	public String getSearchReservList(SearchCriteria cri) {
 		SQL sql = new SQL();
-
 		sql.SELECT("*");
 		sql.FROM("tbl_faq");
 		sql.WHERE("faq_category='예약/결제'");
@@ -79,13 +55,11 @@ public class BoardQueryProvider {
 		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
 		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 
 	public String getSearchOtherList(SearchCriteria cri) {
 		SQL sql = new SQL();
-
 		sql.SELECT("*");
 		sql.FROM("tbl_faq");
 		sql.WHERE("faq_category='홈페이지/기타'");
@@ -94,27 +68,21 @@ public class BoardQueryProvider {
 		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
 		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 
 	//전체
 	public String getSearchFAQList(SearchCriteria cri) {
 		SQL sql = new SQL();
-
 		sql.SELECT("*");
 		sql.FROM("tbl_faq");
-		
 		getSearchWhere(cri, sql);
 		sql.ORDER_BY("faq_num DESC");
 		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
 		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
-
-	
 
 	// 검색조건별 개수
 	public String searchSelectCount(SearchCriteria cri) {
@@ -123,7 +91,6 @@ public class BoardQueryProvider {
 		sql.FROM("tbl_faq");
 		getSearchWhere(cri, sql);
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 	
@@ -134,7 +101,6 @@ public class BoardQueryProvider {
 		sql.WHERE("faq_category='해외여행'");
 		getSearchWhere(cri, sql);
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 
@@ -145,7 +111,6 @@ public class BoardQueryProvider {
 		sql.WHERE("faq_category='항공'");
 		getSearchWhere(cri, sql);
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 	
@@ -156,7 +121,6 @@ public class BoardQueryProvider {
 		sql.WHERE("faq_category='여권/비자/환전'");
 		getSearchWhere(cri, sql);
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 	
@@ -167,7 +131,6 @@ public class BoardQueryProvider {
 		sql.WHERE("faq_category='예약/결제'");
 		getSearchWhere(cri, sql);
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 	
@@ -178,11 +141,8 @@ public class BoardQueryProvider {
 		sql.WHERE("faq_category='홈페이지/기타'");
 		getSearchWhere(cri, sql);
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
-	
-	
 	
 	// 검색조건
 	public void getSearchWhere(SearchCriteria cri, SQL sql) {
@@ -193,20 +153,17 @@ public class BoardQueryProvider {
 			sql.OR().WHERE(titleQuery);
 			sql.OR().WHERE(contentQuery);
 		}
-		
 	}
 
 	//공지리스트
 	public String getNoticeList(SearchCriteria cri) {
 		SQL sql = new SQL();
-
 		sql.SELECT("*");
 		sql.FROM("tbl_notice");
 		sql.ORDER_BY("notice_num DESC");
 		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
 		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 	
@@ -217,7 +174,6 @@ public class BoardQueryProvider {
 		sql.FROM("tbl_notice");
 		getSearchWhere(cri, sql);
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 	
@@ -228,7 +184,6 @@ public class BoardQueryProvider {
 		sql.FROM("tbl_qna");
 		getSearchWhere(cri, sql);
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 	
@@ -236,14 +191,12 @@ public class BoardQueryProvider {
 	//공지리스트
 	public String getQnaList(SearchCriteria cri) {
 		SQL sql = new SQL();
-
 		sql.SELECT("*");
 		sql.FROM("tbl_qna");
 		sql.ORDER_BY("qna_num DESC");
-		sql.LIMIT(cri.getPerPageNum()); // limit: 개수
-		sql.OFFSET(cri.getStartRow()); // offset: 검색시작인덱스
+		sql.LIMIT(cri.getPerPageNum());
+		sql.OFFSET(cri.getStartRow()); 
 		String query = sql.toString();
-		System.out.println(query);
 		return query;
 	}
 	

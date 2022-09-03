@@ -17,14 +17,9 @@ public interface BoardService {
 	
 	//페이징처리
 	PageMaker getPageMaker(SearchCriteria cri) throws Exception;
-	//카테고리별 리스트
-	PageMaker getCategoryPageMaker(SearchCriteria cri, String category) throws Exception;
 	
 	//질문리스트-페이징처리
 	List<FAQBoardVO> faqList(SearchCriteria cri) throws Exception;
-		
-	//카테고리별 리스트
-	List<FAQBoardVO> categoryList(SearchCriteria cri, String faq_category) throws Exception;
 	
 	//해외여행 faq, pm
 	List<FAQBoardVO> getTripList(SearchCriteria cri) throws Exception;
@@ -48,7 +43,6 @@ public interface BoardService {
 	//새글작성
 	void writeFAQ(FAQBoardVO fvo) throws Exception;
 	
-	
 	//글삭제
 	void deleteFAQ(int faq_num) throws Exception;
 	
@@ -67,12 +61,6 @@ public interface BoardService {
 	
 	//qna상세보기
 	QNABoardVO readQNA(int QNA_num) throws Exception;
-	
-	//글 수정
-	String modifyQNA(QNABoardVO qvo) throws Exception;
-	
-	//글삭제
-	void deleteQNA(int QNA_num) throws Exception;
 	
 	//문답게시판 들어갈 공지
 	List<NoticeBoardVO> qnaNoticeList();
@@ -105,28 +93,16 @@ public interface BoardService {
 	//상세보기
 	NoticeBoardVO readNotice(int notice_num) throws Exception;
 	
-	//글 수정
-	String modifyNotice(NoticeBoardVO nvo) throws Exception;
-	
-	//글삭제
-	void deleteNotice(int notice_num) throws Exception;
-	
 	//공지페이지메이커
 	PageMaker getNoticePageMaker(SearchCriteria cri) throws Exception;
-	
-	//공지게시판 카테고리별
-	PageMaker getNoticeCategoryPageMaker(SearchCriteria cri, String category) throws Exception;
-	
-	//구분별 공지리스트
-	List<NoticeBoardVO> noticeCategoryList(SearchCriteria cri, String notice_category);
 	
 	List<NoticeBoardVO> informList(SearchCriteria cri) throws Exception;
 	PageMaker getInformPageMaker(SearchCriteria cri) throws Exception;
 	List<NoticeBoardVO> mofaList(SearchCriteria cri) throws Exception;
 	PageMaker mofaPageMaker(SearchCriteria cri) throws Exception;
+	void deleteNotice(int notice_num);
 	boolean fileUpload(MultipartFile[] files) throws Exception;
 	List<String> getFileNameList(int notice_num) throws Exception;
-	
 	
 	
 	
