@@ -32,11 +32,20 @@
 				</div>
 				<div class="card-body">
 					<p class="catd-text">${notice.notice_content }</p>
+					
+					
 				<form name="noticeInfo" action="noticeDelete" method="POST">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<input type="hidden" name="notice_num" value="${notice.notice_num}">
 				</form>
-				</div>
+				<c:if test="${!empty files}">
+					<div class="card-footer">
+						<p class="card-text">첨부파일</p>					
+						<c:forEach var="file" items="${files}">
+							<a class="d-block" href="${contextPath}/attach${file}">${file.substring(file.lastIndexOf("_") + 1)}</a>
+						</c:forEach>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</div>
@@ -58,17 +67,11 @@
 						data-bs-dismiss="modal">취소</button>
 					<button id="btnDelAgree" type="button" class="btn btn-primary">삭제</button>
 				</div>
-				<c:if test="${!empty files}">
-					<div class="card-footer">
-						<p class="card-text">첨부파일</p>					
-						<c:forEach var="file" items="${files}">
-							<a class="d-block" href="${contextPath}/attach${file}">${file.substring(file.lastIndexOf("_") + 1)}</a>
-						</c:forEach>
-					</div>
-				</c:if>
+				
 			</div>
 		</div>
 	</div>
+	
 </section>
 <script>
 	$("#btnDelAgree").click(function(){
