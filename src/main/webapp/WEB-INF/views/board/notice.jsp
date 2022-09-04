@@ -139,6 +139,18 @@
 		location.href="${contextPath}/board/notice/mofa";
 	});
 
-	
+	var pageUrl = window.location.href; 
+	$(window).on('load', function(){ 
+	    $('.btn-group').siblings('button').removeClass('active'); 
+	    
+	    if (pageUrl.indexOf('inform') > -1) { 
+	        $("#notice").addClass('active');
+	    } else if (pageUrl.indexOf('mofa') > -1) { 
+	    	 $("#mofa").addClass('active');
+	    }  else if (pageUrl.indexOf('airline') > -1) { 
+	    	 $(".btn-outline-dark").removeClass('active');
+	    }
+	    
+	});
 </script>
 <%@ include file="../common/footer.jsp"%>

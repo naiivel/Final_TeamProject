@@ -44,6 +44,7 @@
 					<button value="홈페이지/기타" type="button" class="btn btn-outline-dark" id="other">홈페이지/기타</button>
 				</div>
 			</div>
+			
 			<!-- 페이징 -->
 			<div id="listAll" class="accordion mb-3">
 				<c:set var="number" value="0" />
@@ -160,17 +161,8 @@
 		faqnum = num;
 		console.log(faqnum)
 	}
-	function clickDel(formName) {
-		for (var tag of formName) {
-			if (tag.faq_num.value == faqnum) {
-				tag.action = "${contextPath}/board/faqDelete";
-				tag.method = "post";
-				tag.submit();
-			}
-		}
-	}
-	
 	var userInfo= "<%=session.getAttribute("userInfo")%>";
+	console.log("userInfo: "+userInfo);
 	var userMaster= '${userInfo.member_master}';
 	
 	$("#addBtn").click(function() {
@@ -194,39 +186,64 @@
 	});
 
 	$("#trip").on("click", function() {
-		$(this).toggleClass("active ''");
 		location.href="${contextPath}/board/faq/trip";
 	});
 	
 	$("#airline").on("click", function() {
-		$(this).toggleClass("active");
 		location.href="${contextPath}/board/faq/airline";
 	});
 
 	$("#reservation").on("click", function() {
-		$(this).toggleClass("active");
 		location.href="${contextPath}/board/faq/reserv";
 	});
 
 	$("#passport").on("click", function() {
-		$(this).toggleClass("active");
 		location.href="${contextPath}/board/faq/pass";
 	});
 
 	$("#other").on("click", function() {
-		$(this).toggleClass("active");
 		location.href="${contextPath}/board/faq/other";
 	});
 	
+	function clickDel(formName) {
+		for (var tag of formName) {
+			if (tag.faq_num.value == faqnum) {
+				tag.action = "${contextPath}/board/faqDelete";
+				tag.method = "post";
+				tag.submit();
+			}
+		}
+	}
+	
 	$("#btnSearch").click(function(){
 		location.href="${contextPath}/board/faq?keyword="+$("#keyword").val();
+		
 	});
 	
-	$('input[name="keyword"]').keydown(function() {
+	$('input[type="text"]').keydown(function() {
 		if (event.keyCode === 13) {
 			event.preventDefault();
 			$("#btnSearch").click();
 		};
+	});
+	
+	var pageUrl = window.location.href; 
+	$(window).on('load', function(){ 
+	    $('.btn-group').siblings('button').removeClass('active'); 
+	    
+	    if (pageUrl.indexOf('trip') > -1) { 
+	        $("#trip").addClass('active');
+	    } else if (pageUrl.indexOf('airline') > -1) { 
+	    	 $("#airline").addClass('active');
+	    } else if (pageUrl.indexOf('reserv') > -1) { 
+	    	 $("#reservation").addClass('active');
+	    } else if (pageUrl.indexOf('pass') > -1) { 
+	    	 $("#passport").addClass('active');
+	    } else if (pageUrl.indexOf('other') > -1) { 
+	    	 $("#other").addClass('active');
+	    } else if (pageUrl.indexOf('airline') > -1) { 
+	    	 $(".btn-outline-dark").removeClass('active');
+	    }
 	});
 	
 </script>
