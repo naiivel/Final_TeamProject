@@ -13,8 +13,8 @@
 					관리자 페이지
 				</div>
 				<div class="list-group list-group-flush">
-					<a href="${contextPath}/member/adminPage" class="list-group-item">회원/관리자 목록</a>
-					<a href="${contextPath}/member/sales" class="list-group-item active">매출 관리</a>
+					<a href="${contextPath}/member/adminPage" class="list-group-item active">회원/관리자 목록</a>
+					<a href="${contextPath}/member/sales" class="list-group-item">매출 관리</a>
 					<a href="${contextPath}/member/control" class="list-group-item">상품 관리</a>
 				</div>
 			</div>

@@ -32,7 +32,7 @@
 					<p class="card-text">항공편 : ${noproduct.product_airplane}</p>
 					<p class="card-text">성인 : ${noMember.rev_adult}명 / ${totalAdult}원</p>
 					<p class="card-text">소인 : ${noMember.rev_minor}명 / ${totalMinor}원</p>
-					<p class="card-text">${noproduct.product_plan - 1}박 ${noproduct.product_plan}일</p>
+					<p class="card-text">${noproduct.product_plan}박 ${noproduct.product_plan+1}일</p>
 					<a href="${embassy}" class="card-link">${noproduct.product_country} 대사관</a>
 					<p class="card-text">
 						<small class="text-muted">문제가 있으신 부분은 고객센터로 문의해주시길 바랍니다.</small>

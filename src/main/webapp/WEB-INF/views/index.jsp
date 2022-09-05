@@ -109,7 +109,6 @@
 							</c:choose>
 							<div class="card-body tiny-index">
 								<h5 class="card-title">${product.product_name}</h5>
-								${product.detail_info}
 							</div>
 							<div class="card-body">
 								<a href="${contextPath}/products/${product.product_num}" class="btn btn-outline-secondary">바로가기</a>

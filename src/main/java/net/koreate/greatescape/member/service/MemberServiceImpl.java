@@ -149,6 +149,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	@Transactional
 	public void createAdmin(MemberVO vo) {
+		vo.setMember_pw(bCryptPasswordEncoder.encode(vo.getMember_pw()));
 		mdao.createAdmin(vo);
 		mdao.addAdminAuth(vo);
 	}
