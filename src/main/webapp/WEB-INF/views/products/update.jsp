@@ -62,11 +62,11 @@
         <div class="row">
             <div class="input-group mb-3 col">
                 <span class="input-group-text">도착일</span>
-                <input type="date" class="form-control" name="arrive" value="<fmt:formatDate pattern=" yyyy-MM-dd" value="${product.product_departure}" />">
+                <input type="date" class="form-control" name="arrive" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${product.product_departure}" />">
             </div>
             <div class="input-group mb-3 col">
                 <span class="input-group-text">출발일</span>
-                <input type="date" class="form-control" name="departure" value="<fmt:formatDate pattern=" yyyy-MM-dd" value="${product.product_departure}" />">
+                <input type="date" class="form-control" name="departure" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${product.product_departure}" />">
             </div>
         </div>
         <div class="row">

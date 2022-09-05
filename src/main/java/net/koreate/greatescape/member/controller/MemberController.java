@@ -302,19 +302,19 @@ public class MemberController {
 	// (회원) 탈퇴시 필요한 비밀번호 확인 후 탈퇴 진행
 	@PostMapping("/delete")
 	@Transactional
-	public String delete(RedirectAttributes rttr, MemberVO vo,String member_pw, HttpSession session, HttpServletRequest request) {
-		List<ReservationVO> list = ms.findRevList(vo);
+	public String delete(RedirectAttributes rttr,String member_pw, HttpSession session, HttpServletRequest request) {
+		MemberVO loginMember = (MemberVO) session.getAttribute("userInfo");
+		List<ReservationVO> list = ms.findRevList(loginMember);
 		System.out.println(list);
 		if (list != null && !list.isEmpty()) { 
 			rttr.addFlashAttribute("flashMessage", "현재 예약 상품이 존재하여 탈퇴할 수 없습니다. 예약 내역을 먼저 확인해주세요.");
 			return "redirect:/member/myPage";
 		}
-		vo = (MemberVO) session.getAttribute("userInfo");
-		boolean bool = ms.pwCheck(vo, member_pw);
+		boolean bool = ms.pwCheck(loginMember, member_pw);
 		 // 비밀번호 확인
 		 if(bool) {
 			 // 회원 가입여부 'N'변경
-			 ms.changeLeave(vo);
+			 ms.changeLeave(loginMember);
 			 return "redirect:/member/logOut";
 		 }
 		String message = "비밀번호를 틀리셨습니다. 다시입력해주세요.";

@@ -62,7 +62,7 @@
 			</div>
 			<div class="mb-3">
 				<label for="email" class="form-label">이메일</label>
-				<input type="text" class="form-control" name="member_email" id="member_email" placeholder="">
+				<input type="text" class="form-control" name="member_email" id="member_email" placeholder="비밀번호 찾기에 사용됩니다.">
 			</div>
 		</div>
 	</form>
