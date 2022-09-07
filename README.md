@@ -63,7 +63,7 @@
 #### 4.&emsp;조건에 따른 상품 검색 <br/>
 ![111](https://user-images.githubusercontent.com/98449486/188808612-0ab1db85-0056-4940-991a-8330946d5861.PNG) <br/>
 <br/>
-#### 5.&emsp;조회수에 따른 추천상품 출력 <br/>
+#### 5.&emsp;조회수에 따른 추천상품 출력(상품 바로가기) <br/>
 ![222](https://user-images.githubusercontent.com/98449486/188808649-50726639-c181-4ba7-8036-6be2d56546e4.PNG) <br/>
 <br/>
 <br/>
