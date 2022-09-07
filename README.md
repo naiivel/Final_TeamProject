@@ -15,7 +15,15 @@
 
 ## 프로젝트 소개
 <br/>
+### 프로젝트 제작 목적
+최근 코로나로 인한 팬데믹시기에 해외여행을 자유롭게 가지 못하는 상태에 놓여있었습니다. <br/>
+점점 완화되어가는 분위기 속에 일상에서의 대탈출(GreatEscape)을 위한 여행사 웹사이트 제작해보았습니다. <br/>
 
+### 프로젝트 기술 소개
+● Database Tables <br/>
+![2](https://user-images.githubusercontent.com/98449486/188802579-e84e8915-a1d9-490f-864a-4c1ed0ffe404.PNG)
+● 작업 툴
+![1](https://user-images.githubusercontent.com/98449486/188802533-c582aa72-ae3b-4539-a2f1-a862adff6b7e.PNG)
 
 ## 주요 기능
 
