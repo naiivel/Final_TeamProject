@@ -40,7 +40,7 @@
 ![2](https://user-images.githubusercontent.com/98449486/188809532-b2f24079-fe85-4e84-9680-5c0fde52b7c1.PNG) <br/>
 <br/>
 #### 4.&emsp;상세정보 확인 후 상품예약 <br/>
-![13](https://user-images.githubusercontent.com/98449486/188805531-f4ef8bea-90cf-489e-b493-636e53533a96.PNG) <br/>
+![4](https://user-images.githubusercontent.com/98449486/188809969-e631b9b0-ac32-489b-9260-6995edd2754a.PNG) <br/>
 <br/>
 #### 5.&emsp;예약상품에 대한 상세내역 <비회원> <br/>
 ![14](https://user-images.githubusercontent.com/98449486/188805744-3c70c80e-b4e8-4f2f-af3f-ba97b30ca792.PNG) <br/>
