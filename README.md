@@ -33,12 +33,40 @@
 1.&emsp;여행하고 싶은 대륙 선택 <br/>
 ![10](https://user-images.githubusercontent.com/98449486/188804624-78f3d90c-4b9e-4a0a-aefd-c9e8a08fcc51.PNG) <br/>
 <br/>
-
+2.&emsp;원하는 나라/도시의 상품리스트 출력 <br/>
+![11](https://user-images.githubusercontent.com/98449486/188804894-4d3e4947-6587-46b5-bdd0-f70bb55b06a5.PNG) <br/>
+<br/>
+3.&emsp;상품에 대한 상세정보 확인 <br/>
+![15](https://user-images.githubusercontent.com/98449486/188805280-59bb509b-6ad6-4071-ba6c-b03241336363.PNG) <br/>
+<br/>
+4.&emsp;상세정보 확인 후 상품예약 <br/>
+![13](https://user-images.githubusercontent.com/98449486/188805531-f4ef8bea-90cf-489e-b493-636e53533a96.PNG) <br/>
+<br/>
+5.&emsp;예약상품에 대한 상세내역 <비회원> <br/>
+![14](https://user-images.githubusercontent.com/98449486/188805744-3c70c80e-b4e8-4f2f-af3f-ba97b30ca792.PNG) <br/>
+<br/>
+6.&emsp;예약상품에 대한 상세내역 <회원> <br/>
+![16](https://user-images.githubusercontent.com/98449486/188805923-d1822f08-742e-4c11-83bc-dd356f1ae955.PNG) <br/>
+<br/>
 <br/>
 
 ### ● 예약상품관리
-<br/>
+1.&emsp;상품 등록 <관리자계정> <br/>
 
+<br/>
+2.&emsp;상품 수정 <관리자계정> <br/>
+
+<br/>
+3.&emsp;상품 삭제 <관리자계정> <br/>
+
+<br/>
+4.&emsp;조건에 따른 상품 검색 <br/>
+
+<br/>
+5.&emsp;조회수에 따른 추천상품 출력 <br/>
+
+<br/>
+<br/>
 <hr/>
 
 ## 아쉬운 점
