@@ -30,7 +30,7 @@
 ## 담당 주요 기능
 
 ### ● 예약하기 <br/>
-1. &emsp; 여행하고 싶은 대륙 선택 <br/>
+1.&emsp;여행하고 싶은 대륙 선택 <br/>
 ![10](https://user-images.githubusercontent.com/98449486/188804624-78f3d90c-4b9e-4a0a-aefd-c9e8a08fcc51.PNG) <br/>
 <br/>
 
