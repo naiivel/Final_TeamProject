@@ -27,7 +27,7 @@
 ![1](https://user-images.githubusercontent.com/98449486/188802533-c582aa72-ae3b-4539-a2f1-a862adff6b7e.PNG) <br/>
 <hr/>
 
-## 주요 기능
+## 담당 주요 기능
 
 <br/>
 ● 
