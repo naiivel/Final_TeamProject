@@ -34,7 +34,7 @@
 ![10](https://user-images.githubusercontent.com/98449486/188804624-78f3d90c-4b9e-4a0a-aefd-c9e8a08fcc51.PNG) <br/>
 <br/>
 #### 2.&emsp;원하는 나라/도시의 상품리스트 출력 <br/>
-![11](https://user-images.githubusercontent.com/98449486/188804894-4d3e4947-6587-46b5-bdd0-f70bb55b06a5.PNG) <br/>
+![1](https://user-images.githubusercontent.com/98449486/188809314-3154d5f3-2d92-42b0-811f-022ff28470b9.PNG) <br/>
 <br/>
 #### 3.&emsp;상품에 대한 상세정보 확인 <br/>
 ![15](https://user-images.githubusercontent.com/98449486/188805280-59bb509b-6ad6-4071-ba6c-b03241336363.PNG) <br/>
