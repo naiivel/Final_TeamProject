@@ -61,7 +61,7 @@
 ![25](https://user-images.githubusercontent.com/98449486/188807850-b34c3e38-40e5-4347-a2f0-b0d6d00f57b7.PNG) <br/>
 <br/>
 #### 4.&emsp;조건에 따른 상품 검색 <br/>
-![3](https://user-images.githubusercontent.com/98449486/188809713-65c9ad5c-6d1e-445b-b67d-eb5fb2354c25.PNG) <br/>
+![22](https://user-images.githubusercontent.com/98449486/188810780-9471495f-4f1d-46c3-ac72-b9a174f8ad6a.PNG) <br/>
 <br/>
 #### 5.&emsp;조회수에 따른 추천상품 출력(상품 바로가기) <br/>
 ![222](https://user-images.githubusercontent.com/98449486/188808649-50726639-c181-4ba7-8036-6be2d56546e4.PNG) <br/>
