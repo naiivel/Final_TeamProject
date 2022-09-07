@@ -43,7 +43,7 @@
 ![4](https://user-images.githubusercontent.com/98449486/188809969-e631b9b0-ac32-489b-9260-6995edd2754a.PNG) <br/>
 <br/>
 #### 5.&emsp;예약상품에 대한 상세내역 <비회원> <br/>
-![14](https://user-images.githubusercontent.com/98449486/188805744-3c70c80e-b4e8-4f2f-af3f-ba97b30ca792.PNG) <br/>
+![5](https://user-images.githubusercontent.com/98449486/188810134-29b781b2-6181-4f52-ab9c-08911488e0f2.PNG) <br/>
 <br/>
 #### 6.&emsp;예약상품에 대한 상세내역 <회원> <br/>
 ![16](https://user-images.githubusercontent.com/98449486/188805923-d1822f08-742e-4c11-83bc-dd356f1ae955.PNG) <br/>
