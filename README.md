@@ -3,7 +3,7 @@
 <hr/>
 
 ## 프로젝트 개요
-● ~를 통해 호텔 예약 프로그램을 재현 <br/>
+● 프로젝트 명 : GreatEscape
 ● 제작 인원 : 4명 <br/>
 ● 제작 기간 : 2022-08-08 ~ 2022-09-04 (약 26일) <br/>
 ● 사용 기술 : Java, JavaScriptES6, HTML5, CSS3, My-SQL, STS3 <br/>
