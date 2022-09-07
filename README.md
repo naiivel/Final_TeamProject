@@ -46,7 +46,7 @@
 ![5](https://user-images.githubusercontent.com/98449486/188810134-29b781b2-6181-4f52-ab9c-08911488e0f2.PNG) <br/>
 <br/>
 #### 6.&emsp;예약상품에 대한 상세내역 <회원> <br/>
-![16](https://user-images.githubusercontent.com/98449486/188805923-d1822f08-742e-4c11-83bc-dd356f1ae955.PNG) <br/>
+![6](https://user-images.githubusercontent.com/98449486/188810319-42f2ee2d-77d9-402d-a9d1-3d6f54fada56.PNG) <br/>
 <br/>
 <br/>
 
