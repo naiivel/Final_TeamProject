@@ -52,7 +52,7 @@
 
 ### ● 예약상품관리
 #### 1.&emsp;상품 등록 <관리자계정> <br/>
-![21](https://user-images.githubusercontent.com/98449486/188807173-9e26d5bc-93df-4329-96c9-872e5c07a2aa.PNG) <br/>
+![10](https://user-images.githubusercontent.com/98449486/188810502-4e90505c-40f4-4845-aef8-ae1f294bf705.PNG) <br/>
 <br/>
 #### 2.&emsp;상품 수정 <관리자계정> <br/>
 ![22](https://user-images.githubusercontent.com/98449486/188807712-da37eaf0-aaa5-43fc-a46a-c15c70c760c8.PNG) <br/>
